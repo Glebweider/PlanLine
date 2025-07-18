@@ -1,0 +1,193 @@
+@import '../../styles/_variables.scss';
+
+
+.navbar {
+    display: flex;
+    transition: transform 0.3s ease;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: $color-bg-secondary;
+    height: 100vh;
+    width: 280px;
+    border-right: 1px solid $color-outline-modal;
+}
+
+.disable {
+    transform: translateX(-280px);
+}
+
+.userContainer {
+    display: flex;
+    align-items: center;
+    height: auto;
+    width: 84%;
+    padding: 12 10px;
+    margin-top: 10px;
+    border-radius: 10px;
+    color: $color-secondary;
+    background-color: $color-bg-secondary-2;
+    border: 1px solid $color-outline-modal;
+}
+
+.userContent {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    margin-left: 10px;
+    min-height: 100%;
+    
+    a {
+        font-size: 24px;
+    }
+}
+
+.boardsContainer {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    height: 100%;
+    margin-top: 30px;
+
+    a {
+        font-size: 24px;
+        color: $color-secondary;
+    }
+}
+
+.createNewProjectButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+    background-color: $color-bg-secondary-2;
+    border: 1px solid $color-outline-modal;
+    height: 48px;
+    width: 90%;
+    border-radius: 10px;
+    padding: 8 0px;
+    transition: background-color 0.2s ease;
+    cursor: pointer;
+    font-size: 20px;
+    color: $color-secondary;
+
+    &:hover {
+        background-color: $color-bg-secondary-hover;
+    }
+}
+
+.cardBoardContainer {
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    margin-top: 8px;
+    border-radius: 10px;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+
+    &:hover {
+        background-color: $color-bg-secondary-hover;
+    }
+}
+
+.cardBoardActive {
+    background-color: $color-bg-secondary-hover;
+}
+
+.cardBoardIcon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
+    background: linear-gradient(-60deg, #0d1b2a, #1b263b, #2c2d55, #0d1b2a);
+    background-size: 400% 400%;
+    animation: waveGradient 10s ease-in-out infinite;
+}
+
+@keyframes waveGradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.cardBoardText {
+    font-size: 24px;
+    color: $color-secondary;
+    margin-left: 10px;
+}
+
+.changeVisibilityNavbarButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 35px;
+    height: 35px;
+    margin-top: 10px;
+    margin-left: -1px;
+    font-size: 18px;
+    background-color: $color-bg-secondary;
+    border: 1px solid $color-outline-modal;
+    border-radius: 0px 10px 10px 0px;
+    cursor: pointer;
+}
+
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modalContent {
+    background: $color-bg-modal;
+    border: 12 solid #fff;
+    padding: 20px;
+    border-radius: 8px;
+    width: 500px;
+    height: 32%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.modalData {
+    width: 100%;
+    height: 100%;
+}
+
+.createProjectButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: $color-bg-secondary-2;
+    border: 1px solid $color-outline-modal;
+    height: 32px;
+    width: 150px;
+    margin: 0 10px;
+    border-radius: 10px;
+    padding: 8 0px;
+    transition: background-color 0.2s ease;
+    cursor: pointer;
+    font-size: 24px;
+    color: $color-secondary;
+
+    &:hover {
+        background-color: $color-bg-secondary-hover;
+    }
+}
