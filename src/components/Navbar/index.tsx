@@ -17,12 +17,13 @@ export interface IPreviewProject {
 }
 
 const Navbar = () => {
-    const { id } = useParams();
+    const { projectId } = useParams();
     const { showAlert } = useAlert();
     const user = useSelector((state: RootState) => state.userReducer);
 
     const [isOpenNavbar, setOpenNavbar] = useState<boolean>(true);
     const [isOpenModalNewProject, setOpenModalNewProject] = useState<boolean>(false);
+    const [isCreatingProject, setIsCreatingProject] = useState<boolean>(false);
     const [projects, setProjects] = useState<IPreviewProject[]>([]);
     const [newProjectName, setNewProjectName] = useState<string>('');
 
@@ -42,17 +43,17 @@ const Navbar = () => {
                 }
             );
 
+            const data = await response.json();
+
             if (!response.ok) {
-                const errorText = await response.text();
-                showAlert(`Server error: ${response.status}, ${errorText}`);
+                showAlert(`Server error: ${response.status}, ${data.message}`);
+                return;
             }
 
-            const projects = await response.json();
-
-            if (Array.isArray(projects)) {
-                setProjects(projects); 
+            if (Array.isArray(data)) {
+                setProjects(data); 
             } else {
-                showAlert(`Unexpected response format ${projects}`);
+                showAlert(`Unexpected response format ${data}`);
             }
         } catch (error) {
             showAlert(`Fetch failed: ${error}`);
@@ -60,7 +61,50 @@ const Navbar = () => {
     };
 
     const createProject = async () => {
-        setOpenModalNewProject(false)
+        if (newProjectName.length < 1) {
+            showAlert('Project name must be at least 1 character');
+            return;
+        }
+        if (newProjectName.length > 12) {
+            showAlert('Project name must be no more than 12 characters');
+            return;
+        }
+
+        if (isCreatingProject) return;
+
+        setIsCreatingProject(true);
+
+        try {
+            const response = await fetch(
+                `${process.env.REACT_APP_BACKEND_URI}/projects/`,
+                {
+                    method: 'POST',
+                    credentials: 'include',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        name: newProjectName,
+                        //icon: newProjectIcon
+                    })
+                }
+            );
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                showAlert(`Server error: ${response.status}, ${data.message}`);
+                return;
+            }
+
+            setProjects(prevProjects => [...prevProjects, data]);
+            setNewProjectName('');
+            setOpenModalNewProject(false);
+        } catch (error) {
+            showAlert(`Fetch failed: ${error}`);
+        } finally {
+            setIsCreatingProject(false);
+        }
     };
     
 	return (
@@ -78,7 +122,7 @@ const Navbar = () => {
                     {projects && projects.map(project => (
                         <Link
                             key={project.id}
-                            className={clsx(style.cardBoardContainer, id == project.id && style.cardBoardActive)}  
+                            className={clsx(style.cardBoardContainer, projectId == project.id && style.cardBoardActive)}  
                             to={`/project/${project.id}`}>
                             {project.icon ?
                                 <img 
@@ -92,11 +136,13 @@ const Navbar = () => {
                         </Link>
                     ))}
                 </div>
-                <div 
-                    onClick={() => setOpenModalNewProject(true)}
-                    className={style.createNewProjectButton}>
-                    New Project
-                </div>
+                {projects.length < 5 &&
+                    <div 
+                        onClick={() => setOpenModalNewProject(true)}
+                        className={style.createNewProjectButton}>
+                        New Project
+                    </div>
+                }
             </div>
             {isOpenNavbar ?
                 <ArrowLeftOutlined 
@@ -120,7 +166,10 @@ const Navbar = () => {
                                 className={style.inputField} />
                         </div>
                         <div style={{ display: 'flex' }}>
-                            <div onClick={() => createProject()} className={style.createProjectButton}>Create</div>
+                            <div 
+                                onClick={() => !isCreatingProject && createProject()} 
+                                className={style.createProjectButton}
+                                style={{ opacity: isCreatingProject ? 0.5 : 1 }}>Create</div>
                             <div onClick={() => setOpenModalNewProject(false)} className={style.createProjectButton}>Close</div>
                         </div>
                     </div>

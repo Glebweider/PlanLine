@@ -5,15 +5,13 @@ export interface IProject {
 	name: string;             // Название проекта
 	icon: string;             // Иконка проекта (например, URL)
 	ownerId: string;          // ID владельца
-	members: string[];        // ID пользователей, которые состоят в проекте
+	members: IUser[];        // ID пользователей, которые состоят в проекте
 	boards: IBoard[];         // Доски внутри проекта
-	dateOfCreation: Date;     // Дата создания проекта
 }
 
 export interface IBoard {
 	id: string;
 	name: string;
-	ownerId: string;
 	members: IBoardMember[];
 	lists: IList[];
 }
@@ -24,8 +22,14 @@ export enum MemberRole {
 	OBSERVER = 'Observer',
 }
 
+export interface IUser {
+	id: string;
+	username: string;
+	avatar: string;
+}
+
 export interface IBoardMember {
-	id: string;        // ID Пользователя
+	user: IUser;
 	role: MemberRole;  // Роль Пользователя
 }
 
@@ -40,17 +44,17 @@ export interface ICard {
 	title: string;
 	description: string;
 	labels: string[];
-	dueDate: string;
+	dueDate: Date;
 	comments: IComment[];
-	createdAt: string;
-	updatedAt: string;
+	createdAt: Date;
+	updatedAt: Date;
 }
 
 export interface IComment {
 	id: string;
 	authorId: string;
 	content: string;
-	createdAt: string;
+	createdAt: Date;
 }
 
 const initialState: IProject = {
@@ -60,7 +64,6 @@ const initialState: IProject = {
 	ownerId: '',
 	members: [],
 	boards: [],
-	dateOfCreation: new Date(),
 };
 
 const projectSlice = createSlice({
@@ -74,7 +77,6 @@ const projectSlice = createSlice({
 			state.ownerId = action.payload.ownerId;
 			state.members = action.payload.members;
 			state.boards = action.payload.boards;
-			state.dateOfCreation = action.payload.dateOfCreation;
 		},
 	},
 });

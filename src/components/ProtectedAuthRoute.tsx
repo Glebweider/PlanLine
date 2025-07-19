@@ -36,7 +36,7 @@ const ProtectedAuthRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
           const data = await response.json();
           dispatch(
             setUser({
-              discordId: data.discordId,
+              id: data.discordId,
               username: data.username,
               avatar: data.avatar,
               projects: data.projects,

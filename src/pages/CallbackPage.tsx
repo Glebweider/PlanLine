@@ -50,7 +50,7 @@ const CallbackPage: React.FC = () => {
 
               const user = await response.json()
               dispatch(setUser({
-                discordId: user.discordId,
+                id: user.discordId,
                 username: user.username,
                 avatar: user.avatar,
                 projects: user.projects,

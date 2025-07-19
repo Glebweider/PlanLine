@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export interface IUserState {
-	discordId: string;
+	id: string;
 	username: string;
 	avatar: string;
 	projects: string[];
@@ -9,7 +9,7 @@ export interface IUserState {
 }
 
 const initialState: IUserState = {
-	discordId: '',
+	id: '',
 	username: '',
 	avatar: '',
 	projects: [],
@@ -21,7 +21,7 @@ const userSlice = createSlice({
 	initialState,
 	reducers: {
 		setUser: (state, action: PayloadAction<IUserState>) => {
-			state.discordId = action.payload.discordId;
+			state.id = action.payload.id;
 			state.username = action.payload.username;
 			state.avatar = action.payload.avatar;
 			state.projects = action.payload.projects;

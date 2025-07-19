@@ -5,6 +5,7 @@ import HomePage from './pages/HomePage';
 import CallbackPage from "./pages/CallbackPage";
 import NotFoundPage from "./pages/404Page";
 import ProjectPage from "./pages/ProjectPage";
+import BoardPage from "./pages/BoardPage";
 
 //Components
 import ProtectedAuthRoute from "./components/ProtectedAuthRoute";
@@ -21,10 +22,17 @@ function App() {
 					</ProtectedAuthRoute>
 				} />
 			<Route
-				path="/project/:id"
+				path="/project/:projectId"
 				element={
 					<ProtectedAuthRoute>
 						<ProjectPage />
+					</ProtectedAuthRoute>
+				} />
+			<Route
+				path="/project/:projectId/board/:boardId"
+				element={
+					<ProtectedAuthRoute>
+						<BoardPage />
 					</ProtectedAuthRoute>
 				} />
 			<Route 
