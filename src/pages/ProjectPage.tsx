@@ -8,7 +8,8 @@ import Navbar from '../components/Navbar';
 import { RootState } from '../redux/store';
 import { useAlert } from '../components/Alert/context';
 import { setProject } from '../redux/reducers/projectReducer';
-import { Avatar } from '../components/Avatar';
+import BoardItem from '../components/Board';
+import textAreaHandleInput from '../utils/TextAreaFunc';
 
 const ProjectPage = () => {
 	const { projectId } = useParams();
@@ -24,7 +25,7 @@ const ProjectPage = () => {
 
 	useEffect(() => {
 		getProject();           
-	}, []);
+	}, [projectId]);
 
 	const getProject = async () => {
 		try {
@@ -105,43 +106,12 @@ const ProjectPage = () => {
 		}
 	}, [isCreateBoard]);
 
-	const handleInput = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-		e.target.style.height = 'auto';
-		e.target.style.height = `${e.target.scrollHeight}px`;
-	};
-
 	return (
 		<div className={style.container}>
 			<Navbar />
 			<div className={style.boardsContainer}>
 				{projectState.boards.map(board => (
-					<Link 
-						to={`/project/${projectId}/board/${board.id}`} 
-						key={board.id}
-						className={style.boardContainer}>
-						<text className={style.boardName}>{board.name}</text>
-						{board.lists.length != 0 &&
-							board.lists.map((list, index) => (
-								<div key={list.id} className={style.boardListContainer}>
-									<span className={style.boardList}>
-										Tasks {list.name}: {list.cards.length}
-									</span>
-								</div>
-							))
-						}
-						<div className={style.boardMembers}>
-							{board.members
-								.filter(member => member.role !== 'Observer')
-								.slice(0, 8)
-								.map(member => (
-									<Avatar
-										key={member.user.id}
-										size={32}
-										user={member.user}
-										className={style.boardMemberAvatar}/>
-							))}
-						</div>
-					</Link>
+					<BoardItem projectId={projectId} board={board} />
 				))}
 				{isCreateBoard ?
 					<div className={style.createNewBoardContainer}>
@@ -150,7 +120,7 @@ const ProjectPage = () => {
 							placeholder="Введите название доски"
 							className={style.inputField}
 							rows={1}
-							onInput={handleInput}
+							onInput={textAreaHandleInput}
 							maxLength={256}/>
 						<div className={style.createNewBoardButtons}>
 							<div onClick={() => createBoard()} className={style.createNewBoardButtonApply}>

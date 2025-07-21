@@ -46,7 +46,7 @@ const CallbackPage: React.FC = () => {
                   method: 'GET',
                   credentials: 'include',
                 }
-              ); //backend
+              );
 
               const user = await response.json()
               dispatch(setUser({
@@ -62,6 +62,7 @@ const CallbackPage: React.FC = () => {
         } catch (error) {
           showAlert('Ошибка при авторизации');
           console.log(error)
+          navigate('/auth');
         }
     };
     fetchData();

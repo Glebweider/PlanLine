@@ -9,6 +9,7 @@ import style from './Navbar.module.scss';
 import { Avatar } from '../Avatar';
 import { RootState } from '../../redux/store';
 import { useAlert } from '../Alert/context';
+import UserMenu from '../UserMenu';
 
 export interface IPreviewProject {
     id: string;
@@ -23,6 +24,7 @@ const Navbar = () => {
 
     const [isOpenNavbar, setOpenNavbar] = useState<boolean>(true);
     const [isOpenModalNewProject, setOpenModalNewProject] = useState<boolean>(false);
+    const [isOpenUserModal, setOpenUserModal] = useState<boolean>(false);
     const [isCreatingProject, setIsCreatingProject] = useState<boolean>(false);
     const [projects, setProjects] = useState<IPreviewProject[]>([]);
     const [newProjectName, setNewProjectName] = useState<string>('');
@@ -110,13 +112,16 @@ const Navbar = () => {
 	return (
         <div className={clsx(style.navbar, !isOpenNavbar && style.disable)}>
             <div className={style.container}>
-                <div className={style.userContainer}>
+                <div
+                    onClick={() => setOpenUserModal(!isOpenUserModal)}
+                    className={style.userContainer}>
                     <Avatar size={70} />
                     <div className={style.userContent}>
                         <a>{user.username}</a>
                         {/* <text>Online</text> */}
                     </div>
                 </div>
+                <UserMenu isOpen={isOpenUserModal} />
                 <div className={style.boardsContainer}>
                     <a>Projects</a>
                     {projects && projects.map(project => (

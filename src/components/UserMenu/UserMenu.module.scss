@@ -1,0 +1,35 @@
+@import '../../styles/_variables.scss';
+
+.userMenu {
+    position: absolute;
+    top: 58px;
+    left: -225px;
+    width: 200px;
+    background-color: $color-bg-secondary;
+    border-radius: 0 8px 8px 0;
+    padding: 10px;
+    transition: left 0.3s ease;
+    z-index: 500;
+    border: 1px solid $color-outline-modal;
+}
+
+.userMenu.open {
+    left: 281px;
+}
+
+.userMenu button {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin: 4px 0;
+    color: #f06360;
+    border: none;
+    padding: 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.userMenu button:hover {
+    background: rgba(#f06360, 0.2);
+}

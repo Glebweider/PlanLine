@@ -9,6 +9,7 @@ import Navbar from '../components/Navbar';
 import { setProject } from '../redux/reducers/projectReducer';
 import { useAlert } from '../components/Alert/context';
 import { RootState } from '../redux/store';
+import textAreaHandleInput from 'src/utils/TextAreaFunc';
 
 
 const BoardPage = () => {
@@ -27,7 +28,7 @@ const BoardPage = () => {
 		if (!boardState) {
 			getProject();  
 		}  
-	}, []);
+	}, [boardId]);
 
 	const getProject = async () => {
 		try {
@@ -56,11 +57,6 @@ const BoardPage = () => {
 		console.log(3)
 	};
 
-	const handleInput = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-		e.target.style.height = 'auto';
-		e.target.style.height = `${e.target.scrollHeight}px`;
-	};
-
 	return (
 		<div className={style.container}>
 			<Navbar />
@@ -77,7 +73,7 @@ const BoardPage = () => {
 							placeholder="Введите название списка"
 							className={style.inputField}
 							rows={1}
-							onInput={handleInput}
+							onInput={textAreaHandleInput}
 							maxLength={256}/>
 						<div className={style.createNewListButtons}>
 							<div onClick={() => createList()} className={style.createNewListButtonApply}>

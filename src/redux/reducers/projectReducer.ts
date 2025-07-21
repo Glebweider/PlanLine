@@ -5,7 +5,7 @@ export interface IProject {
 	name: string;             // Название проекта
 	icon: string;             // Иконка проекта (например, URL)
 	ownerId: string;          // ID владельца
-	members: IUser[];        // ID пользователей, которые состоят в проекте
+	members: IUser[];         // ID пользователей, которые состоят в проекте
 	boards: IBoard[];         // Доски внутри проекта
 }
 
@@ -29,7 +29,7 @@ export interface IUser {
 }
 
 export interface IBoardMember {
-	user: IUser;
+	id: string;
 	role: MemberRole;  // Роль Пользователя
 }
 
@@ -44,7 +44,7 @@ export interface ICard {
 	title: string;
 	description: string;
 	labels: string[];
-	dueDate: Date;
+	dueDate: Date | null;
 	comments: IComment[];
 	createdAt: Date;
 	updatedAt: Date;

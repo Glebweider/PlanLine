@@ -6,6 +6,7 @@ import CallbackPage from "./pages/CallbackPage";
 import NotFoundPage from "./pages/404Page";
 import ProjectPage from "./pages/ProjectPage";
 import BoardPage from "./pages/BoardPage";
+import AuthPage from "./pages/AuthPage";
 
 //Components
 import ProtectedAuthRoute from "./components/ProtectedAuthRoute";
@@ -35,6 +36,9 @@ function App() {
 						<BoardPage />
 					</ProtectedAuthRoute>
 				} />
+			<Route 
+				path='/auth' 
+				element={<AuthPage />} />
 			<Route 
 				path='/callback' 
 				element={<CallbackPage />} />
