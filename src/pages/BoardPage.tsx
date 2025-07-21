@@ -10,6 +10,7 @@ import { setProject } from '../redux/reducers/projectReducer';
 import { useAlert } from '../components/Alert/context';
 import { RootState } from '../redux/store';
 import textAreaHandleInput from 'src/utils/TextAreaFunc';
+import ListItem from '../components/List';
 
 
 const BoardPage = () => {
@@ -17,10 +18,11 @@ const BoardPage = () => {
 	const { showAlert } = useAlert();
 	const dispatch = useDispatch();
 
-	const boardState = useSelector((state: RootState) => state.projectReducer.boards.find(b => b.id === boardId));
+	const projectState = useSelector((state: RootState) => state.projectReducer);
+	const boardState = projectState.boards.find(b => b.id === boardId);
 
 	const [isCreateList, setCreateList] = useState<boolean>(false);
-	const [isCreating, setIsCreating] = useState<boolean>(false);
+	const [isCreatingList, setIsCreatingList] = useState<boolean>(false);
 
 	const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -54,7 +56,60 @@ const BoardPage = () => {
 	};
 
 	const createList = async () => {
-		console.log(3)
+		if (isCreatingList) return;
+
+		const listName = textareaRef.current?.value?.trim() || '';
+
+		if (listName.length < 1 || listName.length > 512) {
+			showAlert('Название должно быть от 1 до 512 символов.');
+			return;
+		}
+
+		const unsafePattern = /<[^>]*>|script|onerror|onload|javascript:/i;
+		if (unsafePattern.test(listName)) {
+			showAlert('Название не должно содержать HTML или потенциально опасный код.');
+			return;
+		}
+
+		try {
+			setIsCreatingList(true);
+			const response = await fetch(
+				`${process.env.REACT_APP_BACKEND_URI}/projects/${projectId}/boards/${boardId}`,
+				{
+					method: 'POST',
+					credentials: 'include',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify({ name: listName })
+				}
+			);
+
+			const data = await response.json();
+
+			if (!response.ok) {
+				showAlert(`Server error: ${response.status}, ${data.message}`);
+				return;
+			}
+
+
+			dispatch(setProject({
+			...projectState,
+			boards: projectState.boards.map(board =>
+				board.id === boardId
+				? { ...board, lists: [...board.lists, data] }
+				: board
+			)
+			}));
+			
+			if (textareaRef.current) 
+				textareaRef.current.value = '';
+			
+		} catch (error) {
+			showAlert(`Fetch failed: ${error}`);
+		} finally {
+			setIsCreatingList(false);
+		}
 	};
 
 	return (
@@ -62,9 +117,11 @@ const BoardPage = () => {
 			<Navbar />
 			<div className={style.listsContainer}>
 				{boardState?.lists.map(list => (
-					<div key={list.id} className={style.listContainer}>
-
-					</div>
+					<ListItem 
+						key={list.id}
+						list={list} 
+						projectId={projectId} 
+						boardId={boardId} />
 				))}
 				{isCreateList ?
 					<div className={style.createNewListContainer}>
