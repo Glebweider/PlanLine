@@ -83,6 +83,7 @@
 .cardBoardContainer {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     padding: 8px;
     margin-top: 8px;
     border-radius: 10px;
@@ -182,6 +183,13 @@
     padding: 15 20;
     color: #fff;
     font-size: 16;
+}
+
+.cardBoardTaskCounter {
+    font-size: 16;
+    padding: 2 7;
+    background-color: $color-bg-input;
+    border-radius: 3px;
 }
 
 .createProjectButton {

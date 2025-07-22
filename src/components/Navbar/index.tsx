@@ -15,6 +15,7 @@ export interface IPreviewProject {
     id: string;
     name: string;
     icon: string;
+    cardsCount: string;
 }
 
 const Navbar = () => {
@@ -129,15 +130,18 @@ const Navbar = () => {
                             key={project.id}
                             className={clsx(style.cardBoardContainer, projectId == project.id && style.cardBoardActive)}  
                             to={`/project/${project.id}`}>
-                            {project.icon ?
-                                <img 
-                                    src={project.icon} 
-                                    alt='icon'
-                                    className={style.cardBoardIcon} />
-                                :
-                                <a className={style.cardBoardIcon}>{project.name.charAt(0)}</a>
-                            }
-                            <text className={style.cardBoardText}>{project.name}</text>
+                            <div style={{ display: 'flex', alignItems: 'center' }}>
+                                {project.icon ?
+                                    <img 
+                                        src={project.icon} 
+                                        alt='icon'
+                                        className={style.cardBoardIcon} />
+                                    :
+                                    <a className={style.cardBoardIcon}>{project.name.charAt(0)}</a>
+                                }
+                                <text className={style.cardBoardText}>{project.name}</text>
+                            </div>
+                            <text className={style.cardBoardTaskCounter}>{project.cardsCount}</text>
                         </Link>
                     ))}
                 </div>
