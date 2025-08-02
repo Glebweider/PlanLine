@@ -77,7 +77,7 @@ const Navbar = () => {
                 <div
                     onClick={() => setOpenUserModal(!isOpenUserModal)}
                     className={style.userContainer}>
-                    <Avatar size={48} />
+                    <Avatar size={52} />
                     <div className={style.userContent}>
                         <a>{user.username}</a>
                         {/* <text>Online</text> */}

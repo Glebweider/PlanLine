@@ -24,7 +24,7 @@ export enum MemberRole {
 
 export interface IUser {
 	id: string;
-	username: string;
+	name: string;
 	avatar: string;
 }
 
@@ -93,9 +93,26 @@ const projectSlice = createSlice({
 				}
 			}
 		},
+		removeUserFromProject: (state, action: PayloadAction<string>) => {
+			const userIdToRemove = action.payload;
+
+			state.members = state.members.filter(member => member.id !== userIdToRemove);
+			state.boards.forEach(board => {
+				board.members = board.members.filter(member => member.id !== userIdToRemove);
+			});
+		},
+		deleteBoardFromProject: (state, action: PayloadAction<string>) => {
+			const boardIdToDelete = action.payload;
+			state.boards = state.boards.filter(board => board.id !== boardIdToDelete);
+		},
 	},
 });
 
-export const { setProject, updateBoardMemberRole } = projectSlice.actions;
+export const { 
+	setProject, 
+	updateBoardMemberRole, 
+	removeUserFromProject,
+	deleteBoardFromProject 
+} = projectSlice.actions;
 
 export default projectSlice.reducer;

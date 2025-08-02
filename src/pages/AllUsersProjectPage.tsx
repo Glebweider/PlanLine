@@ -27,6 +27,17 @@ const AllUsersProjectPage = () => {
 		getUsersProject();
 	}, [projectId]);
 
+	useEffect(() => {
+		if (Array.isArray(projectState.members)) {
+			const convertedUsers: IUserProject[] = projectState.members.map(user => ({
+				...user,
+				dateOfCreation: new Date().toISOString(),
+			}));
+
+			setUsers(convertedUsers);
+		}
+	}, [projectState.members]);
+
 	const getUsersProject = async () => {
 		try {
 			const response = await fetch(

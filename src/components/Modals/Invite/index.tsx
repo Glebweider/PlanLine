@@ -106,7 +106,7 @@ const InviteModal: React.FC<InviteModalProps> = ({ isOpenModal, setOpenModal }) 
                     </div>
                 )}
 
-                <hr />
+                <hr className={style.hr} />
                 <button
                     className={style.saveButton}
                     disabled={isChange || inviteLink.length > 0}

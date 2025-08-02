@@ -1,8 +1,27 @@
 @import '../variables';
 
+
 .container {
     margin-top: 38px;
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
+}
+
+.addBoardContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: $color-bg-secondary-2;
+    width: 257px;
+    height: 85px;
+    border-radius: 10px;
+    font-size: 25;
+    color: #FFFFFF;
+    transition: 0.5s background-color;
+    cursor: pointer;
+
+    &:hover {
+        background-color: $color-bg-secondary-hover;
+    }
 }

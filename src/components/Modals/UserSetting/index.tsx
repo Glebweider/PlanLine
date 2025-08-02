@@ -155,7 +155,7 @@ const UserSettingModal: React.FC<UserSettingModalProps> = ({ username, discordId
                     {selectedRole &&
                         <text className={style.warning}>{roleDescription()}</text>
                     }
-                    <hr />
+                    <hr className={style.hr} />
 
                     <button
                         className={style.saveButton}

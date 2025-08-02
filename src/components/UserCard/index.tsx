@@ -1,13 +1,12 @@
-import { useState } from 'react';
+import { SetStateAction, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { MoreOutlined } from '@ant-design/icons';
 
 import style from './UserCard.module.scss';
-import { IUserProject } from '../../pages/AllUsersProjectPage';
 import { Avatar } from '../Avatar';
 import formatDateShortEn from '../../utils/FormatDateShortEn';
 import { RootState } from '../../redux/store';
-import UserSettingModal from '../Modals/UserSetting';
+import UserMenu from '../UserMenu';
 
 
 interface UserCardProps {
@@ -18,7 +17,7 @@ const UserCard: React.FC<UserCardProps> = ({ user }) => {
     const projectState = useSelector((state: RootState) => state.projectReducer);
     const userId = useSelector((state: RootState) => state.userReducer.id);
 
-    const [isOpenUserSettingsMenu, setIsOpenUserSettingsMenu] = useState<boolean>(false);
+    const [isOpenUserMenu, setIsOpenUserMenu] = useState<boolean>(false);
 
     return (
         <div style={{ display: 'flex', position: 'relative' }}>
@@ -32,15 +31,15 @@ const UserCard: React.FC<UserCardProps> = ({ user }) => {
                 </div>
                 {userId == projectState.ownerId && user?.id != projectState.ownerId &&
                     <MoreOutlined
-                        onClick={() => setIsOpenUserSettingsMenu(!isOpenUserSettingsMenu)}
+                        onClick={() => setIsOpenUserMenu(!isOpenUserMenu)}
                         style={{ fontSize: 30, marginRight: -10 }} />
                 }
             </div>
-            <UserSettingModal
-                isOpenModal={isOpenUserSettingsMenu}
-                setOpenModal={setIsOpenUserSettingsMenu}
-                username={user?.name}
-                discordId={user?.id} />
+            <UserMenu
+                user={user}
+                isOpenModal={isOpenUserMenu}
+                projectId={projectState.id}
+                setOpenModal={setIsOpenUserMenu} />
         </div>
     );
 };

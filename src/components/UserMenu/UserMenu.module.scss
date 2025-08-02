@@ -1,35 +1,50 @@
-@import '../../styles/_variables.scss';
+@import '../../styles/variables';
 
-.userMenu {
+
+.container {
     position: absolute;
-    top: 58px;
-    left: -225px;
+    transform: translateY(-120%);
+    margin-left: 255px;
+    opacity: 0;
+    transition: transform 0.4s ease, opacity 0.4s ease;
+        display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 12px;
+}
+
+.open {
+    transform: translateY(0);
+    opacity: 1;
+    background-color: $color-bg-modal;
+    border: 1px solid $color-hr;
+    border-radius: 10px;
+    margin-top: 60px;
     width: 200px;
-    background-color: $color-bg-secondary;
-    border-radius: 0 8px 8px 0;
-    padding: 10px;
-    transition: left 0.3s ease;
-    z-index: 500;
-    border: 1px solid $color-outline-modal;
+    z-index: 20;
 }
 
-.userMenu.open {
-    left: 281px;
-}
-
-.userMenu button {
+.content {
     display: flex;
-    justify-content: space-between;
-    width: 100%;
-    margin: 4px 0;
-    color: #f06360;
-    border: none;
-    padding: 8px;
-    border-radius: 4px;
+    align-items: center;
+    height: 45px;
+    max-width: 100%;
+    border-radius: 10px;
+    color: #FFFFFF;
     cursor: pointer;
-    font-size: 16px;
-}
 
-.userMenu button:hover {
-    background: rgba(#f06360, 0.2);
+    span {
+        margin-left: 15px;
+        margin-right: 10px;
+        width: 25px;
+    }
+
+    text {
+        font-size: 18;
+        margin-top: -3px;
+    }
+
+    &:hover {
+        background-color: #282828;
+    }
 }
