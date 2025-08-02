@@ -6,8 +6,7 @@ import style from './Board.module.scss';
 import { Avatar } from '../Avatar';
 import { IBoard } from '../../redux/reducers/projectReducer';
 import { RootState } from '../../redux/store';
-import { useDispatch, useSelector } from 'react-redux';
-import { useAlert } from '../Alert/context';
+import { useSelector } from 'react-redux';
 
 
 interface BoardProps {
@@ -18,9 +17,6 @@ interface BoardProps {
 const BoardCard: React.FC<BoardProps> = ({ projectId, board }) => {
     const projectState = useSelector((state: RootState) => state.projectReducer);
     const userId = useSelector((state: RootState) => state.userReducer.id);
-
-    const { showAlert } = useAlert();
-    const dispatch = useDispatch();
 
     return (
         <Link

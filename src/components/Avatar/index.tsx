@@ -11,7 +11,7 @@ import { IUser } from '../../redux/reducers/projectReducer';
 type IProfileAvatarIconProps = {
 	size: number;
 	func?: React.Dispatch<React.SetStateAction<boolean>>;
-	user?: IUser;
+	user?: any;
 	className?: string; 
 };
 

@@ -14,14 +14,14 @@ import AllUsersProjectPage from "./pages/AllUsersProjectPage";
 
 //Components
 import ProtectedAuthRoute from "./components/ProtectedAuthRoute";
-import MainLayout from "./components/MainLayout";
+import MainLayout from "./components/Layouts/MainLayout";
 
 
 function App() {
 	return (
 		<Routes>
-			<Route 
-				path='/' 
+			<Route
+				path='/'
 				element={<LandingPage />} />
 			<Route element={<ProtectedAuthRoute> <MainLayout /> </ProtectedAuthRoute>}>
 				<Route path="/dashboard" element={<DashboardPage />} />
@@ -32,11 +32,11 @@ function App() {
 				<Route path="/project/:projectId/settings" element={<ProjectSettingsPage />} />
 				<Route path="/project/:projectId/:boardId" element={<BoardPage />} />
 			</Route>
-			<Route 
-				path='/callback' 
+			<Route
+				path='/callback'
 				element={<CallbackPage />} />
-			<Route 
-				path='*' 
+			<Route
+				path='*'
 				element={<NotFoundPage />} />
 		</Routes>
 	);

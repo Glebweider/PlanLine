@@ -3,12 +3,14 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import style from './MainLayout.module.scss';
-import Navbar from '../Navbar';
-import { RootState } from '../../redux/store';
+import Navbar from '../../Navbar';
+import { RootState } from '../../../redux/store';
+import AllUsersLayout from '../AllUsers';
 
 
 const MainLayout = () => {
     const projectState = useSelector((state: RootState) => state.projectReducer);
+
     const [namePage, setNamePage] = useState<string>('');
     const params = useParams();
 
@@ -30,14 +32,18 @@ const MainLayout = () => {
 
     useEffect(() => {
         setNamePage(getPageName(location.pathname));
-        console.log(123)
     }, [params, projectState]);
 
     return (
         <div className={style.container}>
             <Navbar />
             <div className={style.content}>
-                <text className={style.title}>{namePage}</text>
+                <div className={style.header}>
+                    <text className={style.title}>{namePage}</text>
+                    {location.pathname.includes('/users') &&
+                        <AllUsersLayout />
+                    }
+                </div>
                 <hr className={style.hr} />
                 <Outlet />
             </div>

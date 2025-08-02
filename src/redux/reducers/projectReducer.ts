@@ -78,9 +78,24 @@ const projectSlice = createSlice({
 			state.members = action.payload.members;
 			state.boards = action.payload.boards;
 		},
+		updateBoardMemberRole: (state, action: PayloadAction<{
+			boardId: string;
+			userId: string;
+			newRole: MemberRole;
+		}>) => {
+			const { boardId, userId, newRole } = action.payload;
+
+			const board = state.boards.find(b => b.id === boardId);
+			if (board) {
+				const member = board.members.find(m => m.id === userId);
+				if (member) {
+					member.role = newRole;
+				}
+			}
+		},
 	},
 });
 
-export const { setProject } = projectSlice.actions;
+export const { setProject, updateBoardMemberRole } = projectSlice.actions;
 
 export default projectSlice.reducer;

@@ -1,8 +1,6 @@
-import { useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import style from './ProjectMenu.module.scss';
-import { useAlert } from '../Alert/context';
 import { RootState } from '../../redux/store';
 import { LogoutOutlined, TeamOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';

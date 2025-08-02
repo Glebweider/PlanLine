@@ -1,8 +1,8 @@
 import { useState } from 'react';
 
 import style from './NewProjectModal.module.scss';
-import { useAlert } from '../Alert/context';
-import { IPreviewProject } from '../Navbar';
+import { useAlert } from '../../Alert/context';
+import { IPreviewProject } from '../../Navbar';
 
 
 interface NewProjectModalProps {
@@ -89,7 +89,6 @@ const NewProjectModal: React.FC<NewProjectModalProps> = ({ setProjects, isOpenMo
     } else {
         return <></>
     }
-
 };
 
 export default NewProjectModal;

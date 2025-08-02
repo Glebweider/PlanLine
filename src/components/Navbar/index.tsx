@@ -14,7 +14,7 @@ import style from './Navbar.module.scss';
 import { Avatar } from '../Avatar';
 import { RootState } from '../../redux/store';
 import { useAlert } from '../Alert/context';
-import NewProjectModal from '../NewProjectModal';
+import NewProjectModal from '../Modals/NewProject';
 import NavbarCard from '../NavbarCard';
 import NavbarProjectCard from '../NavbarProjectCard';
 
@@ -29,7 +29,7 @@ export interface IPreviewProject {
 const Navbar = () => {
     const { projectId } = useParams();
     const location = useLocation();
-    const currentPath = location.pathname; 
+    const currentPath = location.pathname;
 
     const { showAlert } = useAlert();
     const user = useSelector((state: RootState) => state.userReducer);
@@ -88,12 +88,12 @@ const Navbar = () => {
                     <NavbarCard
                         href={'dashboard'}
                         Icon={<AppstoreOutlined style={{ fontSize: 30 }} />}
-                        title={'Dashboard'} 
+                        title={'Dashboard'}
                         currentPath={currentPath} />
                     <NavbarCard
                         href={'tasks'}
                         Icon={<CheckCircleOutlined style={{ fontSize: 28 }} />}
-                        title={'Tasks'} 
+                        title={'Tasks'}
                         currentPath={currentPath} />
 
                     {projects.length > 0 &&
@@ -102,7 +102,7 @@ const Navbar = () => {
                             <NavbarCard
                                 href={'projects'}
                                 Icon={<EllipsisOutlined style={{ fontSize: 30 }} />}
-                                title={'All Projects'} 
+                                title={'All Projects'}
                                 currentPath={currentPath} />
 
                             {projects.map(project => (
@@ -121,12 +121,12 @@ const Navbar = () => {
                             <NavbarCard
                                 href={`project/${projectId}/users`}
                                 Icon={<TeamOutlined style={{ fontSize: 26 }} />}
-                                title={'All Users'} 
+                                title={'All Users'}
                                 currentPath={currentPath} />
                             <NavbarCard
                                 href={`project/${projectId}/settings`}
                                 Icon={<SettingOutlined style={{ fontSize: 24 }} />}
-                                title={'Settings'} 
+                                title={'Settings'}
                                 currentPath={currentPath} />
                         </>
                     }
