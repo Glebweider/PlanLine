@@ -1,0 +1,30 @@
+@import '../../styles/_variables.scss';
+
+
+.container {
+    display: flex;
+    align-items: center;
+    height: 50px;
+    width: 100%;
+    border-radius: 10px;
+    margin-top: 8px;
+    color: #FFFFFF;
+
+    span {
+        font-weight: 400;
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+
+    text {
+        font-size: 20;
+    }
+
+    &:hover {
+        background-color: #282828;
+    }
+}
+
+.active {
+    background-color: #282828;
+}

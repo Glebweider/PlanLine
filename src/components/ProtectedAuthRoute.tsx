@@ -50,12 +50,12 @@ const ProtectedAuthRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
 				setIsAuthenticated(true);
 			} else {
 				setIsAuthenticated(false);
-				navigate('/auth');
+				navigate('/');
 			}
 		} catch (error) {
 			showAlert(`Ошибка при проверке токена: ${error}`);
 			setIsAuthenticated(false);
-			navigate('/auth');
+			navigate('/');
 		}
     };
 

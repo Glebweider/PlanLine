@@ -114,7 +114,7 @@ const BoardPage = () => {
 
 	return (
 		<div className={style.container}>
-			<Navbar />
+			
 			<div className={style.listsContainer}>
 				{boardState?.lists.map(list => (
 					<ListItem 

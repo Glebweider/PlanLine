@@ -1,15 +1,12 @@
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { CloseOutlined, PlusOutlined } from '@ant-design/icons';
 
 import style from '../styles/pages/ProjectPage.module.scss';
-import Navbar from '../components/Navbar';
 import { RootState } from '../redux/store';
 import { useAlert } from '../components/Alert/context';
 import { setProject } from '../redux/reducers/projectReducer';
-import BoardItem from '../components/Board';
-import textAreaHandleInput from '../utils/TextAreaFunc';
+import BoardCard from '../components/Board';
 
 const ProjectPage = () => {
 	const { projectId } = useParams();
@@ -24,7 +21,7 @@ const ProjectPage = () => {
 	const textareaRef = useRef<HTMLTextAreaElement>(null);
 
 	useEffect(() => {
-		getProject();           
+		getProject();
 	}, [projectId]);
 
 	const getProject = async () => {
@@ -36,13 +33,13 @@ const ProjectPage = () => {
 					credentials: 'include',
 				}
 			);
-			
+
 			const data = await response.json();
 
-            if (!response.ok) {
-                showAlert(`Server error: ${response.status}, ${data.message}`);
-                return;
-            }
+			if (!response.ok) {
+				showAlert(`Server error: ${response.status}, ${data.message}`);
+				return;
+			}
 
 			dispatch(setProject(data));
 		} catch (error) {
@@ -108,36 +105,12 @@ const ProjectPage = () => {
 
 	return (
 		<div className={style.container}>
-			<Navbar />
-			<div className={style.boardsContainer}>
-				{projectState.boards.map(board => (
-					<BoardItem projectId={projectId} board={board} />
-				))}
-				{isCreateBoard ?
-					<div className={style.createNewBoardContainer}>
-						<textarea
-							ref={textareaRef}
-							placeholder="Введите название доски"
-							className={style.inputField}
-							rows={1}
-							onInput={textAreaHandleInput}
-							maxLength={256}/>
-						<div className={style.createNewBoardButtons}>
-							<div onClick={() => createBoard()} className={style.createNewBoardButtonApply}>
-								Add board
-							</div>
-							<CloseOutlined
-								onClick={() => setCreateBoard(false)}  
-								className={style.createNewBoardButtonClose} />
-						</div>
-					</div>
-					:
-					<div onClick={() => setCreateBoard(true)} className={style.createBoardContainer}>
-						<PlusOutlined style={{ marginLeft: 10, marginRight: 10}} />
-						<text>Create board's</text>
-					</div>
-				}
-			</div>
+			{projectState.boards.map(board =>
+				<BoardCard
+					key={board.id}
+					projectId={projectId}
+					board={board} />
+			)}
 		</div>
 	);
 };

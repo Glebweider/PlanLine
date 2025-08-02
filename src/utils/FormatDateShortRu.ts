@@ -1,4 +1,4 @@
-export function formatDateShort(date: Date): string {
+export function formatDateShortRu(date: Date): string {
     const months = [
         'Янв', 'Фев', 'Мар', 'Апр', 'Май', 'Июн',
         'Июл', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек'

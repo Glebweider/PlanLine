@@ -1,0 +1,49 @@
+@import '../../styles/_variables.scss';
+
+
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 100%;
+    height: 50px;
+    margin-left: 20px;
+    border-radius: 10px;
+    color: #FFFFFF;
+
+    span {
+        font-weight: 400;
+        margin-left: 15px;
+        margin-right: 15px;
+    }
+
+    &:hover {
+        background-color: #282828;
+    }
+}
+
+.active {
+    background-color: #282828;
+}
+
+.content {
+    display: flex;
+    align-items: center;
+
+    text {
+        font-size: 16;
+        margin-top: -2px;
+    }
+}
+
+.taskCounter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 35px;
+    height: 25px;
+    border-radius: 5px;
+    margin-right: 10px;
+    background-color: #303030;
+    font-size: 12;
+}

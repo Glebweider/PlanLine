@@ -3,7 +3,7 @@ import style from './Card.module.scss';
 import { ICard } from '../../redux/reducers/projectReducer';
 import { useDispatch } from 'react-redux';
 import { useAlert } from '../Alert/context';
-import { formatDateShort } from 'src/utils/FormatDateShort';
+import { formatDateShortRu } from '../../utils/FormatDateShortRu';
 import { ArrowRightOutlined, FieldTimeOutlined } from '@ant-design/icons';
 
 interface BoardProps {
@@ -28,12 +28,12 @@ const CardItem: React.FC<BoardProps> = ({ card }) => {
                 <div className={style.footer}>
                     <div className={style.dateBlock}>
                         <FieldTimeOutlined className={style.icon} />
-                        <span className={style.dateText}>{formatDateShort(new Date(card.createdAt))}</span>
+                        <span className={style.dateText}>{formatDateShortRu(new Date(card.createdAt))}</span>
                         {card.dueDate != null && (
                             <>
                                 <ArrowRightOutlined className={style.icon} />
                                 <FieldTimeOutlined  className={style.icon} />
-                                <span className={style.dateText}>{formatDateShort(new Date(card.dueDate))}</span>
+                                <span className={style.dateText}>{formatDateShortRu(new Date(card.dueDate))}</span>
                             </>
                         )}
                     </div>

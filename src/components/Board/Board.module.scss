@@ -1,63 +1,59 @@
 @import '../../styles/variables';
 
-.boardMembers {
-    width: 88%;
-    margin-top: 15px;
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: $color-bg-secondary;
+    border: 1px solid $color-hr;
+    width: 225px;
+    min-height: 66px;
+    padding: 15px;
+    height: auto;
+    border-radius: 10px;
+    color: #FFFFFF;
+    cursor: pointer;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
 }
 
 .boardName {
-    font-size: 22px;
-    color: $color-secondary;
+    font-size: 20;
+    color: #FFFFFF;
     white-space: pre-wrap;
     word-break: break-word;
     width: 88%;
 }
 
-.boardList {
-    font-size: 16px;
-    color: #AAAAB1;
+.listsContainer {
+    display: flex;
+    width: 100%;
+    gap: 4px;
+    flex-direction: column;
+    margin-top: 15px;
+    margin-bottom: 10px;
 }
 
-.boardMemberAvatar {
-    border: 2px solid $color-outline-modal;
-    border-radius: 50%;
+.list {
+    font-size: 16px;
+    font-weight: 200;
+    color: $color-primary;
+}
+
+.members {
+    width: 100%;
+}
+
+.memberAvatar {
+    border: 2px solid $color-hr;
+    border-radius: 10px;
     margin-left: -10px;
 }
 
-.boardMemberAvatar:first-child {
+.memberAvatar:first-child {
     margin-left: 0;
-}
-
-.boardListContainer {
-    margin-top: 10px;
-    width: 88%;
-}
-
-.inputField {
-    background-color: $color-bg-input;
-    border: 1px solid $color-outline-modal;
-    border-radius: 5px;
-    width: 88%;
-    min-height: 60px;
-    margin: 10px;
-    padding: 10 20;
-    color: #fff;
-    font-size: 16;
-    outline: none;
-    overflow: hidden;
-    resize: none;
-}
-
-.boardContainer {
-    width: 250px;
-    margin: 0 10 0 10;
-    padding: 10 0;
-    height: auto;
-    min-height: 8%;
-    border-radius: 10px;
-    background-color: rgba($color-bg-secondary, 0.9);
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
 }
