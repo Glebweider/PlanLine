@@ -10,9 +10,9 @@ import {
 
 
 import style from './ProjectCard.module.scss';
-import formatDateShortEn from '../../utils/FormatDateShortEn';
-import ProjectMenu from '../ProjectMenu';
-import { IProjectCard } from '../../pages/ProjectsPage';
+import formatDateShortEn from '../../../utils/FormatDateShortEn';
+import ProjectMenu from '../../Menus/Project';
+import { IProjectCard } from '../../../pages/ProjectsPage';
 
 
 interface ProjectCardProps {

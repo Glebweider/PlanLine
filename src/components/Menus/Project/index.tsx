@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 
 import style from './ProjectMenu.module.scss';
-import { RootState } from '../../redux/store';
+import { RootState } from '../../../redux/store';
 import { useState, useEffect } from 'react';
 
 
@@ -16,7 +16,7 @@ interface ProjectMenuProps {
 
 const ProjectMenu: React.FC<ProjectMenuProps> = ({ isOpenModal, projectOwnerId, projectId }) => {
     const userId = useSelector((state: RootState) => state.userReducer.id);
-    
+
     const [isOpenMdl, setIsOpenMdl] = useState<boolean>(false);
 
     useEffect(() => {
@@ -29,7 +29,7 @@ const ProjectMenu: React.FC<ProjectMenuProps> = ({ isOpenModal, projectOwnerId, 
             return () => clearTimeout(timer);
         }
     }, [isOpenModal]);
-    
+
 
     const leaveProject = async () => {
 
@@ -37,7 +37,7 @@ const ProjectMenu: React.FC<ProjectMenuProps> = ({ isOpenModal, projectOwnerId, 
         console.log('Leave Porject')
     };
 
-    
+
     if (!isOpenMdl) return <></>
 
     return (

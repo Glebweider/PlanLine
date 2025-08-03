@@ -1,7 +1,8 @@
-import { DiscordOutlined } from '@ant-design/icons';
-import styles from '../styles/pages/LandingPage.module.scss';
-import AuthFunc from 'src/components/Auth';
 import { useState } from 'react';
+
+import styles from '../styles/pages/LandingPage.module.scss';
+import AuthFunc from '../utils/Auth';
+
 
 const slides = [
 	{

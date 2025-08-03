@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import style from './List.module.scss';
-import CardItem from '../../components/Card';
+import CardItem from '../../components/Cards/Card';
 import { IList, setProject } from '../../redux/reducers/projectReducer';
 import { useAlert } from '../Alert/context';
 import { RootState } from '../../redux/store';

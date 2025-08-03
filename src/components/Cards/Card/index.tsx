@@ -1,18 +1,18 @@
 import React from 'react';
-import style from './Card.module.scss';
-import { ICard } from '../../redux/reducers/projectReducer';
-import { useDispatch } from 'react-redux';
-import { useAlert } from '../Alert/context';
-import { formatDateShortRu } from '../../utils/FormatDateShortRu';
 import { ArrowRightOutlined, FieldTimeOutlined } from '@ant-design/icons';
+import { useDispatch } from 'react-redux';
+
+import style from './Card.module.scss';
+import { ICard } from '../../../redux/reducers/projectReducer';
+import { useAlert } from '../../Alert/context';
+import { formatDateShortRu } from '../../../utils/FormatDateShortRu';
+
 
 interface BoardProps {
     card: ICard;
 }
 
 const CardItem: React.FC<BoardProps> = ({ card }) => {
-    const { showAlert } = useAlert();
-    const dispatch = useDispatch();
 
     const handleOpenModal = () => {
         console.log(1)

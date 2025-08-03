@@ -4,8 +4,9 @@ import { useSelector } from 'react-redux';
 
 import style from '../styles/pages/AllUsersProjectPage.module.scss';
 import { useAlert } from '../components/Alert/context';
-import UserCard from '../components/UserCard';
+import UserCard from '../components/Cards/UserCard';
 import { RootState } from '../redux/store';
+import { useGetProject } from 'src/utils/fetch/getProjectById';
 
 
 export interface IUserProject {
@@ -18,13 +19,19 @@ export interface IUserProject {
 const AllUsersProjectPage = () => {
 	const { projectId } = useParams();
 	const { showAlert } = useAlert();
+	const { getProject } = useGetProject();
 
 	const projectState = useSelector((state: RootState) => state.projectReducer);
 
 	const [users, setUsers] = useState<IUserProject[]>([]);
 
+
 	useEffect(() => {
-		getUsersProject();
+		if (!projectState.id) {
+			getProject(projectId || "");
+		} else {
+			getUsersProject();
+		}
 	}, [projectId]);
 
 	useEffect(() => {

@@ -7,7 +7,7 @@ import style from './Board.module.scss';
 import { Avatar } from '../Avatar';
 import { IBoard, setProject } from '../../redux/reducers/projectReducer';
 import { RootState } from '../../redux/store';
-import BoardMenu from '../BoardMenu';
+import BoardMenu from '../Menus/Board';
 import { useAlert } from '../Alert/context';
 
 

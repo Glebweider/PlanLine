@@ -3,9 +3,9 @@ import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import { useEffect, useState } from 'react';
 
 import style from './BoardMenu.module.scss';
-import { RootState } from '../../redux/store';
-import { useAlert } from '../Alert/context';
-import { deleteBoardFromProject } from '../../redux/reducers/projectReducer';
+import { RootState } from '../../../redux/store';
+import { useAlert } from '../../Alert/context';
+import { deleteBoardFromProject } from '../../../redux/reducers/projectReducer';
 
 
 interface BoardMenuProps {
@@ -22,11 +22,11 @@ interface BoardMenuProps {
 const BoardMenu: React.FC<BoardMenuProps> = ({ textareaRef, isOpenModal, projectOwnerId, projectId, boardId, setOpenModal, isRenameBoard, setIsRenameBoard }) => {
     const { showAlert } = useAlert();
     const dispatch = useDispatch();
-    
+
     const userId = useSelector((state: RootState) => state.userReducer.id);
 
     const [isOpenMdl, setIsOpenMdl] = useState<boolean>(false);
-    const [isDeleteBoard,setIsDeleteBoard] = useState<boolean>(false);
+    const [isDeleteBoard, setIsDeleteBoard] = useState<boolean>(false);
 
 
     useEffect(() => {

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import style from '../styles/pages/ProjectsPage.module.scss';
 import { useAlert } from 'src/components/Alert/context';
-import ProjectCard from 'src/components/ProjectCard';
+import ProjectCard from 'src/components/Cards/ProjectCard';
 
 export interface IProjectCard {
 	id: string;

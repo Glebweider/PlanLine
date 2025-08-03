@@ -15,8 +15,8 @@ import { Avatar } from '../Avatar';
 import { RootState } from '../../redux/store';
 import { useAlert } from '../Alert/context';
 import NewProjectModal from '../Modals/NewProject';
-import NavbarCard from '../NavbarCard';
-import NavbarProjectCard from '../NavbarProjectCard';
+import NavbarCard from '../Cards/NavbarCard';
+import NavbarProjectCard from '../Cards/NavbarProjectCard';
 
 
 export interface IPreviewProject {

@@ -17,10 +17,11 @@ const NewBoardModal: React.FC<NewBoardModalProps> = ({ isOpenModal, projectId, s
     const { showAlert } = useAlert();
     const dispatch = useDispatch();
 
+    const projectState = useSelector((state: RootState) => state.projectReducer);
+
     const [isCreatingBoard, setIsCreatingBoard] = useState<boolean>(false);
     const [newBoardName, setNewBoardName] = useState<string>('');
 
-    const projectState = useSelector((state: RootState) => state.projectReducer);
 
     const createBoard = async () => {
         if (newBoardName.length < 1) {

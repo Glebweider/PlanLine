@@ -5,17 +5,18 @@ import { useParams } from 'react-router-dom';
 import { CloseOutlined, PlusOutlined } from '@ant-design/icons';
 
 import style from '../styles/pages/BoardPage.module.scss';
-import Navbar from '../components/Navbar';
 import { setProject } from '../redux/reducers/projectReducer';
 import { useAlert } from '../components/Alert/context';
 import { RootState } from '../redux/store';
-import textAreaHandleInput from 'src/utils/TextAreaFunc';
+import textAreaHandleInput from '../utils/TextAreaFunc';
 import ListItem from '../components/List';
+import { useGetProject } from '../utils/fetch/getProjectById';
 
 
 const BoardPage = () => {
 	const { projectId, boardId } = useParams();
 	const { showAlert } = useAlert();
+	const { getProject } = useGetProject();
 	const dispatch = useDispatch();
 
 	const projectState = useSelector((state: RootState) => state.projectReducer);
@@ -28,32 +29,9 @@ const BoardPage = () => {
 
 	useEffect(() => {
 		if (!boardState) {
-			getProject();  
+			getProject(projectId || "");  
 		}  
 	}, [boardId]);
-
-	const getProject = async () => {
-		try {
-			const response = await fetch(
-				`${process.env.REACT_APP_BACKEND_URI}/projects/${projectId}`,
-				{
-					method: 'GET',
-					credentials: 'include',
-				}
-			);
-			
-			const data = await response.json();
-
-			if (!response.ok) {
-				showAlert(`Server error: ${response.status}, ${data.message}`);
-				return;
-			}
-
-			dispatch(setProject(data));
-		} catch (error) {
-			showAlert(`Fetch failed: ${error}`);
-		}
-	};
 
 	const createList = async () => {
 		if (isCreatingList) return;

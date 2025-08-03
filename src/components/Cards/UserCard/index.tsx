@@ -1,12 +1,12 @@
-import { SetStateAction, useState } from 'react';
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { MoreOutlined } from '@ant-design/icons';
 
 import style from './UserCard.module.scss';
-import { Avatar } from '../Avatar';
-import formatDateShortEn from '../../utils/FormatDateShortEn';
-import { RootState } from '../../redux/store';
-import UserMenu from '../UserMenu';
+import { Avatar } from '../../Avatar';
+import formatDateShortEn from '../../../utils/FormatDateShortEn';
+import { RootState } from '../../../redux/store';
+import UserMenu from '../../Menus/User';
 
 
 interface UserCardProps {

@@ -2,9 +2,9 @@ import { LogoutOutlined, SettingOutlined, TeamOutlined } from '@ant-design/icons
 import { Link, useNavigate } from 'react-router-dom';
 
 import style from './UserMenu.module.scss';
-import UserSettingModal from '../Modals/UserSetting';
+import UserSettingModal from '../../Modals/UserSetting';
 import { useEffect, useState } from 'react';
-import { useAlert } from '../Alert/context';
+import { useAlert } from '../../Alert/context';
 import { useDispatch } from 'react-redux';
 import { removeUserFromProject } from 'src/redux/reducers/projectReducer';
 
@@ -23,7 +23,7 @@ const UserMenu: React.FC<UserMenuProps> = ({ user, isOpenModal, setOpenModal, pr
     const [isOpenUserSettingsMenu, setIsOpenUserSettingsMenu] = useState<boolean>(false);
     const [isKickUser, setIsKickUser] = useState<boolean>(false);
     const [isOpenMdl, setIsOpenMdl] = useState<boolean>(false);
-    
+
 
     useEffect(() => {
         if (isOpenModal) {
