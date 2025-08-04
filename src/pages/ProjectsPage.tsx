@@ -47,7 +47,6 @@ const ProjectsPage = () => {
 		}
 	};
 
-
 	return (
 		<div className={style.container}>
 			{projects.map(project =>

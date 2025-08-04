@@ -6,6 +6,7 @@ import style from './MainLayout.module.scss';
 import Navbar from '../../Navbar';
 import { RootState } from '../../../redux/store';
 import AllUsersLayout from '../AllUsers';
+import ProjectDropdown from './ProjectDropdown';
 
 
 const MainLayout = () => {
@@ -18,14 +19,14 @@ const MainLayout = () => {
         if (pathname.startsWith('/dashboard')) return 'Dashboard';
         if (pathname.startsWith('/tasks')) return 'Tasks';
         if (pathname.startsWith('/projects')) return 'Projects';
-        if (pathname.includes('/settings')) return 'Project Settings';
-        if (pathname.includes('/users')) return 'Project All Users';
+        if (pathname.includes('/settings')) return 'Project > Settings';
+        if (pathname.includes('/users')) return 'Project > All Users';
         if (pathname.match(/\/project\/[^/]+\/[^/]+/)) {
             return params.boardId && projectState.boards.find(board => board.id === params.boardId) ?
-                `Board: ${projectState.boards.find(board => board.id === params.boardId)?.name}` : 'Board';
+                `Board ${projectState.boards.find(board => board.id === params.boardId)?.name}` : 'Board';
         }
         if (pathname.match(/\/project\/[^/]+$/)) {
-            return params.projectId ? `Project: ${projectState.name}` : 'Project';
+            return params.projectId ? `Project ${projectState.name}` : 'Project';
         }
         return 'Unknown';
     };
@@ -39,7 +40,10 @@ const MainLayout = () => {
             <Navbar />
             <div className={style.content}>
                 <div className={style.header}>
-                    <text className={style.title}>{namePage}</text>
+                    <text className={style.title}>
+                        {namePage}
+                        {namePage === 'Tasks' && <> {'>'}<ProjectDropdown /></>}
+                    </text>
                     {location.pathname.includes('/users') &&
                         <AllUsersLayout />
                     }
