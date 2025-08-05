@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import {
     AppstoreOutlined,
     CheckCircleOutlined,
+    DoubleLeftOutlined,
     EllipsisOutlined,
     SettingOutlined,
     TeamOutlined
@@ -35,6 +36,7 @@ const Navbar = () => {
     const user = useSelector((state: RootState) => state.userReducer);
 
     const [isOpenModalNewProject, setOpenModalNewProject] = useState<boolean>(false);
+    const [isOpenNavbar, setOpenNavbar] = useState<boolean>(false);
     const [isOpenUserModal, setOpenUserModal] = useState<boolean>(false);
     const [projects, setProjects] = useState<IPreviewProject[]>([]);
 
@@ -73,39 +75,48 @@ const Navbar = () => {
 
     return (
         <>
-            <div className={style.container}>
+            <div
+                className={style.container}
+                style={!isOpenNavbar ? { width: '100%' } : undefined}>
                 <div
-                    onClick={() => setOpenUserModal(!isOpenUserModal)}
+                    onClick={() => isOpenNavbar ? setOpenNavbar(false) : setOpenUserModal(true)}
                     className={style.userContainer}>
                     <Avatar size={52} />
-                    <div className={style.userContent}>
-                        <a>{user.username}</a>
-                        {/* <text>Online</text> */}
-                    </div>
+                    {!isOpenNavbar &&
+                        <>
+                            <div className={style.userContent}>
+                                <a>{user.username}</a>
+                                {/* <text>Online</text> */}
+                            </div>
+                            <DoubleLeftOutlined
+                                onClick={() => setOpenNavbar(true)}
+                                className={style.changeVisibility} />
+                        </>
+                    }
                 </div>
 
                 <div style={{ width: '100%', height: '100%', marginTop: 34 }}>
                     <NavbarCard
                         href={'dashboard'}
                         Icon={<AppstoreOutlined style={{ fontSize: 30 }} />}
-                        title={'Dashboard'}
+                        title={!isOpenNavbar ? 'Dashboard' : ''}
                         currentPath={currentPath} />
                     <NavbarCard
                         href={'tasks'}
                         Icon={<CheckCircleOutlined style={{ fontSize: 28 }} />}
-                        title={'Tasks'}
+                        title={!isOpenNavbar ? 'Tasks' : ''}
                         currentPath={currentPath} />
 
                     {projects.length > 0 &&
                         <>
-                            <hr className={style.line} />
+                            {!isOpenNavbar && <hr className={style.line} />}
                             <NavbarCard
                                 href={'projects'}
                                 Icon={<EllipsisOutlined style={{ fontSize: 30 }} />}
-                                title={'All Projects'}
+                                title={!isOpenNavbar ? 'All Projects' : ''}
                                 currentPath={currentPath} />
 
-                            {projects.map(project => (
+                            {!isOpenNavbar && projects.map(project => (
                                 <NavbarProjectCard
                                     key={project.id}
                                     title={project.name}
@@ -117,16 +128,16 @@ const Navbar = () => {
 
                     {projectId &&
                         <>
-                            <hr className={style.line} />
+                            {!isOpenNavbar && <hr className={style.line} />}
                             <NavbarCard
                                 href={`project/${projectId}/users`}
                                 Icon={<TeamOutlined style={{ fontSize: 26 }} />}
-                                title={'All Users'}
+                                title={!isOpenNavbar ? 'All Users' : ''}
                                 currentPath={currentPath} />
                             <NavbarCard
                                 href={`project/${projectId}/settings`}
                                 Icon={<SettingOutlined style={{ fontSize: 24 }} />}
-                                title={'Settings'}
+                                title={!isOpenNavbar ? 'Settings' : ''}
                                 currentPath={currentPath} />
                         </>
                     }

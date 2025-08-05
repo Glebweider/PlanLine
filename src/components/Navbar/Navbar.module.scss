@@ -7,7 +7,6 @@
     align-items: center;
     background-color: $color-bg-secondary;
     height: 96vh;
-    min-width: 334px;
     max-width: 334px;
     padding: 8px;
     border-radius: 15px;
@@ -36,12 +35,26 @@
     justify-content: flex-start;
     margin-left: 15px;
     min-height: 100%;
+    width: 100%;
     color: #FFFFFF;
     
     a {
         font-size: 20;
         font-weight: 400;
         text-transform: capitalize;
+    }
+}
+
+.changeVisibility {
+    font-size: 24;
+    color: #CFCFCF;
+    padding: 10px;
+    border-radius: 5px;
+    transition: background-color 0.2s ease;
+    cursor: pointer;
+
+    &:hover {
+        background-color: $color-bg-secondary-hover;
     }
 }
 
