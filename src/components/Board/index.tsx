@@ -24,14 +24,14 @@ const BoardCard: React.FC<BoardProps> = ({ projectId, board }) => {
     const userId = useSelector((state: RootState) => state.userReducer.id);
 
     const [isOpenBoardMenu, setIsOpenBoardMenu] = useState<boolean>(false);
-    const [isRenameBoard, setIsRenameBoard] = useState<boolean>(false);
+    const [isRenamedBoard, setIsRenamedBoard] = useState<boolean>(false);
     const [newBoardName, setNewBoardName] = useState<string>(board.name);
     const [selectedBoardId, setSelectedBoardId] = useState<string>('');
 
     const textareaRef = useRef<HTMLTextAreaElement>(null);
 
     const handleRenameBoard = async () => {
-        setIsRenameBoard(false);
+        setIsRenamedBoard(false);
 
         const trimmedName = newBoardName.trim();
         if (trimmedName === '' || trimmedName === board.name) {
@@ -83,12 +83,12 @@ const BoardCard: React.FC<BoardProps> = ({ projectId, board }) => {
                 key={board.id}
                 className={style.container}
                 onClick={(e) => {
-                    if (isRenameBoard) {
+                    if (isRenamedBoard) {
                         e.preventDefault();
                     }
                 }}>
                 <div className={style.header}>
-                    {!isRenameBoard ? (
+                    {!isRenamedBoard ? (
                         <a
                             className={style.boardName}
                             onClick={(e) => {
@@ -152,8 +152,8 @@ const BoardCard: React.FC<BoardProps> = ({ projectId, board }) => {
             <BoardMenu
                 textareaRef={textareaRef}
                 isOpenModal={isOpenBoardMenu}
-                setIsRenameBoard={setIsRenameBoard}
-                isRenameBoard={isRenameBoard}
+                setIsRenameBoard={setIsRenamedBoard}
+                isRenameBoard={isRenamedBoard}
                 projectOwnerId={projectState.ownerId}
                 projectId={projectId || ""}
                 boardId={selectedBoardId}
