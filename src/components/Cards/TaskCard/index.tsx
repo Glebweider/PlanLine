@@ -1,18 +1,17 @@
 import React from 'react';
 import { ArrowRightOutlined, FieldTimeOutlined } from '@ant-design/icons';
-import { useDispatch } from 'react-redux';
 
-import style from './Card.module.scss';
+import style from './TaskCard.module.scss';
 import { ICard } from '../../../redux/reducers/projectReducer';
 import { useAlert } from '../../Alert/context';
 import { formatDateShortRu } from '../../../utils/FormatDateShortRu';
 
 
-interface BoardProps {
+interface TaskCardProps {
     card: ICard;
 }
 
-const CardItem: React.FC<BoardProps> = ({ card }) => {
+const TaskCard: React.FC<TaskCardProps> = ({ card }) => {
 
     const handleOpenModal = () => {
         console.log(1)
@@ -43,4 +42,4 @@ const CardItem: React.FC<BoardProps> = ({ card }) => {
     );
 };
 
-export default CardItem;
+export default TaskCard;

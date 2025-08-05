@@ -18,6 +18,7 @@ import { useAlert } from '../Alert/context';
 import NewProjectModal from '../Modals/NewProject';
 import NavbarCard from '../Cards/NavbarCard';
 import NavbarProjectCard from '../Cards/NavbarProjectCard';
+import ButtonCreate from '../ButtonCreate';
 
 
 export interface IPreviewProject {
@@ -73,15 +74,16 @@ const Navbar = () => {
         }
     };
 
+
     return (
         <>
             <div
                 className={style.container}
-                style={!isOpenNavbar ? { width: '100%' } : undefined}>
+                style={!isOpenNavbar ? { width: '100%' } : { maxWidth: 84, minWidth: 84 }}>
                 <div
                     onClick={() => isOpenNavbar ? setOpenNavbar(false) : setOpenUserModal(true)}
-                    className={style.userContainer}>
-                    <Avatar size={52} />
+                    className={isOpenNavbar ? style.navbarDisable : style.userContainer}>
+                    <Avatar size={64} />
                     {!isOpenNavbar &&
                         <>
                             <div className={style.userContent}>
@@ -143,12 +145,8 @@ const Navbar = () => {
                     }
                 </div>
 
-                {projects.length < 5 &&
-                    <div
-                        onClick={() => setOpenModalNewProject(true)}
-                        className={style.createNewProjectButton}>
-                        New Project
-                    </div>
+                {projects.length &&
+                    <ButtonCreate style={style.buttonCreateProject} setIsOpenCreateBoardModal={setOpenModalNewProject} />
                 }
             </div>
             <NewProjectModal

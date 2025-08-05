@@ -15,7 +15,7 @@ const NavbarCard: React.FC<NavbarCardProps> = ({ Icon, title, href, currentPath 
     return (
         <Link 
             to={`/${href}`}
-            className={`${style.container} ${isActive ? style.active : ''}`}>
+            className={`${style.container} ${isActive ? style.active : ''} ${!title ? style.navbarClose : ''}`}>
             {Icon}
             <text>{title}</text>
         </Link>

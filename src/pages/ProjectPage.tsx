@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { SetStateAction, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { PlusOutlined } from '@ant-design/icons';
 
@@ -9,6 +9,7 @@ import { RootState } from '../redux/store';
 import BoardCard from '../components/Board';
 import NewBoardModal from '../components/Modals/NewBoard';
 import { useGetProject } from '../utils/fetch/getProjectById';
+import ButtonCreate from 'src/components/ButtonCreate';
 
 const ProjectPage = () => {
 	const { projectId } = useParams();
@@ -31,11 +32,7 @@ const ProjectPage = () => {
 					projectId={projectId || ""}
 					board={board} />
 			)}
-			<div
-				onClick={() => setIsOpenCreateBoardModal(true)}
-				className={style.addBoardContainer}>
-				<PlusOutlined />
-			</div>
+			<ButtonCreate setIsOpenCreateBoardModal={setIsOpenCreateBoardModal} />
 			<NewBoardModal 
 				isOpenModal={isOpenCreateBoardModal} 
 				setOpenModal={setIsOpenCreateBoardModal} 
