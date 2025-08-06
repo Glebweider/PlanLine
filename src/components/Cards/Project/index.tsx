@@ -17,9 +17,10 @@ import { IProjectCard } from '../../../pages/ProjectsPage';
 
 interface ProjectCardProps {
     project: IProjectCard;
+    setProjects: React.Dispatch<React.SetStateAction<IProjectCard[]>>;
 }
 
-const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
+const ProjectCard: React.FC<ProjectCardProps> = ({ project, setProjects }) => {
     const [isOpenProjectMenu, setIsOpenProjectMenu] = useState<boolean>(false);
 
     return (
@@ -59,7 +60,8 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
             <ProjectMenu
                 isOpenModal={isOpenProjectMenu}
                 projectOwnerId={project.ownerId}
-                projectId={project.id} />
+                projectId={project.id}
+                setProjects={setProjects} />
         </div>
     );
 };

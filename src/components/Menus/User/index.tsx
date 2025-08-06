@@ -1,12 +1,11 @@
-import { LogoutOutlined, SettingOutlined, TeamOutlined } from '@ant-design/icons';
-import { Link, useNavigate } from 'react-router-dom';
+import { LogoutOutlined, SettingOutlined } from '@ant-design/icons';
+import { useDispatch } from 'react-redux';
+import { useEffect, useState } from 'react';
 
 import style from './UserMenu.module.scss';
 import UserSettingModal from '../../Modals/UserSetting';
-import { useEffect, useState } from 'react';
 import { useAlert } from '../../Alert/context';
-import { useDispatch } from 'react-redux';
-import { removeUserFromProject } from 'src/redux/reducers/projectReducer';
+import { removeUserFromProject } from '../../../redux/reducers/projectReducer';
 
 
 interface UserMenuProps {

@@ -7,9 +7,17 @@
     align-items: center;
     background-color: $color-bg-secondary;
     height: 96vh;
-    max-width: 326px;
     padding: 10px;
     border-radius: 15px;
+    transition: max-width 0.3s ease, min-width 0.3s ease;
+    max-width: 326px;
+    min-width: 326px;
+    overflow: hidden;
+}
+
+.containerCollapsed {
+    max-width: 84px;
+    min-width: 84px;
 }
 
 .buttonCreateProject {

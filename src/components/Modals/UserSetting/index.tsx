@@ -25,20 +25,22 @@ const UserSettingModal: React.FC<UserSettingModalProps> = ({ username, discordId
     const [isChange, setIsChange] = useState<boolean>(false);
 
     useEffect(() => {
-        if (selectedBoardId) {
-            const board = projectState.boards.find(b => b.id === selectedBoardId);
-            if (board) {
-                const member = board.members.find(m => m.id === discordId);
-                if (member) {
-                    setSelectedRole(member.role);
-                } else {
-                    setSelectedRole('');
-                }
-            }
+        const board = projectState.boards.find(b => b.id === selectedBoardId);
+
+        if (!board) {
+            setSelectedRole('');
+            return;
+        }
+
+        const member = board.members.find(m => m.id === discordId);
+
+        if (member) {
+            setSelectedRole(member.role);
         } else {
             setSelectedRole('');
         }
     }, [selectedBoardId, discordId, projectState.boards]);
+
 
     const roleDescription = () => {
         switch (selectedRole) {
@@ -86,6 +88,7 @@ const UserSettingModal: React.FC<UserSettingModalProps> = ({ username, discordId
             }));
 
             setOpenModal(false);
+            setSelectedBoardId('');
         } catch (error) {
             showAlert(`Fetch failed: ${error}`);
         } finally {
@@ -96,7 +99,10 @@ const UserSettingModal: React.FC<UserSettingModalProps> = ({ username, discordId
     if (isOpenModal) {
         return (
             <div
-                onClick={() => setOpenModal(false)}
+                onClick={() => {
+                    setOpenModal(false);
+                    setSelectedBoardId('');
+                }}
                 className={style.modalOverlay}>
                 <div
                     onClick={(e) => {

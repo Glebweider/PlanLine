@@ -1,17 +1,20 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
+
 import { setUser } from '../redux/reducers/userReducer';
 import { useAlert } from '../components/Alert/context';
 
-const CallbackPage: React.FC = () => {
+
+const CallbackPage = () => {
 	const dispatch = useDispatch();
 	const location = useLocation();
 	const navigate = useNavigate();
+	const { showAlert } = useAlert();
+	
 	const queryParams = new URLSearchParams(location.search);
 	const code = queryParams.get('code');
-	const { showAlert } = useAlert();
+	
 
 	useEffect(() => {
 		const fetchData = async () => {

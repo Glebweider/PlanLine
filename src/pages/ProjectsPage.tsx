@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import style from '../styles/pages/ProjectsPage.module.scss';
 import { useAlert } from 'src/components/Alert/context';
-import ProjectCard from 'src/components/Cards/ProjectCard';
+import ProjectCard from 'src/components/Cards/Project';
 
 export interface IProjectCard {
 	id: string;
@@ -50,7 +50,10 @@ const ProjectsPage = () => {
 	return (
 		<div className={style.container}>
 			{projects.map(project =>
-				<ProjectCard key={project.id} project={project} />
+				<ProjectCard 
+					key={project.id} 
+					project={project}
+					setProjects={setProjects} />
 			)}
 		</div>
 	);

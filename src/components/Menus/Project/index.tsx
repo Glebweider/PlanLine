@@ -1,23 +1,28 @@
 import { useSelector } from 'react-redux';
 import { LogoutOutlined, SettingOutlined, TeamOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
-
+import { useState, useEffect } from 'react';
 
 import style from './ProjectMenu.module.scss';
 import { RootState } from '../../../redux/store';
-import { useState, useEffect } from 'react';
+import { useAlert } from '../../../components/Alert/context';
+import { IProjectCard } from '../../../pages/ProjectsPage';
 
 
 interface ProjectMenuProps {
     isOpenModal: boolean;
     projectOwnerId: string;
     projectId: string;
+    setProjects: React.Dispatch<React.SetStateAction<IProjectCard[]>>;
 }
 
-const ProjectMenu: React.FC<ProjectMenuProps> = ({ isOpenModal, projectOwnerId, projectId }) => {
+const ProjectMenu: React.FC<ProjectMenuProps> = ({ isOpenModal, projectOwnerId, projectId, setProjects }) => {
+    const { showAlert } = useAlert();
+
     const userId = useSelector((state: RootState) => state.userReducer.id);
 
     const [isOpenMdl, setIsOpenMdl] = useState<boolean>(false);
+    const [isLeaveProject, setIsLeaveProject] = useState<boolean>(false);
 
     useEffect(() => {
         if (isOpenModal) {
@@ -32,9 +37,31 @@ const ProjectMenu: React.FC<ProjectMenuProps> = ({ isOpenModal, projectOwnerId, 
 
 
     const leaveProject = async () => {
+        if (isLeaveProject) return;
 
-        // TODO Додепать
-        console.log('Leave Porject')
+        setIsLeaveProject(true);
+
+        try {
+            const response = await fetch(
+                `${process.env.REACT_APP_BACKEND_URI}/projects/${projectId}/leave`,
+                {
+                    method: 'POST',
+                    credentials: 'include',
+                }
+            );
+
+            if (!response.ok) {
+                const data = await response.json();
+                showAlert(`Server error: ${response.status}, ${data.message}`);
+                return;
+            }
+
+            setProjects(prevProjects => prevProjects.filter(project => project.id !== projectId));
+        } catch (error) {
+            showAlert(`Fetch failed: ${error}`);
+        } finally {
+            setIsLeaveProject(false);
+        }
     };
 
 

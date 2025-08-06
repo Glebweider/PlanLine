@@ -16,8 +16,8 @@ import { Avatar } from '../Avatar';
 import { RootState } from '../../redux/store';
 import { useAlert } from '../Alert/context';
 import NewProjectModal from '../Modals/NewProject';
-import NavbarCard from '../Cards/NavbarCard';
-import NavbarProjectCard from '../Cards/NavbarProjectCard';
+import NavbarCard from '../Cards/Navbar';
+import NavbarProjectCard from '../Cards/NavbarProject';
 import ButtonCreate from '../ButtonCreate';
 
 
@@ -26,6 +26,7 @@ export interface IPreviewProject {
     name: string;
     icon: string;
     cardsCount: number;
+    ownerId: string;
 }
 
 const Navbar = () => {
@@ -40,12 +41,30 @@ const Navbar = () => {
     const [isOpenNavbar, setOpenNavbar] = useState<boolean>(false);
     const [isOpenUserModal, setOpenUserModal] = useState<boolean>(false);
     const [projects, setProjects] = useState<IPreviewProject[]>([]);
+    const [ownerProjects, setOwnerProjects] = useState<number>(0);
+    const [hideText, setHideText] = useState(false);
+
+
+    useEffect(() => {
+        if (isOpenNavbar) {
+
+            const timeout = setTimeout(() => setHideText(true), 300);
+            return () => clearTimeout(timeout);
+        } else {
+            setHideText(false);
+        }
+    }, [isOpenNavbar]);
 
     useEffect(() => {
         if (projects.length == 0) {
             getPreviewProjects();
         }
     }, []);
+
+    useEffect(() => {
+        const count = projects.filter(project => project.ownerId === user.id).length;
+        setOwnerProjects(count);
+    }, [projects, user.id]);
 
     const getPreviewProjects = async () => {
         try {
@@ -77,9 +96,7 @@ const Navbar = () => {
 
     return (
         <>
-            <div
-                className={style.container}
-                style={!isOpenNavbar ? { width: '100%' } : { maxWidth: 84, minWidth: 84 }}>
+            <div className={`${style.container} ${isOpenNavbar ? style.containerCollapsed : ''}`}>
                 <div
                     onClick={() => isOpenNavbar ? setOpenNavbar(false) : setOpenUserModal(true)}
                     className={isOpenNavbar ? style.navbarDisable : style.userContainer}>
@@ -145,7 +162,7 @@ const Navbar = () => {
                     }
                 </div>
 
-                {projects.length &&
+                {ownerProjects < 5 &&
                     <ButtonCreate style={style.buttonCreateProject} setIsOpenCreateBoardModal={setOpenModalNewProject} />
                 }
             </div>

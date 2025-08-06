@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 
 import style from '../styles/pages/AllUsersProjectPage.module.scss';
 import { useAlert } from '../components/Alert/context';
-import UserCard from '../components/Cards/UserCard';
+import UserCard from '../components/Cards/User';
 import { RootState } from '../redux/store';
 import { useGetProject } from 'src/utils/fetch/getProjectById';
 
