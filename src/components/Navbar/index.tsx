@@ -153,11 +153,13 @@ const Navbar = () => {
                                 Icon={<TeamOutlined style={{ fontSize: 26 }} />}
                                 title={!isOpenNavbar ? 'All Users' : ''}
                                 currentPath={currentPath} />
-                            <NavbarCard
-                                href={`project/${projectId}/settings`}
-                                Icon={<SettingOutlined style={{ fontSize: 24 }} />}
-                                title={!isOpenNavbar ? 'Settings' : ''}
-                                currentPath={currentPath} />
+                            {projects.find(project => project.id === projectId)?.ownerId === user.id &&
+                                <NavbarCard
+                                    href={`project/${projectId}/settings`}
+                                    Icon={<SettingOutlined style={{ fontSize: 24 }} />}
+                                    title={!isOpenNavbar ? 'Settings' : ''}
+                                    currentPath={currentPath} />
+                            }
                         </>
                     }
                 </div>
