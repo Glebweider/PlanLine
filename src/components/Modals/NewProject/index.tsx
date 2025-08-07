@@ -53,7 +53,12 @@ const NewProjectModal: React.FC<NewProjectModalProps> = ({ setProjects, isOpenMo
                 return;
             }
 
-            setProjects(prevProjects => [...prevProjects, data]);
+            setProjects(prevProjects => [...prevProjects, {
+                id: data.id,
+                name: data.name,
+                cardsCount: 0,
+                ownerId: data.ownerId
+            }]);
             setNewProjectName('');
             setOpenModal(false);
         } catch (error) {

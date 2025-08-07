@@ -24,7 +24,6 @@ import ButtonCreate from '../ButtonCreate';
 export interface IPreviewProject {
     id: string;
     name: string;
-    icon: string;
     cardsCount: number;
     ownerId: string;
 }
@@ -92,7 +91,6 @@ const Navbar = () => {
             showAlert(`Fetch failed: ${error}`);
         }
     };
-
 
     return (
         <>

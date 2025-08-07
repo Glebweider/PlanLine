@@ -4,7 +4,6 @@ export interface IProject {
 	id: string;               // ID проекта (uuid или другой внешний id)
 	discordId: string;
 	name: string;             // Название проекта
-	icon: string;             // Иконка проекта (например, URL)
 	ownerId: string;          // ID владельца
 	members: IUser[];         // ID пользователей, которые состоят в проекте
 	boards: IBoard[];         // Доски внутри проекта
@@ -63,7 +62,6 @@ const initialState: IProject = {
 	id: '',
 	discordId: '',
 	name: '',
-	icon: '',
 	ownerId: '',
 	members: [],
 	boards: [],
@@ -77,7 +75,6 @@ const projectSlice = createSlice({
 			state.id = action.payload.id;
 			state.discordId = action.payload.discordId;
 			state.name = action.payload.name;
-			state.icon = action.payload.icon;
 			state.ownerId = action.payload.ownerId;
 			state.members = action.payload.members;
 			state.boards = action.payload.boards;
