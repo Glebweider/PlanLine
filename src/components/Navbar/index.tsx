@@ -1,6 +1,6 @@
 // MainView.jsx
 import { useLocation, useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import {
     AppstoreOutlined,
@@ -19,6 +19,7 @@ import NewProjectModal from '../Modals/NewProject';
 import NavbarCard from '../Cards/Navbar';
 import NavbarProjectCard from '../Cards/NavbarProject';
 import ButtonCreate from '../ButtonCreate';
+import { setIsNavbarOpen } from 'src/redux/reducers/siteReducer';
 
 
 export interface IPreviewProject {
@@ -32,12 +33,13 @@ const Navbar = () => {
     const { projectId } = useParams();
     const location = useLocation();
     const currentPath = location.pathname;
+    const dispacth = useDispatch();
 
     const { showAlert } = useAlert();
     const user = useSelector((state: RootState) => state.userReducer);
 
     const [isOpenModalNewProject, setOpenModalNewProject] = useState<boolean>(false);
-    const [isOpenNavbar, setOpenNavbar] = useState<boolean>(false);
+    const [isOpenNavbar, setOpenNavbar] = useState<boolean>(JSON.parse(localStorage.getItem('isOpenNavbar') || 'false'));
     const [isOpenUserModal, setOpenUserModal] = useState<boolean>(false);
     const [projects, setProjects] = useState<IPreviewProject[]>([]);
     const [ownerProjects, setOwnerProjects] = useState<number>(0);
@@ -45,8 +47,10 @@ const Navbar = () => {
 
 
     useEffect(() => {
+        localStorage.setItem('isOpenNavbar', `${isOpenNavbar}`);
+        dispacth(setIsNavbarOpen(isOpenNavbar))
+        
         if (isOpenNavbar) {
-
             const timeout = setTimeout(() => setHideText(true), 300);
             return () => clearTimeout(timeout);
         } else {

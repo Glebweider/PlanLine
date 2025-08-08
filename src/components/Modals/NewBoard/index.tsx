@@ -28,8 +28,8 @@ const NewBoardModal: React.FC<NewBoardModalProps> = ({ isOpenModal, projectId, s
             showAlert('Board name must be at least 1 character');
             return;
         }
-        if (newBoardName.length > 32) {
-            showAlert('Board name must be no more than 32 characters');
+        if (newBoardName.length > 16) {
+            showAlert('Board name must be no more than 16 characters');
             return;
         }
 
@@ -76,7 +76,10 @@ const NewBoardModal: React.FC<NewBoardModalProps> = ({ isOpenModal, projectId, s
     if (isOpenModal) {
         return (
             <div
-                onClick={() => setOpenModal(false)}
+                onClick={() => {
+                    setOpenModal(false);
+                    setNewBoardName('');
+                }}
                 className={style.modalOverlay}>
                 <div
                     onClick={(e) => {

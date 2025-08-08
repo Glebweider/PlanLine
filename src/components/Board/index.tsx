@@ -105,7 +105,7 @@ const BoardCard: React.FC<BoardProps> = ({ projectId, board }) => {
                             value={newBoardName}
                             onChange={(e) => setNewBoardName(e.target.value)}
                             onBlur={handleRenameBoard}
-                            maxLength={32}
+                            maxLength={16}
                             onKeyDown={(e) => {
                                 if (e.key === 'Enter') {
                                     e.preventDefault();
@@ -146,7 +146,8 @@ const BoardCard: React.FC<BoardProps> = ({ projectId, board }) => {
                                 size={32}
                                 user={projectState.members.find((m) => m.id === member.id)}
                                 className={style.memberAvatar} />
-                        ))}
+                        ))
+                    }
                 </div>
             </Link>
             <BoardMenu

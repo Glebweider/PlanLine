@@ -1,8 +1,88 @@
 @import '../variables';
 
+
 .container {
-    margin-top: 38px;
     display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    margin-top: 38px;
+    position: relative;
+}
+
+.listContainerPagination {
+    max-height: 760px;
+}
+
+.listContainer {
+    max-height: 670px;
+}
+
+.slider {
+    position: relative;
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+}
+
+.slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    gap: 26px;
+    opacity: 0;
+    transform: translateX(100%);
+    transition: all 0.3s ease-in-out;
+    pointer-events: none;
+}
+
+.slide.active {
+    opacity: 1;
+    transform: translateX(0%);
+    pointer-events: auto;
+    position: relative;
+}
+
+.slide.prev.fromRight {
+    transform: translateX(-100%);
+}
+
+.slide.next.fromLeft {
+    transform: translateX(100%);
+}
+
+.pagination {
+    display: flex;
+    align-items: center;
+    bottom: 0;
+    gap: 8px;
+    margin-bottom: 48px;
+    font-size: 16;
+    z-index: 100;
+    position: absolute;
+
+    span {
+        background-color: $color-bg-input;
+        border-radius: 5px;
+        width: 32px;
+        height: 32px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: background-color 0.1s ease;
+
+        &:hover {
+            background-color: $color-bg-secondary-hover;
+        }
+    }
+}
+
+.buttonCreate {
+    width: 250px;
+    height: 54px;
 }

@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import style from './UserSettingModal.module.scss';
 import { useAlert } from '../../Alert/context';
-import { MemberRole, updateBoardMemberRole } from '../../../redux/reducers/projectReducer';
+import { EMemberRole, updateBoardMemberRole } from '../../../redux/reducers/projectReducer';
 import { RootState } from '../../../redux/store';
 
 
@@ -84,7 +84,7 @@ const UserSettingModal: React.FC<UserSettingModalProps> = ({ username, discordId
             dispatch(updateBoardMemberRole({
                 boardId: selectedBoardId,
                 userId: discordId,
-                newRole: selectedRole as MemberRole
+                newRole: selectedRole as EMemberRole
             }));
 
             setOpenModal(false);

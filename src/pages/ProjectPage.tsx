@@ -15,6 +15,7 @@ const ProjectPage = () => {
 	const { getProject } = useGetProject();
 
 	const projectState = useSelector((state: RootState) => state.projectReducer);
+	const userId = useSelector((state: RootState) => state.userReducer).id;
 
 	const [isOpenCreateBoardModal, setIsOpenCreateBoardModal] = useState<boolean>(false);
 
@@ -33,7 +34,9 @@ const ProjectPage = () => {
 					projectId={projectId || ""}
 					board={board} />
 			)}
-			<ButtonCreate setIsOpenCreateBoardModal={setIsOpenCreateBoardModal} />
+			{projectState.ownerId === userId &&
+				<ButtonCreate setIsOpenCreateBoardModal={setIsOpenCreateBoardModal} />
+			}
 			<NewBoardModal
 				isOpenModal={isOpenCreateBoardModal}
 				setOpenModal={setIsOpenCreateBoardModal}

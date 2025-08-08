@@ -16,7 +16,7 @@ export interface IBoard {
 	lists: IList[];
 }
 
-export enum MemberRole {
+export enum EMemberRole {
 	ADMIN = 'Admin',
 	NORMAL = 'Normal',
 	OBSERVER = 'Observer',
@@ -30,7 +30,7 @@ export interface IUser {
 
 export interface IBoardMember {
 	id: string;
-	role: MemberRole;  // Роль Пользователя
+	role: EMemberRole;  // Роль Пользователя
 }
 
 export interface IList {
@@ -82,7 +82,7 @@ const projectSlice = createSlice({
 		updateBoardMemberRole: (state, action: PayloadAction<{
 			boardId: string;
 			userId: string;
-			newRole: MemberRole;
+			newRole: EMemberRole;
 		}>) => {
 			const { boardId, userId, newRole } = action.payload;
 
@@ -106,14 +106,63 @@ const projectSlice = createSlice({
 			const boardIdToDelete = action.payload;
 			state.boards = state.boards.filter(board => board.id !== boardIdToDelete);
 		},
+		addListToBoard: (state, action: PayloadAction<{ boardId: string; list: IList }>) => {
+			const { boardId, list } = action.payload;
+			const board = state.boards.find((b) => b.id === boardId);
+			if (board) {
+				board.lists.push(list);
+			}
+		},
+		deleteListFromBoard: (state, action: PayloadAction<{ boardId: string; listId: string }>) => {
+			const { boardId, listId } = action.payload;
+			const board = state.boards.find((b) => b.id === boardId);
+			if (board) {
+				board.lists = board.lists.filter((list) => list.id !== listId);
+			}
+		},
+		renameListInBoard: (state, action: PayloadAction<{ boardId: string; listId: string; newName: string }>) => {
+			const { boardId, listId, newName } = action.payload;
+			const board = state.boards.find((b) => b.id === boardId);
+			if (board) {
+				const list = board.lists.find((l) => l.id === listId);
+				if (list) {
+					list.name = newName;
+				}
+			}
+		},
+		addCardToList: (state, action: PayloadAction<{ boardId: string; listId: string; card: ICard }>) => {
+			const { boardId, listId, card } = action.payload;
+			const board = state.boards.find((b) => b.id === boardId);
+			if (board) {
+				const list = board.lists.find((l) => l.id === listId);
+				if (list) {
+					list.cards.push(card);
+				}
+			}
+		},
+		removeCardFromList: (state, action: PayloadAction<{ boardId: string; listId: string; cardId: string }>) => {
+			const { boardId, listId, cardId } = action.payload;
+			const board = state.boards.find((b) => b.id === boardId);
+			if (board) {
+				const list = board.lists.find((l) => l.id === listId);
+				if (list) {
+					list.cards = list.cards.filter((card) => card.id !== cardId);
+				}
+			}
+		},
 	},
 });
 
-export const { 
-	setProject, 
-	updateBoardMemberRole, 
+export const {
+	setProject,
+	updateBoardMemberRole,
 	removeUserFromProject,
-	deleteBoardFromProject 
+	deleteBoardFromProject,
+	addCardToList,
+	deleteListFromBoard,
+	renameListInBoard,
+	addListToBoard,
+	removeCardFromList
 } = projectSlice.actions;
 
 export default projectSlice.reducer;
