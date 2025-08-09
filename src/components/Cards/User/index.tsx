@@ -25,7 +25,7 @@ const UserCard: React.FC<UserCardProps> = ({ user }) => {
                 <div className={style.content}>
                     <Avatar size={45} user={user} className={style.avatar} />
                     <div className={style.data}>
-                        <text className={style.name}>{user?.name}</text>
+                        <text className={style.name}>{user?.displayName ? user?.displayName  : user?.name}</text>
                         <text className={style.dateOfCreation}>Created: {formatDateShortEn(user?.dateOfCreation)}</text>
                     </div>
                 </div>
