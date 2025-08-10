@@ -84,7 +84,17 @@ const InviteModal: React.FC<InviteModalProps> = ({ isOpenModal, setOpenModal }) 
                         ))}
                     </select>
                 </div>
-
+                                <div className={style.userInfo}>
+                    <text>Max link used</text>
+                    <select className={style.select}>
+                        <option value="">Select</option>
+                        <option value="1">1</option>
+                        <option value="2">5</option>
+                        <option value="3">10</option>
+                        <option value="3">25</option>
+                        <option value="3">50</option>
+                    </select>
+                </div>
                 {inviteLink && (
                     <div className={style.inviteLinkBox}>
                         <p>Invite link:</p>
@@ -105,7 +115,6 @@ const InviteModal: React.FC<InviteModalProps> = ({ isOpenModal, setOpenModal }) 
                         </div>
                     </div>
                 )}
-
                 <hr className={style.hr} />
                 <button
                     className={style.saveButton}

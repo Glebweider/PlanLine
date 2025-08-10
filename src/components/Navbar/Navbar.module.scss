@@ -10,6 +10,28 @@
     max-width: 326px;
     padding: 10px;
     border-radius: 15px;
+<<<<<<< Updated upstream
+=======
+    transition: max-width 0.3s ease, min-width 0.3s ease, all 0.3s ease;
+    max-width: 326px;
+    min-width: 326px;
+    overflow: hidden;
+}
+
+.fade-in {
+    opacity: 1;
+    transition: opacity 0.3s ease;
+}
+
+.fade-out {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.containerCollapsed {
+    max-width: 84px;
+    min-width: 84px;
+>>>>>>> Stashed changes
 }
 
 .buttonCreateProject {

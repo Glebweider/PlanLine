@@ -78,23 +78,45 @@ const Navbar = () => {
     return (
         <>
             <div
+<<<<<<< Updated upstream
                 className={style.container}
                 style={!isOpenNavbar ? { width: '100%' } : { maxWidth: 84, minWidth: 84 }}>
+=======
+                className={`${style.container} ${isOpenNavbar ? style.containerCollapsed : ''}`}
+                onClick={() => {
+                    if (isOpenNavbar) {
+                        setOpenNavbar(false);
+                    } else {
+                        setOpenNavbar(true);
+                    }
+                }}
+            >
+>>>>>>> Stashed changes
                 <div
-                    onClick={() => isOpenNavbar ? setOpenNavbar(false) : setOpenUserModal(true)}
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        if (isOpenNavbar) {
+                            setOpenNavbar(false);
+                        } else {
+                            setOpenNavbar(true);
+                        }
+                    }}
+
                     className={isOpenNavbar ? style.navbarDisable : style.userContainer}>
                     <Avatar size={64} />
-                    {!isOpenNavbar &&
+                    {!isOpenNavbar && (
                         <>
                             <div className={style.userContent}>
-                                <a>{user.username}</a>
-                                {/* <text>Online</text> */}
+                                <span className={hideText ? 'fade-out' : 'fade-in'}>
+                                    {user.username}
+                                </span>
                             </div>
                             <DoubleLeftOutlined
                                 onClick={() => setOpenNavbar(true)}
-                                className={style.changeVisibility} />
+                                className={style.changeVisibility}
+                            />
                         </>
-                    }
+                    )}
                 </div>
 
                 <div style={{ width: '100%', height: '100%', marginTop: 34 }}>
