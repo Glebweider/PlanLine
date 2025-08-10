@@ -18,10 +18,22 @@ interface BoardListProps {
     boardId: string;
     userRole: EMemberRole;
     setIsOpenCreateTaskModal: React.Dispatch<React.SetStateAction<boolean>>;
+    setIsOpenTaskModal: React.Dispatch<React.SetStateAction<boolean>>;
+    setSelectedCard: React.Dispatch<React.SetStateAction<ICard>>;
     setSelectedListId: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const BoardList: React.FC<BoardListProps> = ({ list, projectState, style, setIsOpenCreateTaskModal, setSelectedListId, userRole, boardId }) => {
+const BoardList: React.FC<BoardListProps> = ({ 
+    list, 
+    projectState, 
+    style, 
+    setIsOpenCreateTaskModal,
+    setIsOpenTaskModal, 
+    setSelectedCard,
+    setSelectedListId, 
+    userRole, 
+    boardId 
+}) => {
     const { showAlert } = useAlert();
     const dispatch = useDispatch();
 
@@ -189,6 +201,9 @@ const BoardList: React.FC<BoardListProps> = ({ list, projectState, style, setIsO
                             key={card.id}
                             listId={list.id}
                             card={card}
+                            setSelectedCard={setSelectedCard}
+                            setSelectedListId={setSelectedListId}
+                            setIsOpenTaskModal={setIsOpenTaskModal}
                             projectState={projectState} />
                     )}
                 </div>

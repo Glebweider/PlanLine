@@ -5,8 +5,19 @@ export interface IProject {
 	discordId: string;
 	name: string;             // Название проекта
 	ownerId: string;          // ID владельца
-	members: IUser[];         // ID пользователей, которые состоят в проекте
+	members: IUserProject[];         // ID пользователей, которые состоят в проекте
 	boards: IBoard[];         // Доски внутри проекта
+	dateOfCreation: Date;
+	discordIntegration: IDiscordIntegration;
+}
+
+export interface IDiscordIntegration {
+	updateChannelId: string;
+	// summary: {
+	// 	enabled: boolean;
+	// 	time: Date;
+	// 	channelId: string;
+	// }
 }
 
 export interface IBoard {
@@ -22,11 +33,12 @@ export enum EMemberRole {
 	OBSERVER = 'Observer',
 }
 
-export interface IUser {
+export interface IUserProject {
 	id: string;
 	name: string;
 	avatar: string;
 	displayName: string;
+	dateOfCreation: string;
 }
 
 export interface IBoardMember {
@@ -66,6 +78,10 @@ const initialState: IProject = {
 	ownerId: '',
 	members: [],
 	boards: [],
+	dateOfCreation: new Date(),
+	discordIntegration: {
+		updateChannelId: ''
+	}
 };
 
 const projectSlice = createSlice({
@@ -73,13 +89,27 @@ const projectSlice = createSlice({
 	initialState,
 	reducers: {
 		setProject: (state, action: PayloadAction<IProject>) => {
+			const discordIntegration = action.payload.discordIntegration || { updateChannelId: '' };
 			state.id = action.payload.id;
 			state.discordId = action.payload.discordId;
 			state.name = action.payload.name;
 			state.ownerId = action.payload.ownerId;
 			state.members = action.payload.members;
 			state.boards = action.payload.boards;
+			state.dateOfCreation = action.payload.dateOfCreation;
+			state.discordIntegration = discordIntegration;
 		},
+		updateUpdateChannelId: (state, action: PayloadAction<string>) => {
+			if (state.discordIntegration) {
+				state.discordIntegration.updateChannelId = action.payload;
+			} else {
+				state.discordIntegration = { updateChannelId: action.payload };
+			}
+		},
+		setProjectName: (state, action: PayloadAction<string>) => {
+			state.name = action.payload;
+		},
+		clearProject: () => initialState,
 		updateBoardMemberRole: (state, action: PayloadAction<{
 			boardId: string;
 			userId: string;
@@ -151,11 +181,30 @@ const projectSlice = createSlice({
 				}
 			}
 		},
+		updateCardInList: (state, action: PayloadAction<{ boardId: string; listId: string; cardId: string; updates: Partial<Pick<ICard, 'dueDate' | 'title' | 'description'>> }>) => {
+			const { boardId, listId, cardId, updates } = action.payload;
+			const board = state.boards.find(b => b.id === boardId);
+			if (board) {
+				const list = board.lists.find(l => l.id === listId);
+				if (list) {
+					const card = list.cards.find(c => c.id === cardId);
+					if (card) {
+						if (updates.title !== undefined) card.title = updates.title;
+						if (updates.description !== undefined) card.description = updates.description;
+						if (updates.dueDate !== undefined) card.dueDate = updates.dueDate;
+					}
+				}
+			}
+		}
 	},
 });
 
 export const {
 	setProject,
+	setProjectName,
+	clearProject,
+	updateCardInList,
+	updateUpdateChannelId,
 	updateBoardMemberRole,
 	removeUserFromProject,
 	deleteBoardFromProject,

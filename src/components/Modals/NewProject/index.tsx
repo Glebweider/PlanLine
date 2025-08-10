@@ -70,7 +70,7 @@ const NewProjectModal: React.FC<NewProjectModalProps> = ({ setProjects, isOpenMo
 
     if (isOpenModal) {
         return (
-            <div className={style.modalOverlay}>
+            <div className='modalOverlay'>
                 <div className={style.modalContent}>
                     <a style={{ color: '#fff', fontSize: 18 }}>Create New Project</a>
                     <div className={style.modalData}>

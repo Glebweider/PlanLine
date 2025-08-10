@@ -80,7 +80,7 @@ const NewBoardModal: React.FC<NewBoardModalProps> = ({ isOpenModal, projectId, s
                     setOpenModal(false);
                     setNewBoardName('');
                 }}
-                className={style.modalOverlay}>
+                className='modalOverlay'>
                 <div
                     onClick={(e) => {
                         e.preventDefault();

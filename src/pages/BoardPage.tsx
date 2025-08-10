@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, SetStateAction } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { ArrowLeftOutlined, ArrowRightOutlined } from '@ant-design/icons';
@@ -8,9 +8,10 @@ import { RootState } from '../redux/store';
 import { useGetProject } from '../utils/fetch/getProjectById';
 import ButtonCreate from '../components/ButtonCreate';
 import BoardList from '../components/BoardList';
-import { EMemberRole } from '../redux/reducers/projectReducer';
+import { EMemberRole, ICard } from '../redux/reducers/projectReducer';
 import NewListModal from '../components/Modals/NewList';
 import NewTaskModal from '../components/Modals/NewTask';
+import TaskModal from 'src/components/Modals/Task';
 
 
 const BoardPage = () => {
@@ -25,8 +26,20 @@ const BoardPage = () => {
 
 	const [isOpenCreateListModal, setIsOpenCreateListModal] = useState<boolean>(false);
 	const [isOpenCreateTaskModal, setIsOpenCreateTaskModal] = useState<boolean>(false);
+	const [isOpenTaskModal, setIsOpenTaskModal] = useState<boolean>(false);
 	const [currentPage, setCurrentPage] = useState<number>(0);
 	const [selectedListId, setSelectedListId] = useState<string>('');
+	const [selectedCard, setSelectedCard] = useState<ICard>({
+		id: '',
+		title: '',
+		description: '',
+		members: [],
+		labels: [],
+		dueDate: null,
+		comments: [],
+		createdAt: new Date(),
+		updatedAt: new Date()
+	});
 	const [direction, setDirection] = useState<"left" | "right">("right");
 
 	const itemsPerPage = isOpenNavbar ? 6 : 5;
@@ -95,6 +108,8 @@ const BoardPage = () => {
 									key={list.id}
 									list={list}
 									setIsOpenCreateTaskModal={setIsOpenCreateTaskModal}
+									setIsOpenTaskModal={setIsOpenTaskModal}
+									setSelectedCard={setSelectedCard}
 									setSelectedListId={setSelectedListId}
 									projectState={projectState}
 									boardId={boardId || ""}
@@ -125,6 +140,14 @@ const BoardPage = () => {
 				projectId={projectId || ""}
 				boardId={boardId || ""}
 				users={filteredMembers}
+				listId={selectedListId} />
+			<TaskModal
+				isOpenModal={isOpenTaskModal}
+				setOpenModal={setIsOpenTaskModal}
+				task={selectedCard}
+				userRole={userRole || EMemberRole.OBSERVER}
+				project={projectState} 
+				boardId={boardId || ""} 
 				listId={selectedListId} />
 		</div>
 	);

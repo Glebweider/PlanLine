@@ -4,6 +4,7 @@ import { CheckCircleOutlined, ClockCircleOutlined, CloseCircleOutlined, InfoCirc
 import style from './TaskCard.module.scss';
 import { ITaskPreview } from "../../../pages/TasksPage";
 import formatDateShortEn from "../../../utils/FormatDateShortEn";
+import Tooltip from "../../../components/Tooltip";
 
 
 interface TaskCardProps {
@@ -42,18 +43,24 @@ const TaskCard: React.FC<TaskCardProps> = ({ projectId, task }) => {
             <div className={style.taskInfo}>
                 <div className={style.title}>{task.title}</div>
                 <div className={style.timestamps}>
-                    <div className={style.projectDataContainer}>
-                        <CheckCircleOutlined style={{ fontSize: 14 }} />
-                        <text className={style.projectDataText}>{formatDateShortEn(task.dueDate)}</text>
-                    </div>
-                    <div className={style.projectDataContainer}>
-                        <ClockCircleOutlined style={{ fontSize: 14 }} />
-                        <text className={style.projectDataText}>{formatDateShortEn(task.createdAt)}</text>
-                    </div>
-                    <div className={style.projectDataContainer}>
-                        <InfoCircleOutlined style={{ fontSize: 14 }} />
-                        <text className={style.projectDataText}>{formatDateShortEn(task.updatedAt)}</text>
-                    </div>
+                    <Tooltip text="Дата окончания задачи">
+                        <div className={style.projectDataContainer}>
+                            <CheckCircleOutlined style={{ fontSize: 14 }} />
+                            <text className={style.projectDataText}>{formatDateShortEn(task.dueDate)}</text>
+                        </div>
+                    </Tooltip>
+                    <Tooltip text="Дата созданния задачи">
+                        <div className={style.projectDataContainer}>
+                            <QuestionCircleOutlined style={{ fontSize: 14 }} />
+                            <text className={style.projectDataText}>{formatDateShortEn(`${task.createdAt}`)}</text>
+                        </div>
+                    </Tooltip>
+                    <Tooltip text="Дата обновленния задачи">
+                        <div className={style.projectDataContainer}>
+                            <InfoCircleOutlined style={{ fontSize: 14 }} />
+                            <text className={style.projectDataText}>{formatDateShortEn(`${task.updatedAt}`)}</text>
+                        </div>
+                    </Tooltip>
                 </div>
             </div>
         </Link>

@@ -8,20 +8,19 @@ const slides = [
 	{
 		title: "Plan-line: Your next generation task manager",
 		text: "Manage tasks, projects, and ideas effortlessly. Collaborate with your team in real time.",
-		image: "https://images.unsplash.com/photo-1581091215369-9e4b0c5e33b3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800"
+		image: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=800&q=80"
 	},
 	{
 		title: "Seamless Discord Integration",
 		text: "Connect your Plan-line workspace to Discord to get instant updates and manage tasks directly from your channels.",
-		image: "https://images.unsplash.com/photo-1611262588024-9dbfdd7c318e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800"
+		image: "https://images.unsplash.com/photo-1525182008055-f88b95ff7980?auto=format&fit=crop&w=800&q=80"
 	},
 	{
 		title: "Smart boards & analytics",
 		text: "Organize your workflow with Kanban boards and get insightful analytics to track your team's performance.",
-		image: "https://images.unsplash.com/photo-1634744649029-6cd946263740?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800"
+		image: "https://images.unsplash.com/photo-1551836022-4296f10a3db1?auto=format&fit=crop&w=800&q=80"
 	}
 ];
-
 
 const LandingPage = () => {
 	const [currentSlide, setCurrentSlide] = useState(0);
@@ -41,6 +40,7 @@ const LandingPage = () => {
 			setCurrentSlide(prev => prev - 1);
 		}
 	};
+
 	return (
 		<div className={styles.app}>
 			<header className={styles.header}>
@@ -49,9 +49,9 @@ const LandingPage = () => {
 					<h1>Plan-line</h1>
 				</div>
 				<nav className={styles.nav}>
-					<a href="#about">About</a>
+					{/* <a href="#about">About</a>
 					<a href="#features">Features</a>
-					<a href="#contact">Contact</a>
+					<a href="#contact">Contact</a> */}
 					<div className={`${styles.authInNavbar} ${currentSlide > 0 ? styles.show : ''}`}>
 						<button className={styles.authButtonSmall} onClick={AuthFunc}>
 							Auth with Discord

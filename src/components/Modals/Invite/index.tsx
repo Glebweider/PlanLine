@@ -64,7 +64,7 @@ const InviteModal: React.FC<InviteModalProps> = ({ isOpenModal, setOpenModal }) 
     return (
         <div
             onClick={() => setOpenModal(false)}
-            className={style.modalOverlay}>
+            className='modalOverlay'>
             <div
                 onClick={(e) => {
                     e.preventDefault();

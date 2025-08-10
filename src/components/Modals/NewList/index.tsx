@@ -79,7 +79,7 @@ const NewListModal: React.FC<NewListModalProps> = ({ isOpenModal, projectId, boa
                 setOpenModal(false);
                 setNewListName('');
             }}
-            className={style.modalOverlay}>
+            className='modalOverlay'>
             <div
                 onClick={(e) => {
                     e.preventDefault();

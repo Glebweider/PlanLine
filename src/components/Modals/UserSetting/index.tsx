@@ -103,7 +103,7 @@ const UserSettingModal: React.FC<UserSettingModalProps> = ({ username, discordId
                     setOpenModal(false);
                     setSelectedBoardId('');
                 }}
-                className={style.modalOverlay}>
+                className='modalOverlay'>
                 <div
                     onClick={(e) => {
                         e.preventDefault();

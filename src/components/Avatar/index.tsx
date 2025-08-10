@@ -6,7 +6,6 @@ import style from './Avatar.module.scss';
 // ? src
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
-import { IUser } from '../../redux/reducers/projectReducer';
 
 type IProfileAvatarIconProps = {
 	size: number;

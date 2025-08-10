@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 
 import style from './NewTaskModal.module.scss';
 import { useAlert } from '../../Alert/context';
-import { addCardToList, IUser } from '../../../redux/reducers/projectReducer';
+import { addCardToList, IUserProject } from '../../../redux/reducers/projectReducer';
 
 
 interface NewTaskModalProps {
@@ -12,7 +12,7 @@ interface NewTaskModalProps {
     projectId: string;
     boardId: string;
     listId: string;
-    users: IUser[];
+    users: IUserProject[];
 }
 
 const NewTaskModal: React.FC<NewTaskModalProps> = ({ isOpenModal, projectId, setOpenModal, boardId, listId, users }) => {
@@ -94,7 +94,7 @@ const NewTaskModal: React.FC<NewTaskModalProps> = ({ isOpenModal, projectId, set
                 setAssignedUser('');
                 setDueDate('');
             }}
-            className={style.modalOverlay}>
+            className='modalOverlay'>
             <div
                 onClick={(e) => {
                     e.preventDefault();
