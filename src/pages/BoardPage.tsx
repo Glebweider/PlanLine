@@ -115,7 +115,7 @@ const BoardPage = () => {
 									boardId={boardId || ""}
 									userRole={userRole || EMemberRole.OBSERVER}
 									style={pages.length <= 1 ? style.listContainerPagination : style.listContainer}
-								/>
+									isOpenCreateTaskModal={isOpenCreateTaskModal} />
 							)
 						)}
 					</div>
@@ -146,9 +146,10 @@ const BoardPage = () => {
 				setOpenModal={setIsOpenTaskModal}
 				task={selectedCard}
 				userRole={userRole || EMemberRole.OBSERVER}
-				project={projectState} 
-				boardId={boardId || ""} 
-				listId={selectedListId} />
+				project={projectState}
+				boardId={boardId || ""}
+				listId={selectedListId}
+				users={filteredMembers} />
 		</div>
 	);
 };

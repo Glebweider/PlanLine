@@ -6,13 +6,19 @@ import styles from './ButtonCreate.module.scss';
 export interface IButtonCreate {
     setIsOpenCreateBoardModal: React.Dispatch<React.SetStateAction<boolean>>;
     style?: string;
+    onClick?: () => void;
 }
 
-const ButtonCreate: React.FC<IButtonCreate> = ({ setIsOpenCreateBoardModal, style }) => {
+const ButtonCreate: React.FC<IButtonCreate> = ({ setIsOpenCreateBoardModal, style, onClick }) => {
+    const handleClick = () => {
+        if (onClick) onClick();
+        setIsOpenCreateBoardModal(true);
+    };
+
     return (
         <div
-            onClick={() => setIsOpenCreateBoardModal(true)}
-            className={`${style} ${styles.addBoardContainer}`}>
+            onClick={handleClick}
+            className={`${style ?? ''} ${styles.addBoardContainer}`}>
             <PlusOutlined />
         </div>
     );

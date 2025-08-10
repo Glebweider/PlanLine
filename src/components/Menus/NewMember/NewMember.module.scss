@@ -10,7 +10,7 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
-    padding: 12px;
+    padding: 6px;
     z-index: 20;
 }
 
@@ -21,12 +21,14 @@
     border: 1px solid $color-hr;
     border-radius: 10px;
     margin-top: 40px;
-    width: 200px;
+    width: 170px;
 }
 
 .content {
     display: flex;
     align-items: center;
+    gap: 12px;
+    padding-left: 10px;
     height: 45px;
     max-width: 100%;
     border-radius: 10px;
@@ -40,7 +42,7 @@
     }
 
     text {
-        font-size: 18;
+        font-size: 16;
         margin-top: -3px;
     }
 

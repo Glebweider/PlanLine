@@ -17,22 +17,24 @@ interface BoardListProps {
     style: string;
     boardId: string;
     userRole: EMemberRole;
+    isOpenCreateTaskModal: boolean;
     setIsOpenCreateTaskModal: React.Dispatch<React.SetStateAction<boolean>>;
     setIsOpenTaskModal: React.Dispatch<React.SetStateAction<boolean>>;
     setSelectedCard: React.Dispatch<React.SetStateAction<ICard>>;
     setSelectedListId: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const BoardList: React.FC<BoardListProps> = ({ 
-    list, 
-    projectState, 
-    style, 
+const BoardList: React.FC<BoardListProps> = ({
+    list,
+    projectState,
+    style,
+    isOpenCreateTaskModal,
     setIsOpenCreateTaskModal,
-    setIsOpenTaskModal, 
+    setIsOpenTaskModal,
     setSelectedCard,
-    setSelectedListId, 
-    userRole, 
-    boardId 
+    setSelectedListId,
+    userRole,
+    boardId
 }) => {
     const { showAlert } = useAlert();
     const dispatch = useDispatch();
@@ -155,10 +157,6 @@ const BoardList: React.FC<BoardListProps> = ({
         return () => observer.disconnect();
     }, []);
 
-    useEffect(() => {
-        setSelectedListId(list.id);
-    }, [setIsOpenCreateTaskModal]);
-
     return (
         <div style={{ position: 'relative', display: 'flex' }} ref={dropRef}>
             <div className={`${style} ${styles.container}`}>
@@ -209,8 +207,13 @@ const BoardList: React.FC<BoardListProps> = ({
                 </div>
                 {(userRole === EMemberRole.ADMIN || userRole === EMemberRole.NORMAL) &&
                     <ButtonCreate
+                        key={list.id}
                         style={styles.buttonCreate}
-                        setIsOpenCreateBoardModal={setIsOpenCreateTaskModal} />
+                        setIsOpenCreateBoardModal={setIsOpenCreateTaskModal}
+                        onClick={() => {
+                            setSelectedListId(list.id);
+                            setIsOpenCreateTaskModal(true);
+                        }} />
                 }
             </div>
             <ListMenu

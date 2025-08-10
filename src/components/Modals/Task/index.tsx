@@ -4,11 +4,11 @@ import { ClockCircleOutlined, InfoCircleOutlined, MinusOutlined, PlusOutlined, Q
 
 import style from './TaskModal.module.scss';
 import { useAlert } from '../../Alert/context';
-import { EMemberRole, ICard, IProject, removeCardFromList, updateCardInList } from '../../../redux/reducers/projectReducer';
+import { EMemberRole, ICard, IProject, IUserProject, removeCardFromList, updateCardInList } from '../../../redux/reducers/projectReducer';
 import { Avatar } from '../../../components/Avatar';
 import formatDateShortEn from '../../../utils/FormatDateShortEn';
 import Tooltip from '../../../components/Tooltip';
-import NewMemberMenu from 'src/components/Menus/NewMember';
+import NewMemberMenu from '../../../components/Menus/NewMember';
 
 
 interface TaskModalProps {
@@ -19,6 +19,7 @@ interface TaskModalProps {
     listId: string;
     project: IProject;
     userRole: EMemberRole;
+    users: IUserProject[];
 }
 
 const TaskModal: React.FC<TaskModalProps> = ({
@@ -28,7 +29,8 @@ const TaskModal: React.FC<TaskModalProps> = ({
     boardId,
     listId,
     project,
-    userRole
+    userRole,
+    users
 }) => {
     const { showAlert } = useAlert();
     const dispatch = useDispatch();
@@ -46,7 +48,7 @@ const TaskModal: React.FC<TaskModalProps> = ({
             setNewTaskDescription(task.description);
             setNewTaskName(task.title);
         }
-    }, [task]);
+    }, [task, isOpenModal]);
 
     const handleSaveTask = async () => {
         if (isUpdatingTask) return;
@@ -142,6 +144,7 @@ const TaskModal: React.FC<TaskModalProps> = ({
                 setOpenModal(false);
                 setNewTaskDescription('');
                 setIsEdit(false);
+                setIsOpenNewMembersMenu(false);
             }}>
             <div
                 onClick={(e) => {
@@ -183,7 +186,7 @@ const TaskModal: React.FC<TaskModalProps> = ({
                                 </div>
                             )}
 
-                            {userRole === EMemberRole.ADMIN &&
+                            {userRole === EMemberRole.ADMIN && users.filter(user => !task.members.includes(user.id)).length > 0 &&
                                 task.members.length < 4 && (
                                     <div style={{ position: 'relative', display: 'flex' }}>
                                         <Tooltip text="Добавить участника в задачу">
@@ -194,10 +197,14 @@ const TaskModal: React.FC<TaskModalProps> = ({
                                             </div>
                                         </Tooltip>
                                         <NewMemberMenu
-                                            user={undefined}
                                             isOpenModal={isOpenNewMembersMenu}
                                             setOpenModal={setIsOpenNewMembersMenu}
-                                            project={project} />
+                                            users={users}
+                                            members={task.members}
+                                            projectId={project.id}
+                                            boardId={boardId}
+                                            listId={listId}
+                                            taskId={task.id} />
                                     </div>
                                 )
                             }
