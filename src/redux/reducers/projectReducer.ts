@@ -165,6 +165,22 @@ const projectSlice = createSlice({
 				}
 			}
 		},
+		removeUserFromCardInList: (
+			state,
+			action: PayloadAction<{ boardId: string; listId: string; cardId: string; userId: string }>
+		) => {
+			const { boardId, listId, cardId, userId } = action.payload;
+			const board = state.boards.find(b => b.id === boardId);
+			if (board) {
+				const list = board.lists.find(l => l.id === listId);
+				if (list) {
+					const card = list.cards.find(c => c.id === cardId);
+					if (card && card.members) {
+						card.members = card.members.filter(id => id !== userId);
+					}
+				}
+			}
+		},
 		deleteListFromBoard: (state, action: PayloadAction<{ boardId: string; listId: string }>) => {
 			const { boardId, listId } = action.payload;
 			const board = state.boards.find((b) => b.id === boardId);
@@ -223,6 +239,7 @@ const projectSlice = createSlice({
 export const {
 	setProject,
 	addUserToCardInList,
+	removeUserFromCardInList,
 	setProjectName,
 	clearProject,
 	updateCardInList,

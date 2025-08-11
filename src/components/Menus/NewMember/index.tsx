@@ -53,16 +53,10 @@ const NewMemberMenu: React.FC<NewMemberProps> = ({
 
         try {
             const response = await fetch(
-                `${process.env.REACT_APP_BACKEND_URI}/projects/${projectId}/boards/${boardId}/${listId}/${taskId}`,
+                `${process.env.REACT_APP_BACKEND_URI}/projects/${projectId}/boards/${boardId}/${listId}/${taskId}/add-member/${userId}`,
                 {
-                    method: 'PUT',
+                    method: 'PATCH',
                     credentials: 'include',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        assignedUser: userId
-                    }),
                 }
             );
 

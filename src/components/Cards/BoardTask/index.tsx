@@ -13,7 +13,7 @@ interface BoardTaskCardProps {
     listId: string;
     projectState: IProject;
     setIsOpenTaskModal: React.Dispatch<React.SetStateAction<boolean>>;
-    setSelectedCard: React.Dispatch<React.SetStateAction<ICard>>;
+    setSelectedCardId: React.Dispatch<React.SetStateAction<string>>;
     setSelectedListId: React.Dispatch<React.SetStateAction<string>>;
 }
 
@@ -22,7 +22,7 @@ const BoardTaskCard: React.FC<BoardTaskCardProps> = ({
     listId,
     projectState,
     setIsOpenTaskModal,
-    setSelectedCard,
+    setSelectedCardId,
     setSelectedListId
 }) => {
     const [{ isDragging }, dragRef] = useDrag({
@@ -38,7 +38,7 @@ const BoardTaskCard: React.FC<BoardTaskCardProps> = ({
             ref={dragRef}
             style={{ opacity: isDragging ? 0.5 : 1 }}
             onClick={() => {
-                setSelectedCard(card);
+                setSelectedCardId(card.id);
                 setSelectedListId(listId);
                 setIsOpenTaskModal(true);
             }}

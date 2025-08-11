@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, SetStateAction } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { ArrowLeftOutlined, ArrowRightOutlined } from '@ant-design/icons';
@@ -8,10 +8,10 @@ import { RootState } from '../redux/store';
 import { useGetProject } from '../utils/fetch/getProjectById';
 import ButtonCreate from '../components/ButtonCreate';
 import BoardList from '../components/BoardList';
-import { EMemberRole, ICard } from '../redux/reducers/projectReducer';
+import { EMemberRole } from '../redux/reducers/projectReducer';
 import NewListModal from '../components/Modals/NewList';
 import NewTaskModal from '../components/Modals/NewTask';
-import TaskModal from 'src/components/Modals/Task';
+import TaskModal from '../components/Modals/Task';
 
 
 const BoardPage = () => {
@@ -29,17 +29,7 @@ const BoardPage = () => {
 	const [isOpenTaskModal, setIsOpenTaskModal] = useState<boolean>(false);
 	const [currentPage, setCurrentPage] = useState<number>(0);
 	const [selectedListId, setSelectedListId] = useState<string>('');
-	const [selectedCard, setSelectedCard] = useState<ICard>({
-		id: '',
-		title: '',
-		description: '',
-		members: [],
-		labels: [],
-		dueDate: null,
-		comments: [],
-		createdAt: new Date(),
-		updatedAt: new Date()
-	});
+	const [selectedCardId, setSelectedCardId] = useState<string>('');
 	const [direction, setDirection] = useState<"left" | "right">("right");
 
 	const itemsPerPage = isOpenNavbar ? 6 : 5;
@@ -109,13 +99,12 @@ const BoardPage = () => {
 									list={list}
 									setIsOpenCreateTaskModal={setIsOpenCreateTaskModal}
 									setIsOpenTaskModal={setIsOpenTaskModal}
-									setSelectedCard={setSelectedCard}
+									setSelectedCardId={setSelectedCardId}
 									setSelectedListId={setSelectedListId}
 									projectState={projectState}
 									boardId={boardId || ""}
 									userRole={userRole || EMemberRole.OBSERVER}
-									style={pages.length <= 1 ? style.listContainerPagination : style.listContainer}
-									isOpenCreateTaskModal={isOpenCreateTaskModal} />
+									style={pages.length <= 1 ? style.listContainerPagination : style.listContainer} />
 							)
 						)}
 					</div>
@@ -144,7 +133,7 @@ const BoardPage = () => {
 			<TaskModal
 				isOpenModal={isOpenTaskModal}
 				setOpenModal={setIsOpenTaskModal}
-				task={selectedCard}
+				taskId={selectedCardId}
 				userRole={userRole || EMemberRole.OBSERVER}
 				project={projectState}
 				boardId={boardId || ""}

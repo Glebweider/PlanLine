@@ -1,20 +1,21 @@
-import { SetStateAction, useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { ClockCircleOutlined, InfoCircleOutlined, MinusOutlined, PlusOutlined, QuestionCircleOutlined } from '@ant-design/icons';
 
 import style from './TaskModal.module.scss';
 import { useAlert } from '../../Alert/context';
-import { EMemberRole, ICard, IProject, IUserProject, removeCardFromList, updateCardInList } from '../../../redux/reducers/projectReducer';
+import { EMemberRole, IProject, IUserProject, removeCardFromList, removeUserFromCardInList, updateCardInList } from '../../../redux/reducers/projectReducer';
 import { Avatar } from '../../../components/Avatar';
 import formatDateShortEn from '../../../utils/FormatDateShortEn';
 import Tooltip from '../../../components/Tooltip';
 import NewMemberMenu from '../../../components/Menus/NewMember';
+import { RootState } from '../../../redux/store';
 
 
 interface TaskModalProps {
     isOpenModal: boolean;
     setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
-    task: ICard;
+    taskId: string;
     boardId: string;
     listId: string;
     project: IProject;
@@ -25,7 +26,7 @@ interface TaskModalProps {
 const TaskModal: React.FC<TaskModalProps> = ({
     isOpenModal,
     setOpenModal,
-    task,
+    taskId,
     boardId,
     listId,
     project,
@@ -34,6 +35,13 @@ const TaskModal: React.FC<TaskModalProps> = ({
 }) => {
     const { showAlert } = useAlert();
     const dispatch = useDispatch();
+
+    const task = useSelector((state: RootState) =>
+        state.projectReducer.boards
+            .find(b => b.id === boardId)
+            ?.lists.find(l => l.id === listId)
+            ?.cards.find(c => c.id === taskId)
+    );
 
     const [isEdit, setIsEdit] = useState<boolean>(false);
     const [isUpdatingTask, setIsUpdatingTask] = useState<boolean>(false);
@@ -44,9 +52,9 @@ const TaskModal: React.FC<TaskModalProps> = ({
 
 
     useEffect(() => {
-        if (newTaskDescription != task.description || newTaskName != task.title) {
-            setNewTaskDescription(task.description);
-            setNewTaskName(task.title);
+        if (newTaskDescription != task?.description || newTaskName != task.title) {
+            setNewTaskDescription(task?.description || '');
+            setNewTaskName(task?.title || '');
         }
     }, [task, isOpenModal]);
 
@@ -57,7 +65,7 @@ const TaskModal: React.FC<TaskModalProps> = ({
 
         try {
             const response = await fetch(
-                `${process.env.REACT_APP_BACKEND_URI}/projects/${project.id}/boards/${boardId}/${listId}/${task.id}`,
+                `${process.env.REACT_APP_BACKEND_URI}/projects/${project.id}/boards/${boardId}/${listId}/${task?.id}`,
                 {
                     method: 'PUT',
                     credentials: 'include',
@@ -81,7 +89,7 @@ const TaskModal: React.FC<TaskModalProps> = ({
             dispatch(updateCardInList({
                 boardId: boardId,
                 listId: listId,
-                cardId: task.id,
+                cardId: task?.id || '',
                 updates: {
                     title: newTaskName || undefined,
                     description: newTaskDescription || undefined,
@@ -104,7 +112,7 @@ const TaskModal: React.FC<TaskModalProps> = ({
 
         try {
             const response = await fetch(
-                `${process.env.REACT_APP_BACKEND_URI}/projects/${project.id}/boards/${boardId}/${listId}/${task.id}`,
+                `${process.env.REACT_APP_BACKEND_URI}/projects/${project.id}/boards/${boardId}/${listId}/${task?.id}`,
                 {
                     method: 'DELETE',
                     credentials: 'include',
@@ -120,7 +128,7 @@ const TaskModal: React.FC<TaskModalProps> = ({
             dispatch(removeCardFromList({
                 boardId: boardId,
                 listId: listId,
-                cardId: task.id
+                cardId: task?.id || ''
             }));
 
             setOpenModal(false);
@@ -132,9 +140,39 @@ const TaskModal: React.FC<TaskModalProps> = ({
     }
 
     const handleDeleteMemberTask = async (memberId: string) => {
-        console.log(123)
+        if (isUpdatingTask) return;
+
+        setIsUpdatingTask(true);
+
+        try {
+            const response = await fetch(
+                `${process.env.REACT_APP_BACKEND_URI}/projects/${project.id}/boards/${boardId}/${listId}/${taskId}/remove-member/${memberId}`,
+                {
+                    method: 'PATCH',
+                    credentials: 'include',
+                }
+            );
+
+            if (!response.ok) {
+                const data = await response.json();
+                showAlert(`Server error: ${response.status}, ${data.message}`);
+                return;
+            }
+
+            dispatch(removeUserFromCardInList({
+                boardId: boardId,
+                listId: listId,
+                cardId: taskId,
+                userId: memberId
+            }));
+        } catch (error) {
+            showAlert(`Fetch failed: ${error}`);
+        } finally {
+            setIsUpdatingTask(false);
+        }
     }
 
+    if (!task) return null;
     if (!isOpenModal) return null;
 
     return (
