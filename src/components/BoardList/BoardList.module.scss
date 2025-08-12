@@ -1,0 +1,59 @@
+@import '../../styles/variables';
+
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    min-height: auto;
+    color: #FFFFFF;
+    gap: 10px;
+}
+
+.body {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    height: auto;
+    overflow-y: auto;
+}
+
+.main {
+    background-color: $color-bg-secondary;
+    border: 1px solid $color-hr;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 218px;
+    height: 32px;
+    padding: 10 15;
+    border-radius: 10px;
+    font-size: 20;
+}
+
+.buttonCreate {
+    width: 219px;
+    max-height: 52px;
+    min-height: 52px;
+}
+
+.listName {
+    font-size: 20;
+    color: #FFFFFF;
+    white-space: pre-wrap;
+    word-break: break-word;
+    width: 88%;
+}
+
+.listTextArea {
+    border: 1px solid $color-hr;
+    border-radius: 5px;
+    padding: 8 12;
+    color: #fff;
+    font-size: 16;
+    resize: none;
+    
+    &:focus {
+        border: none;
+    }
+}

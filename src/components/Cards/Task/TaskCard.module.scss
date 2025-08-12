@@ -1,0 +1,65 @@
+@import '../../../styles/variables';
+
+
+.taskItem {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    border: 1px solid #333;
+    border-radius: 8px;
+    background-color: $color-bg-secondary;
+    border: 1px solid $color-hr;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    text-decoration: none;
+
+    &:hover {
+        background-color: darken($color-bg-secondary, 5%);
+    }
+}
+
+.icon {
+    font-size: 26px;
+    color: #ccc;
+}
+
+.taskInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.title {
+    font-size: 16px;
+    font-weight: 500;
+    color: #fff;
+}
+
+.timestamps {
+    display: flex;
+    gap: 5px;
+}
+
+.projectDataContainer {
+    display: flex;
+    align-items: center;
+    background-color: $color-bg-secondary-2;
+    height: 25px;
+    min-width: 80px;
+    max-width: 115px;
+    font-weight: 200;
+    border-radius: 5px;
+    color: #FFFFFF;
+
+    span {
+        margin-left: 8px;
+        margin-right: 8px;
+    }
+}
+
+.projectDataText {
+    font-size: 12;
+    margin-right: 8px;
+}

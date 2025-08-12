@@ -1,0 +1,33 @@
+@import '../../../styles/variables';
+
+
+.container {
+    display: flex;
+    padding: 12px;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-left: 60px;
+    margin-right: 60px;
+}
+
+.title {
+    min-height: 150px;
+    display: flex;
+    align-items: center;
+    color: #fff;
+    font-size: 32;
+    font-weight: 400;
+}
+
+.hr {
+    margin-top: 20px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+}

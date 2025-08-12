@@ -1,0 +1,17 @@
+@import '../variables';
+
+
+.container {
+    margin-top: 38px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    overflow: auto;
+    height: 70%;
+}
+
+.boardTitle {
+	font-weight: 600;
+	font-size: 18px;
+	color: $color-primary;
+}
