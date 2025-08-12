@@ -8,16 +8,20 @@ import { BrowserRouter } from "react-router-dom";
 import { AlertProvider } from "./components/Alert/context";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
+import { Analytics } from '@vercel/analytics/react';
 
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
 root.render(
-	<Provider store={store}>
-		<BrowserRouter>
-			<DndProvider backend={HTML5Backend}>
-				<AlertProvider>
-					<App />
-				</AlertProvider>
-			</DndProvider>
-		</BrowserRouter>
-	</Provider>
+	<>
+		<Provider store={store}>
+			<BrowserRouter>
+				<DndProvider backend={HTML5Backend}>
+					<AlertProvider>
+						<App />
+					</AlertProvider>
+				</DndProvider>
+			</BrowserRouter>
+		</Provider>
+		<Analytics />
+	</>
 );
