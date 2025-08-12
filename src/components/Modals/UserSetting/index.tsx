@@ -107,16 +107,16 @@ const UserSettingModal: React.FC<UserSettingModalProps> = ({ username, discordId
                     <h2 style={{ fontSize: 26, marginBottom: 15 }}>Edit User</h2>
 
                     <div className={style.userInfo}>
-                        <text>Discord id</text>
-                        <div>{discordId}</div>
+                        <label className={style.userLabel}>Discord id</label>
+                        <div className={style.userValue}>{discordId}</div>
                     </div>
                     <div className={style.userInfo}>
-                        <text>Nickname</text>
-                        <div>{username}</div>
+                        <label className={style.userLabel}>Nickname</label>
+                        <div className={style.userValue}>{username}</div>
                     </div>
 
                     <div className={style.userInfo}>
-                        <text>Board</text>
+                        <label>Board</label>
                         <select
                             value={selectedBoardId}
                             onChange={(e) => setSelectedBoardId(e.target.value)}

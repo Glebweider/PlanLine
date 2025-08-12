@@ -112,3 +112,10 @@
         background-color: darken($color-bg-input, 5%);
     }
 }
+
+.warning {
+    color: $color-primary;
+    font-size: 13;
+    margin-top: 0px;
+    padding: 0 10px;
+}

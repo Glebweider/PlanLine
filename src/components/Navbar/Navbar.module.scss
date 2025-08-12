@@ -1,6 +1,5 @@
 @import '../../styles/_variables.scss';
 
-
 .container {
     display: flex;
     flex-direction: column;
@@ -8,14 +7,16 @@
     background-color: $color-bg-secondary;
     height: 96vh;
     max-width: 326px;
+    min-width: 326px;
     padding: 10px;
     border-radius: 15px;
-<<<<<<< Updated upstream
-=======
-    transition: max-width 0.3s ease, min-width 0.3s ease, all 0.3s ease;
-    max-width: 326px;
-    min-width: 326px;
+    transition: all 0.3s ease;
     overflow: hidden;
+
+    &.containerCollapsed {
+        max-width: 84px;
+        min-width: 84px;
+    }
 }
 
 .fade-in {
@@ -26,12 +27,6 @@
 .fade-out {
     opacity: 0;
     transition: opacity 0.3s ease;
-}
-
-.containerCollapsed {
-    max-width: 84px;
-    min-width: 84px;
->>>>>>> Stashed changes
 }
 
 .buttonCreateProject {
@@ -71,16 +66,20 @@
     min-height: 100%;
     width: 100%;
     color: #FFFFFF;
+    opacity: 1;
+    transition: opacity 0.2s ease-in-out;
     
-    a {
-        font-size: 20;
+    a,
+    span {
+        font-size: 20px;
         font-weight: 400;
         text-transform: capitalize;
     }
 }
 
+
 .changeVisibility {
-    font-size: 24;
+    font-size: 24px;
     color: #CFCFCF;
     padding: 10px;
     border-radius: 5px;
@@ -102,13 +101,17 @@
     height: 48px;
     width: 90%;
     border-radius: 10px;
-    padding: 8 0px;
+    padding: 8px 0;
     transition: background-color 0.2s ease;
     cursor: pointer;
-    font-size: 20;
+    font-size: 20px;
     color: $color-secondary;
 
     &:hover {
         background-color: $color-bg-secondary-hover;
     }
+}
+
+.containerCollapsed .userContent {
+    opacity: 0;
 }

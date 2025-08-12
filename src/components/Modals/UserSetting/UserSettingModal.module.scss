@@ -61,8 +61,8 @@
 
 .warning {
     color: $color-primary;
-    font-size: 10;
-    margin-top: 18px;
+    font-size: 13;
+    margin-top: 15px;
     padding: 0 10px;
 }
 
@@ -121,4 +121,14 @@
 .saveButton:disabled {
     opacity: 0.5;
     cursor: default;
+}
+
+
+
+.userLabel {
+
+}
+
+.userValue {
+
 }

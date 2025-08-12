@@ -1,7 +1,6 @@
-// MainView.jsx
 import { useLocation, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, MouseEvent } from 'react';
 import {
     AppstoreOutlined,
     CheckCircleOutlined,
@@ -20,7 +19,6 @@ import NavbarCard from '../Cards/NavbarCard';
 import NavbarProjectCard from '../Cards/NavbarProjectCard';
 import ButtonCreate from '../ButtonCreate';
 
-
 export interface IPreviewProject {
     id: string;
     name: string;
@@ -38,11 +36,10 @@ const Navbar = () => {
 
     const [isOpenModalNewProject, setOpenModalNewProject] = useState<boolean>(false);
     const [isOpenNavbar, setOpenNavbar] = useState<boolean>(false);
-    const [isOpenUserModal, setOpenUserModal] = useState<boolean>(false);
     const [projects, setProjects] = useState<IPreviewProject[]>([]);
 
     useEffect(() => {
-        if (projects.length == 0) {
+        if (projects.length === 0) {
             getPreviewProjects();
         }
     }, []);
@@ -74,47 +71,37 @@ const Navbar = () => {
         }
     };
 
+    const handleContainerClick = (e: MouseEvent<HTMLDivElement>) => {
+        const target = e.target as HTMLElement;
+        // Если клик был по кнопке, ссылке, иконке или input/textarea — не сворачиваем
+        if (
+            target.closest('button') ||
+            target.closest('a') ||
+            target.closest('input') ||
+            target.closest('textarea') ||
+            target.closest('svg') ||
+            target.closest(`.${style.buttonCreateProject}`)
+        ) {
+            return;
+        }
+        setOpenNavbar(prev => !prev);
+    };
 
     return (
         <>
             <div
-<<<<<<< Updated upstream
-                className={style.container}
-                style={!isOpenNavbar ? { width: '100%' } : { maxWidth: 84, minWidth: 84 }}>
-=======
                 className={`${style.container} ${isOpenNavbar ? style.containerCollapsed : ''}`}
-                onClick={() => {
-                    if (isOpenNavbar) {
-                        setOpenNavbar(false);
-                    } else {
-                        setOpenNavbar(true);
-                    }
-                }}
+                onClick={handleContainerClick}
             >
->>>>>>> Stashed changes
                 <div
-                    onClick={(e) => {
-                        e.stopPropagation();
-                        if (isOpenNavbar) {
-                            setOpenNavbar(false);
-                        } else {
-                            setOpenNavbar(true);
-                        }
-                    }}
-
-                    className={isOpenNavbar ? style.navbarDisable : style.userContainer}>
+                    className={isOpenNavbar ? style.userContainerCollapsed : style.userContainer}
+                >
                     <Avatar size={64} />
                     {!isOpenNavbar && (
                         <>
                             <div className={style.userContent}>
-                                <span className={hideText ? 'fade-out' : 'fade-in'}>
-                                    {user.username}
-                                </span>
+                                <span>{user.username}</span>
                             </div>
-                            <DoubleLeftOutlined
-                                onClick={() => setOpenNavbar(true)}
-                                className={style.changeVisibility}
-                            />
                         </>
                     )}
                 </div>
@@ -124,57 +111,67 @@ const Navbar = () => {
                         href={'dashboard'}
                         Icon={<AppstoreOutlined style={{ fontSize: 30 }} />}
                         title={!isOpenNavbar ? 'Dashboard' : ''}
-                        currentPath={currentPath} />
+                        currentPath={currentPath} 
+                    />
                     <NavbarCard
                         href={'tasks'}
                         Icon={<CheckCircleOutlined style={{ fontSize: 28 }} />}
                         title={!isOpenNavbar ? 'Tasks' : ''}
-                        currentPath={currentPath} />
+                        currentPath={currentPath} 
+                    />
 
-                    {projects.length > 0 &&
+                    {projects.length > 0 && (
                         <>
                             {!isOpenNavbar && <hr className={style.line} />}
                             <NavbarCard
                                 href={'projects'}
                                 Icon={<EllipsisOutlined style={{ fontSize: 30 }} />}
                                 title={!isOpenNavbar ? 'All Projects' : ''}
-                                currentPath={currentPath} />
+                                currentPath={currentPath} 
+                            />
 
                             {!isOpenNavbar && projects.map(project => (
                                 <NavbarProjectCard
                                     key={project.id}
                                     title={project.name}
                                     href={project.id}
-                                    taskCounter={project.cardsCount} />
+                                    taskCounter={project.cardsCount} 
+                                />
                             ))}
                         </>
-                    }
+                    )}
 
-                    {projectId &&
+                    {projectId && (
                         <>
                             {!isOpenNavbar && <hr className={style.line} />}
                             <NavbarCard
                                 href={`project/${projectId}/users`}
                                 Icon={<TeamOutlined style={{ fontSize: 26 }} />}
                                 title={!isOpenNavbar ? 'All Users' : ''}
-                                currentPath={currentPath} />
+                                currentPath={currentPath} 
+                            />
                             <NavbarCard
                                 href={`project/${projectId}/settings`}
                                 Icon={<SettingOutlined style={{ fontSize: 24 }} />}
                                 title={!isOpenNavbar ? 'Settings' : ''}
-                                currentPath={currentPath} />
+                                currentPath={currentPath} 
+                            />
                         </>
-                    }
+                    )}
                 </div>
 
-                {projects.length &&
-                    <ButtonCreate style={style.buttonCreateProject} setIsOpenCreateBoardModal={setOpenModalNewProject} />
-                }
+                {projects.length > 0 && (
+                    <ButtonCreate 
+                        style={style.buttonCreateProject} 
+                        setIsOpenCreateBoardModal={setOpenModalNewProject} 
+                    />
+                )}
             </div>
             <NewProjectModal
                 setProjects={setProjects}
                 isOpenModal={isOpenModalNewProject}
-                setOpenModal={setOpenModalNewProject} />
+                setOpenModal={setOpenModalNewProject} 
+            />
         </>
     );
 };

@@ -96,6 +96,7 @@ const UserMenu: React.FC<UserMenuProps> = ({ user, isOpenModal, setOpenModal, pr
                 discordId={user?.id} />
         </>
     );
+    
 }
 
 export default UserMenu;

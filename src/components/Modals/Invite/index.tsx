@@ -116,6 +116,7 @@ const InviteModal: React.FC<InviteModalProps> = ({ isOpenModal, setOpenModal }) 
                     </div>
                 )}
                 <hr className={style.hr} />
+                <text className={style.warning}>Please note that when you invite someone, they will have access to all boards as an observer. And to the selected one as a user. </text>
                 <button
                     className={style.saveButton}
                     disabled={isChange || inviteLink.length > 0}
