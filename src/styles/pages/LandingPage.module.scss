@@ -1,33 +1,5 @@
 @import '../variables';
 
-.container {
-	width: 100%;
-	height: 100vh;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	background: linear-gradient(-60deg, #1a1c40, #282a57, #3b3c73, #1a1c40);
-	background-size: 200% 200%;
-	animation: waveGradient 12s ease-in-out infinite;
-	color: $color-secondary;
-	font-size: 24;
-}
-
-@keyframes waveGradient {
-	0% {
-		background-position: 0% 50%;
-	}
-
-	50% {
-		background-position: 100% 50%;
-	}
-
-	100% {
-		background-position: 0% 50%;
-	}
-}
-
-
 
 .app {
 	display: flex;
@@ -37,7 +9,7 @@
 	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 	background: linear-gradient(-60deg, #1a1c40, #282a57, #3b3c73, #1a1c40);
 	animation: fadeSlideIn 1.2s ease forwards;
-	overflow: hidden;
+	overflow-x: hidden;
 	opacity: 0;
 }
 
@@ -273,10 +245,9 @@
 	cursor: default;
 }
 
-/* Плавающая закладка футера */
 .footerTab {
 	position: fixed;
-	bottom: 20px;
+	bottom: 25px;
 	right: 20px;
 	background: #7f5af0;
 	color: white;
@@ -286,26 +257,23 @@
 	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 	padding: 8px 16px;
 	transition: max-width 0.4s ease, background-color 0.3s ease;
-	max-width: 80px; // начальная ширина
+	max-width: 80px;
 	white-space: nowrap;
 }
 
 .footerTab.open {
-	max-width: 250px; // раскрытие футера
+	max-width: 250px;
 }
 
 .footerTab:hover {
 	background-color: #6843e0;
 }
 
-/* Контент футера */
 .footerContent {
 	font-size: 12px;
 	text-align: left;
 	opacity: 0;
-	/* Начальная скрытость */
 	transform: translateX(10px);
-	/* Сдвиг для анимации */
 	animation: fadeInSlide 0.4s forwards;
 }
 
@@ -323,5 +291,45 @@
 
 .footerTab:not(.open) .footerContent {
 	display: none;
-	/* Контент скрыт при закрытом футере */
+}
+
+
+/* 📱 Мобильная версия */
+@media (max-width: 768px) {
+
+	body {
+		overflow-y: auto !important;
+		-webkit-overflow-scrolling: touch;
+	}
+
+	.header {
+		padding: 20px;
+	}
+
+	.main {
+		padding: 35px 20px;
+		flex: 1;
+		align-items: flex-start;
+	}
+
+	.authButton {
+		margin-bottom: 15px;
+	}
+
+	.controlButton {
+		padding: 12px 32px;
+		border-radius: 50px;
+	}
+
+	.authButtonSmall {
+		padding: 12px 15px;
+	}
+
+	.footerTab {
+		font-size: 16px;
+	}
+
+	.footerContent {
+		font-size: 14px;
+	}
 }

@@ -18,7 +18,7 @@ const slides = [
 	{
 		title: "Smart boards & analytics",
 		text: "Organize your workflow with Kanban boards and get insightful analytics to track your team's performance.",
-		image: "https://images.unsplash.com/photo-1551836022-4296f10a3db1?auto=format&fit=crop&w=800&q=80"
+		image: "https://media.gettyimages.com/id/1496883078/photo/business-people-smart-board-and-analytics-in-meeting-for-corporate-data-graph-or-charts-at.jpg?s=1024x1024&w=gi&k=20&c=Nu11CGB3xUW6_HX3QWBqmEI_pexgy-TQaH3vuwKVXyc="
 	}
 ];
 
