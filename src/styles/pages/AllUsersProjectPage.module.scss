@@ -11,3 +11,18 @@
     flex-wrap: wrap;
     gap: 20px;
 }
+
+/* 📱 Мобильная версия */
+@media (max-width: 768px) {
+    .container {
+        margin-top: 28px;
+        overflow-y: auto;
+        overflow-x: hidden;
+        height: 90%;
+        padding-bottom: 25px;
+    }
+
+    .content {
+        gap: 12px;
+    }
+}

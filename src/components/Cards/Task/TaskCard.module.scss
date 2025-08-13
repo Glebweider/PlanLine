@@ -21,6 +21,8 @@
 }
 
 .icon {
+    width: 26px;
+    height: 26px;
     font-size: 26px;
     color: #ccc;
 }
@@ -54,6 +56,7 @@
     color: #FFFFFF;
 
     span {
+        font-size: 14;
         margin-left: 8px;
         margin-right: 8px;
     }
@@ -62,4 +65,39 @@
 .projectDataText {
     font-size: 12;
     margin-right: 8px;
+}
+
+/* 📱 Мобильная версия */
+@media (max-width: 768px) {
+    .taskItem {
+        gap: 12px;
+        padding: 10px 10px;
+        border-radius: 8px;
+    }
+
+    .icon {
+        width: 20px;
+        height: 20px;
+        font-size: 20px;
+    }
+
+    .title {
+        font-size: 16;
+    }
+
+    .projectDataContainer {
+        height: 20px;
+        min-width: 60px;
+        max-width: 100px;
+
+        span {
+            font-size: 12;
+            margin-left: 6px;
+            margin-right: 6px;
+        }
+    }
+
+    .projectDataText {
+        font-size: 10;
+    }
 }

@@ -8,6 +8,11 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
+html,
+body {
+    overflow: hidden;
+}
+
 body {
     font-size: 12;
     color: $color-primary;
@@ -16,7 +21,6 @@ body {
     min-height: 100vh;
     font-family: 'Outfit', sans-serif;
     font-weight: 300;
-    overflow: hidden;
 }
 
 .modalOverlay {

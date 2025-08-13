@@ -45,19 +45,19 @@ const TaskCard: React.FC<TaskCardProps> = ({ projectId, task }) => {
                 <div className={style.timestamps}>
                     <Tooltip text="Дата окончания задачи">
                         <div className={style.projectDataContainer}>
-                            <CheckCircleOutlined style={{ fontSize: 14 }} />
+                            <CheckCircleOutlined />
                             <text className={style.projectDataText}>{formatDateShortEn(task.dueDate)}</text>
                         </div>
                     </Tooltip>
                     <Tooltip text="Дата созданния задачи">
                         <div className={style.projectDataContainer}>
-                            <QuestionCircleOutlined style={{ fontSize: 14 }} />
+                            <QuestionCircleOutlined />
                             <text className={style.projectDataText}>{formatDateShortEn(`${task.createdAt}`)}</text>
                         </div>
                     </Tooltip>
                     <Tooltip text="Дата обновленния задачи">
                         <div className={style.projectDataContainer}>
-                            <InfoCircleOutlined style={{ fontSize: 14 }} />
+                            <InfoCircleOutlined />
                             <text className={style.projectDataText}>{formatDateShortEn(`${task.updatedAt}`)}</text>
                         </div>
                     </Tooltip>

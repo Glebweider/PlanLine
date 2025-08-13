@@ -36,3 +36,10 @@
     color: $color-secondary;
     font-size: 14;
 }
+
+/* 📱 Мобильная версия */
+@media (max-width: 768px) {
+    .container {
+        max-width: 255px;
+    }
+}

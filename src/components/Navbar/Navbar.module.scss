@@ -25,19 +25,8 @@
     height: 60px;
 }
 
-.navbarDisable {
-    margin-top: 12px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 10px;
-}
-
 .line {
-    width: 100%;
-    height: 1px;
     margin-top: 20px;
-    background-color: $color-hr;
 }
 
 .userContainer {
@@ -57,7 +46,7 @@
     min-height: 100%;
     width: 100%;
     color: #FFFFFF;
-    
+
     a {
         font-size: 20;
         font-weight: 400;
@@ -96,5 +85,58 @@
 
     &:hover {
         background-color: $color-bg-secondary-hover;
+    }
+}
+
+.content {
+    width: 100%;
+    height: 100%;
+    margin-top: 34px;
+}
+
+.containerCollapsed {
+
+    .content {
+        width: auto;
+
+        a text {
+            display: none;
+        }
+    }
+
+    .userContainer {
+        width: 100%;
+        justify-content: center;
+
+        div {
+            display: none;
+        }
+
+        span {
+            display: none;
+        }
+    }
+}
+
+/* 📱 Мобильная версия */
+@media (max-width: 768px) {
+    .containerCollapsed {
+
+        .content {
+            margin-top: 12px;
+
+            a {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            a span {
+                font-size: 32;
+            }
+        }
+
+        max-width: 64px;
+        min-width: 64px;
     }
 }

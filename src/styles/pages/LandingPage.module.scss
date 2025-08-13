@@ -297,10 +297,10 @@
 /* 📱 Мобильная версия */
 @media (max-width: 768px) {
 
-	body {
-		overflow-y: auto !important;
-		-webkit-overflow-scrolling: touch;
-	}
+	// body {
+	// 	overflow-y: auto !important;
+	// 	-webkit-overflow-scrolling: touch;
+	// }
 
 	.header {
 		padding: 20px;

@@ -6,12 +6,27 @@
     display: flex;
     flex-direction: column;
     gap: 24px;
-    overflow: auto;
-    height: 70%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 90%;
+    padding-bottom: 25px;
 }
 
 .boardTitle {
-	font-weight: 600;
-	font-size: 18px;
-	color: $color-primary;
+    font-weight: 600;
+    font-size: 18px;
+    color: $color-primary;
+}
+
+.boardContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* 📱 Мобильная версия */
+@media (max-width: 768px) {
+    .container {
+        margin-top: 28px;
+    }
 }

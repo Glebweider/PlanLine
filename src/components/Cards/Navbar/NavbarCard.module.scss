@@ -32,3 +32,12 @@
 .navbarClose {
     justify-content: center;
 }
+
+/* 📱 Мобильная версия */
+@media (max-width: 768px) {
+    .container span {
+        font-weight: 400;
+        margin-left: 15px;
+        margin-right: 15px;
+    }
+}

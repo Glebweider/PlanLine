@@ -43,14 +43,13 @@ const TasksPage = () => {
 					return acc;
 				}, {})
 			).map(([boardName, boardTasks]) => (
-				<div key={boardName} style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+				<div key={boardName} className={style.boardContainer}>
 					<div className={style.boardTitle}>{boardName}</div>
 					{boardTasks.map(task => (
 						<TaskCard key={task.id} projectId={projectId || ''} task={task} />
 					))}
 				</div>
 			))}
-
 		</div>
 	);
 };

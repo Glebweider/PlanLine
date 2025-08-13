@@ -40,19 +40,19 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, setProjects }) => {
                 </div>
                 <div className={style.projectFooter}>
                     <div className={style.projectDataContainer}>
-                        <ProjectOutlined style={{ fontSize: 14 }} />
+                        <ProjectOutlined />
                         <text className={style.projectDataText}>{project.boardsCount} Boards</text>
                     </div>
                     <div className={style.projectDataContainer}>
-                        <ProfileOutlined style={{ fontSize: 14 }} />
+                        <ProfileOutlined />
                         <text className={style.projectDataText}>{project.cardsCount} Tasks</text>
                     </div>
                     <div className={style.projectDataContainer}>
-                        <CalendarOutlined style={{ fontSize: 14 }} />
+                        <CalendarOutlined />
                         <text className={style.projectDataText}>{formatDateShortEn(project.dateOfCreation)}</text>
                     </div>
                     <div className={style.projectDataContainer}>
-                        <TeamOutlined style={{ fontSize: 14 }} />
+                        <TeamOutlined />
                         <text className={style.projectDataText}>{project.membersCount} Assigned</text>
                     </div>
                 </div>

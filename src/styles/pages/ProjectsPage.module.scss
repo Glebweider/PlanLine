@@ -3,4 +3,18 @@
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 90%;
+    padding-bottom: 25px;
+}
+
+/* 📱 Мобильная версия */
+@media (max-width: 768px) {
+    .container {
+        margin-top: 28px;
+        flex-wrap: nowrap;
+        flex-direction: column;
+        gap: 12px;
+    }
 }

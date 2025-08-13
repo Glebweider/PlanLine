@@ -61,3 +61,11 @@
     opacity: 0.5;
     cursor: default;
 }
+
+/* 📱 Мобильная версия */
+@media (max-width: 768px) {
+    .modal {
+        padding: 18px;
+        width: 80%;
+    }
+}

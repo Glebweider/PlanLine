@@ -97,3 +97,11 @@
         background-color: darken($color-bg-input, 5%);
     }
 }
+
+/* 📱 Мобильная версия */
+@media (max-width: 768px) {
+    .modal {
+        padding: 18px;
+        width: 80%;
+    }
+}

@@ -49,7 +49,7 @@ const Navbar = () => {
     useEffect(() => {
         localStorage.setItem('isOpenNavbar', `${isOpenNavbar}`);
         dispacth(setIsNavbarOpen(isOpenNavbar))
-        
+
         if (isOpenNavbar) {
             const timeout = setTimeout(() => setHideText(true), 300);
             return () => clearTimeout(timeout);
@@ -101,31 +101,27 @@ const Navbar = () => {
             <div className={`${style.container} ${isOpenNavbar ? style.containerCollapsed : ''}`}>
                 <div
                     onClick={() => isOpenNavbar ? setOpenNavbar(false) : setOpenUserModal(true)}
-                    className={isOpenNavbar ? style.navbarDisable : style.userContainer}>
+                    className={style.userContainer}>
                     <Avatar size={64} />
-                    {!isOpenNavbar &&
-                        <>
-                            <div className={style.userContent}>
-                                <a>{user.username}</a>
-                                {/* <text>Online</text> */}
-                            </div>
-                            <DoubleLeftOutlined
-                                onClick={() => setOpenNavbar(true)}
-                                className={style.changeVisibility} />
-                        </>
-                    }
+                    <div className={style.userContent}>
+                        <a>{user.username}</a>
+                        {/* <text>Online</text> */}
+                    </div>
+                    <DoubleLeftOutlined
+                        onClick={() => setOpenNavbar(true)}
+                        className={style.changeVisibility} />
                 </div>
 
-                <div style={{ width: '100%', height: '100%', marginTop: 34 }}>
+                <div className={style.content}>
                     <NavbarCard
                         href={'dashboard'}
                         Icon={<AppstoreOutlined style={{ fontSize: 30 }} />}
-                        title={!isOpenNavbar ? 'Dashboard' : ''}
+                        title={'Dashboard'}
                         currentPath={currentPath} />
                     <NavbarCard
                         href={'tasks'}
                         Icon={<CheckCircleOutlined style={{ fontSize: 28 }} />}
-                        title={!isOpenNavbar ? 'Tasks' : ''}
+                        title={'Tasks'}
                         currentPath={currentPath} />
 
                     {projects.length > 0 &&
@@ -134,7 +130,7 @@ const Navbar = () => {
                             <NavbarCard
                                 href={'projects'}
                                 Icon={<EllipsisOutlined style={{ fontSize: 30 }} />}
-                                title={!isOpenNavbar ? 'All Projects' : ''}
+                                title={'All Projects'}
                                 currentPath={currentPath} />
 
                             {!isOpenNavbar && projects.map(project => (
@@ -153,13 +149,13 @@ const Navbar = () => {
                             <NavbarCard
                                 href={`project/${projectId}/users`}
                                 Icon={<TeamOutlined style={{ fontSize: 26 }} />}
-                                title={!isOpenNavbar ? 'All Users' : ''}
+                                title={'All Users'}
                                 currentPath={currentPath} />
                             {projects.find(project => project.id === projectId)?.ownerId === user.id &&
                                 <NavbarCard
                                     href={`project/${projectId}/settings`}
                                     Icon={<SettingOutlined style={{ fontSize: 24 }} />}
-                                    title={!isOpenNavbar ? 'Settings' : ''}
+                                    title={'Settings'}
                                     currentPath={currentPath} />
                             }
                         </>

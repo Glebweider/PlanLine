@@ -2,7 +2,7 @@
 
 
 .container {
-    padding: 24px;
+    margin-top: 38px;
     color: #fff;
 }
 
@@ -99,5 +99,25 @@
 
     &:hover {
         background: #d9363e;
+    }
+}
+
+/* 📱 Мобильная версия */
+@media (max-width: 768px) {
+    .container {
+        margin-top: 28px;
+    }
+
+    .code {
+        font-size: 11px;
+    }
+
+    .saveBtn {
+        padding: 0 12;
+        max-height: 32px;
+        min-height: 32px;
+        font-weight: 300;
+        font-size: 14;
+        margin-left: 8px;
     }
 }

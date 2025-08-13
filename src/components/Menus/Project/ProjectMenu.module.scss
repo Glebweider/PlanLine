@@ -48,3 +48,22 @@
         background-color: #282828;
     }
 }
+
+/* 📱 Мобильная версия */
+@media (max-width: 768px) {
+    .container {
+        margin-left: 95px;
+        padding: 10px;
+    }
+
+    .open {
+        margin-top: 50px;
+        width: 170px;
+    }
+
+    .content span {
+        margin-left: 10px;
+        margin-right: 5px;
+        width: 25px;
+    }
+}

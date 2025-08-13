@@ -38,7 +38,7 @@
     color: #fff;
     font-size: 16;
     resize: none;
-    
+
     &:focus {
         border: none;
     }
@@ -71,4 +71,11 @@
 
 .memberAvatar:first-child {
     margin-left: 0;
+}
+
+/* 📱 Мобильная версия */
+@media (max-width: 768px) {
+    .container {
+        width: 258px;
+    }
 }
