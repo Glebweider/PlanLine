@@ -61,6 +61,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, setProjects }) => {
                 isOpenModal={isOpenProjectMenu}
                 projectOwnerId={project.ownerId}
                 projectId={project.id}
+                onClose={() => setIsOpenProjectMenu(false)}
                 setProjects={setProjects} />
         </div>
     );

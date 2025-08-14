@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import style from './NewMember.module.scss';
 import { useAlert } from '../../Alert/context';
@@ -18,21 +18,23 @@ interface NewMemberProps {
     taskId: string;
 }
 
-const NewMemberMenu: React.FC<NewMemberProps> = ({ 
-    isOpenModal, 
-    setOpenModal, 
-    users, 
+const NewMemberMenu: React.FC<NewMemberProps> = ({
+    isOpenModal,
+    setOpenModal,
+    users,
     members,
     projectId,
     boardId,
     listId,
     taskId
- }) => {
+}) => {
     const { showAlert } = useAlert();
     const dispatch = useDispatch();
 
     const [isOpenMdl, setIsOpenMdl] = useState<boolean>(false);
     const [isUpdatingTask, setIsUpdatingTask] = useState<boolean>(false);
+
+    const menuRef = useRef<HTMLDivElement>(null);
 
 
     useEffect(() => {
@@ -45,6 +47,21 @@ const NewMemberMenu: React.FC<NewMemberProps> = ({
             return () => clearTimeout(timer);
         }
     }, [isOpenModal]);
+
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (!isOpenModal && menuRef.current && !menuRef.current.contains(event.target as Node)) {
+                setOpenModal(false);
+            }
+        };
+
+        if (isOpenModal)
+            document.addEventListener("mousedown", handleClickOutside);
+
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, [isOpenModal, isOpenModal, setOpenModal]);
 
     const addUser = async (userId: string) => {
         if (isUpdatingTask) return;
@@ -81,10 +98,12 @@ const NewMemberMenu: React.FC<NewMemberProps> = ({
         }
     }
 
-    if (!isOpenMdl) return <></>
+    if (!isOpenMdl) return null;
 
     return (
-        <div className={`${style.container} ${isOpenModal ? style.open : ''}`}>
+        <div
+            ref={menuRef}
+            className={`${style.container} ${isOpenModal ? style.open : ''}`}>
             {users.filter(user => !members.includes(user.id)).map(user =>
                 <div
                     onClick={() => addUser(user.id)}

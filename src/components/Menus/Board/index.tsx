@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import style from './BoardMenu.module.scss';
 import { RootState } from '../../../redux/store';
@@ -28,6 +28,8 @@ const BoardMenu: React.FC<BoardMenuProps> = ({ textareaRef, isOpenModal, project
     const [isOpenMdl, setIsOpenMdl] = useState<boolean>(false);
     const [isDeleteBoard, setIsDeleteBoard] = useState<boolean>(false);
 
+    const menuRef = useRef<HTMLDivElement>(null);
+
 
     useEffect(() => {
         if (isOpenModal) {
@@ -40,10 +42,35 @@ const BoardMenu: React.FC<BoardMenuProps> = ({ textareaRef, isOpenModal, project
         }
     }, [isOpenModal]);
 
-    const renameBoard = async () => {
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+                setOpenModal(false);
+            }
+        };
+
+        if (isOpenModal) {
+            document.addEventListener("mousedown", handleClickOutside);
+        } else {
+            document.removeEventListener("mousedown", handleClickOutside);
+        }
+
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, [isOpenModal, setOpenModal]);
+
+    const renameBoard = () => {
         setIsRenameBoard(true);
-        textareaRef.current?.focus();
         setOpenModal(false);
+
+
+        setTimeout(() => {
+            if (textareaRef.current) {
+                textareaRef.current.focus();
+                textareaRef.current.select();
+            }
+        }, 0);
     };
 
     const deleteBoard = async () => {
@@ -76,10 +103,12 @@ const BoardMenu: React.FC<BoardMenuProps> = ({ textareaRef, isOpenModal, project
     };
 
 
-    if (!isOpenMdl) return <></>
+    if (!isOpenMdl) return null;
 
     return (
-        <div className={`${style.container} ${isOpenModal ? style.open : ''}`}>
+        <div
+            ref={menuRef}
+            className={`${style.container} ${isOpenModal ? style.open : ''}`}>
             {projectOwnerId == userId &&
                 <div
                     onClick={renameBoard}

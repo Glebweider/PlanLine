@@ -1,5 +1,5 @@
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 
 import style from './ListMenu.module.scss';
@@ -24,6 +24,8 @@ const ListMenu: React.FC<ListMenuProps> = ({ textareaRef, isOpenModal, projectId
     const [isOpenMdl, setIsOpenMdl] = useState<boolean>(false);
     const [isUseList, setIsUseList] = useState<boolean>(false);
 
+    const menuRef = useRef<HTMLDivElement>(null);
+
 
     useEffect(() => {
         if (isOpenModal) {
@@ -36,10 +38,35 @@ const ListMenu: React.FC<ListMenuProps> = ({ textareaRef, isOpenModal, projectId
         }
     }, [isOpenModal]);
 
-    const renameList = async () => {
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+                setOpenModal(false);
+            }
+        };
+
+        if (isOpenModal) {
+            document.addEventListener("mousedown", handleClickOutside);
+        } else {
+            document.removeEventListener("mousedown", handleClickOutside);
+        }
+
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, [isOpenModal, setOpenModal]);
+
+    const renameList = () => {
         setIsRenameList(true);
-        textareaRef.current?.focus();
         setOpenModal(false);
+
+
+        setTimeout(() => {
+            if (textareaRef.current) {
+                textareaRef.current.focus();
+                textareaRef.current.select();
+            }
+        }, 0);
     };
 
     const deleteList = async () => {
@@ -74,10 +101,11 @@ const ListMenu: React.FC<ListMenuProps> = ({ textareaRef, isOpenModal, projectId
     };
 
 
-    if (!isOpenMdl) return <></>
-
+    if (!isOpenMdl) return null;
     return (
-        <div className={`${style.container} ${isOpenModal ? style.open : ''}`}>
+        <div
+            ref={menuRef}
+            className={`${style.container} ${isOpenModal ? style.open : ''}`}>
             <div
                 onClick={renameList}
                 className={style.content}>

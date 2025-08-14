@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 import { LogoutOutlined, SettingOutlined, TeamOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 import style from './ProjectMenu.module.scss';
 import { RootState } from '../../../redux/store';
@@ -13,16 +13,18 @@ interface ProjectMenuProps {
     isOpenModal: boolean;
     projectOwnerId: string;
     projectId: string;
+    onClose: () => void;
     setProjects: React.Dispatch<React.SetStateAction<IProjectCard[]>>;
 }
 
-const ProjectMenu: React.FC<ProjectMenuProps> = ({ isOpenModal, projectOwnerId, projectId, setProjects }) => {
+const ProjectMenu: React.FC<ProjectMenuProps> = ({ isOpenModal, projectOwnerId, projectId, onClose, setProjects }) => {
     const { showAlert } = useAlert();
 
     const userId = useSelector((state: RootState) => state.userReducer.id);
 
     const [isOpenMdl, setIsOpenMdl] = useState<boolean>(false);
     const [isLeaveProject, setIsLeaveProject] = useState<boolean>(false);
+    const menuRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         if (isOpenModal) {
@@ -35,6 +37,21 @@ const ProjectMenu: React.FC<ProjectMenuProps> = ({ isOpenModal, projectOwnerId, 
         }
     }, [isOpenModal]);
 
+
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+                onClose();
+            }
+        };
+
+        if (isOpenModal) 
+            document.addEventListener('mousedown', handleClickOutside);
+
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [isOpenModal, onClose]);
 
     const leaveProject = async () => {
         if (isLeaveProject) return;
@@ -65,10 +82,12 @@ const ProjectMenu: React.FC<ProjectMenuProps> = ({ isOpenModal, projectOwnerId, 
     };
 
 
-    if (!isOpenMdl) return <></>
+    if (!isOpenMdl) return null;
 
     return (
-        <div className={`${style.container} ${isOpenModal ? style.open : ''}`}>
+        <div 
+            ref={menuRef}
+            className={`${style.container} ${isOpenModal ? style.open : ''}`}>
             <Link
                 to={`/project/${projectId}/users`}
                 className={style.content}>

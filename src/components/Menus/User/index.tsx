@@ -1,6 +1,6 @@
 import { LogoutOutlined, SettingOutlined } from '@ant-design/icons';
 import { useDispatch } from 'react-redux';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import style from './UserMenu.module.scss';
 import UserSettingModal from '../../Modals/UserSetting';
@@ -23,6 +23,7 @@ const UserMenu: React.FC<UserMenuProps> = ({ user, isOpenModal, setOpenModal, pr
     const [isKickUser, setIsKickUser] = useState<boolean>(false);
     const [isOpenMdl, setIsOpenMdl] = useState<boolean>(false);
 
+    const menuRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         if (isOpenModal) {
@@ -34,6 +35,21 @@ const UserMenu: React.FC<UserMenuProps> = ({ user, isOpenModal, setOpenModal, pr
             return () => clearTimeout(timer);
         }
     }, [isOpenModal]);
+
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (!isOpenUserSettingsMenu && menuRef.current && !menuRef.current.contains(event.target as Node)) {
+                setOpenModal(false);
+            }
+        };
+
+        if (isOpenModal)
+            document.addEventListener("mousedown", handleClickOutside);
+
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, [isOpenModal, isOpenUserSettingsMenu, setOpenModal]);
 
     const kickUser = async () => {
         if (isKickUser) return;
@@ -70,11 +86,13 @@ const UserMenu: React.FC<UserMenuProps> = ({ user, isOpenModal, setOpenModal, pr
         }
     };
 
-    if (!isOpenMdl) return <></>
+    if (!isOpenMdl) return null;
 
     return (
         <>
-            <div className={`${style.container} ${isOpenModal ? style.open : ''}`}>
+            <div
+                ref={menuRef}
+                className={`${style.container} ${isOpenModal ? style.open : ''}`}>
                 <div
                     onClick={() => setIsOpenUserSettingsMenu(true)}
                     className={style.content}>
