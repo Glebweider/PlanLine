@@ -49,8 +49,8 @@
 
 .warning {
     color: $color-primary;
-    font-size: 10;
-    margin-top: 18px;
+    font-size: 13;
+    margin-top: 15px;
     padding: 0 10px;
 }
 
@@ -74,7 +74,7 @@
     border: 2px solid $color-hr;
     cursor: pointer;
     transition: background-color 0.2s;
-    
+
     span {
         height: 70px;
     }

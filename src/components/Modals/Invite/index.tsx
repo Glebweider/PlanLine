@@ -16,6 +16,7 @@ const InviteModal: React.FC<InviteModalProps> = ({ isOpenModal, setOpenModal }) 
     const projectState = useSelector((state: RootState) => state.projectReducer);
 
     const [selectedBoardId, setSelectedBoardId] = useState<string>('');
+    const [selectedLinkUsed, setSelectedLinkUsed] = useState<number | "">("");
     const [isChange, setIsChange] = useState<boolean>(false);
     const [inviteLink, setInviteLink] = useState<string>('');
 
@@ -38,7 +39,8 @@ const InviteModal: React.FC<InviteModalProps> = ({ isOpenModal, setOpenModal }) 
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
-                        ...(selectedBoardId ? { boardId: selectedBoardId } : {})
+                        ...(selectedBoardId ? { boardId: selectedBoardId } : {}),
+                        ...(selectedLinkUsed ? { linkUsed: Number(selectedLinkUsed) } : {})
                     })
                 }
             );
@@ -85,6 +87,20 @@ const InviteModal: React.FC<InviteModalProps> = ({ isOpenModal, setOpenModal }) 
                     </select>
                 </div>
 
+                <div className={style.userInfo}>
+                    <text>Max link used</text>
+                    <select
+                        value={selectedLinkUsed}
+                        onChange={(e) => setSelectedLinkUsed(Number(e.target.value))}
+                        className={style.select}>
+                        <option value="">Select link used</option>
+                        <option value="1">1</option>
+                        <option value="5">5</option>
+                        <option value="10">10</option>
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                    </select>
+                </div>
                 {inviteLink && (
                     <div className={style.inviteLinkBox}>
                         <p>Invite link:</p>
@@ -107,6 +123,10 @@ const InviteModal: React.FC<InviteModalProps> = ({ isOpenModal, setOpenModal }) 
                 )}
 
                 <hr className={style.hr} />
+                <text className={style.warning}>
+                    Please note that when you invite someone, they will have access to all boards as an observer. And to the selected one as a user.
+                </text>
+
                 <button
                     className={style.saveButton}
                     disabled={isChange || inviteLink.length > 0}
