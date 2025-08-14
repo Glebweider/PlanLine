@@ -1,12 +1,11 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import style from './BoardMenu.module.scss';
 import { RootState } from '../../../redux/store';
 import { useAlert } from '../../Alert/context';
 import { deleteBoardFromProject } from '../../../redux/reducers/projectReducer';
-
 
 interface BoardMenuProps {
     textareaRef: React.RefObject<HTMLTextAreaElement>;
@@ -22,12 +21,12 @@ interface BoardMenuProps {
 const BoardMenu: React.FC<BoardMenuProps> = ({ textareaRef, isOpenModal, projectOwnerId, projectId, boardId, setOpenModal, isRenameBoard, setIsRenameBoard }) => {
     const { showAlert } = useAlert();
     const dispatch = useDispatch();
-
     const userId = useSelector((state: RootState) => state.userReducer.id);
 
     const [isOpenMdl, setIsOpenMdl] = useState<boolean>(false);
     const [isDeleteBoard, setIsDeleteBoard] = useState<boolean>(false);
 
+    const menuRef = useRef<HTMLDivElement>(null); // ссылка на меню
 
     useEffect(() => {
         if (isOpenModal) {
@@ -40,15 +39,40 @@ const BoardMenu: React.FC<BoardMenuProps> = ({ textareaRef, isOpenModal, project
         }
     }, [isOpenModal]);
 
-    const renameBoard = async () => {
-        setIsRenameBoard(true);
-        textareaRef.current?.focus();
-        setOpenModal(false);
-    };
+    // Закрытие при клике вне меню
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+                setOpenModal(false);
+            }
+        };
+
+        if (isOpenModal) {
+            document.addEventListener("mousedown", handleClickOutside);
+        } else {
+            document.removeEventListener("mousedown", handleClickOutside);
+        }
+
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, [isOpenModal, setOpenModal]);
+
+const renameBoard = () => {
+    setIsRenameBoard(true);
+    setOpenModal(false);
+
+
+    setTimeout(() => {
+        if (textareaRef.current) {
+            textareaRef.current.focus();
+            textareaRef.current.select(); 
+        }
+    }, 0);
+};
 
     const deleteBoard = async () => {
         if (isDeleteBoard) return;
-
         setIsDeleteBoard(true);
 
         try {
@@ -75,27 +99,25 @@ const BoardMenu: React.FC<BoardMenuProps> = ({ textareaRef, isOpenModal, project
         }
     };
 
-
-    if (!isOpenMdl) return <></>
+    if (!isOpenMdl) return null;
 
     return (
-        <div className={`${style.container} ${isOpenModal ? style.open : ''}`}>
-            {projectOwnerId == userId &&
-                <div
-                    onClick={renameBoard}
-                    className={style.content}>
+        <div
+            ref={menuRef}
+            className={`${style.container} ${isOpenModal ? style.open : ''}`}
+        >
+            {projectOwnerId === userId && (
+                <div onClick={renameBoard} className={style.content}>
                     <EditOutlined style={{ fontSize: 20 }} />
-                    <text>Rename</text>
+                    <span>Rename</span>
                 </div>
-            }
-            {projectOwnerId == userId &&
-                <div
-                    onClick={deleteBoard}
-                    className={style.content}>
+            )}
+            {projectOwnerId === userId && (
+                <div onClick={deleteBoard} className={style.content}>
                     <DeleteOutlined style={{ color: '#FF2D20', fontSize: 20 }} />
-                    <text style={{ color: '#FF2D20' }}>Delete</text>
+                    <span style={{ color: '#FF2D20' }}>Delete</span>
                 </div>
-            }
+            )}
         </div>
     );
 };

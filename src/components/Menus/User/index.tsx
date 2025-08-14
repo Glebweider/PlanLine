@@ -1,13 +1,11 @@
-import { LogoutOutlined, SettingOutlined, TeamOutlined } from '@ant-design/icons';
-import { Link, useNavigate } from 'react-router-dom';
-
-import style from './UserMenu.module.scss';
-import UserSettingModal from '../../Modals/UserSetting';
-import { useEffect, useState } from 'react';
+import { LogoutOutlined, SettingOutlined } from '@ant-design/icons';
+import { useEffect, useRef, useState } from 'react';
 import { useAlert } from '../../Alert/context';
 import { useDispatch } from 'react-redux';
 import { removeUserFromProject } from 'src/redux/reducers/projectReducer';
 
+import style from './UserMenu.module.scss';
+import UserSettingModal from '../../Modals/UserSetting';
 
 interface UserMenuProps {
     user: any;
@@ -20,25 +18,43 @@ const UserMenu: React.FC<UserMenuProps> = ({ user, isOpenModal, setOpenModal, pr
     const { showAlert } = useAlert();
     const dispatch = useDispatch();
 
-    const [isOpenUserSettingsMenu, setIsOpenUserSettingsMenu] = useState<boolean>(false);
-    const [isKickUser, setIsKickUser] = useState<boolean>(false);
-    const [isOpenMdl, setIsOpenMdl] = useState<boolean>(false);
+    const [isOpenUserSettingsMenu, setIsOpenUserSettingsMenu] = useState(false);
+    const [isKickUser, setIsKickUser] = useState(false);
+    const [isOpenMdl, setIsOpenMdl] = useState(false);
 
+    const menuRef = useRef<HTMLDivElement>(null);
 
+    // Плавное скрытие меню
     useEffect(() => {
         if (isOpenModal) {
             setIsOpenMdl(true);
         } else {
             const timer = setTimeout(() => {
                 setIsOpenMdl(false);
-            }, 1000);
+            }, 300); // можно настроить под анимацию
             return () => clearTimeout(timer);
         }
     }, [isOpenModal]);
 
+    // Закрытие при клике вне меню, только если не открыто другое меню
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (!isOpenUserSettingsMenu && menuRef.current && !menuRef.current.contains(event.target as Node)) {
+                setOpenModal(false);
+            }
+        };
+
+        if (isOpenModal) {
+            document.addEventListener("mousedown", handleClickOutside);
+        }
+
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, [isOpenModal, isOpenUserSettingsMenu, setOpenModal]);
+
     const kickUser = async () => {
         if (isKickUser) return;
-
         setIsKickUser(true);
 
         try {
@@ -47,12 +63,8 @@ const UserMenu: React.FC<UserMenuProps> = ({ user, isOpenModal, setOpenModal, pr
                 {
                     method: 'POST',
                     credentials: 'include',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        discordId: user?.id,
-                    })
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ discordId: user?.id })
                 }
             );
 
@@ -71,32 +83,38 @@ const UserMenu: React.FC<UserMenuProps> = ({ user, isOpenModal, setOpenModal, pr
         }
     };
 
-    if (!isOpenMdl) return <></>
+    if (!isOpenMdl) return null;
 
     return (
         <>
-            <div className={`${style.container} ${isOpenModal ? style.open : ''}`}>
+            <div
+                ref={menuRef}
+                className={`${style.container} ${isOpenModal ? style.open : ''}`}
+            >
                 <div
                     onClick={() => setIsOpenUserSettingsMenu(true)}
-                    className={style.content}>
+                    className={style.content}
+                >
                     <SettingOutlined style={{ fontSize: 20 }} />
-                    <text>Edit</text>
+                    <span>Edit</span>
                 </div>
                 <div
                     onClick={kickUser}
-                    className={style.content}>
+                    className={style.content}
+                >
                     <LogoutOutlined style={{ color: '#FF2D20', fontSize: 20 }} />
-                    <text style={{ color: '#FF2D20' }}>Kick</text>
+                    <span style={{ color: '#FF2D20' }}>Kick</span>
                 </div>
             </div>
+
             <UserSettingModal
                 isOpenModal={isOpenUserSettingsMenu}
                 setOpenModal={setIsOpenUserSettingsMenu}
                 username={user?.name}
-                discordId={user?.id} />
+                discordId={user?.id}
+            />
         </>
     );
-    
-}
+};
 
 export default UserMenu;
