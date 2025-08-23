@@ -1,11 +1,10 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import { useEffect, useRef, useState } from 'react';
 
 import style from './BoardMenu.module.scss';
 import { RootState } from '../../../redux/store';
 import { useAlert } from '../../Alert/context';
-import { deleteBoardFromProject } from '../../../redux/reducers/projectReducer';
 
 
 interface BoardMenuProps {
@@ -21,7 +20,6 @@ interface BoardMenuProps {
 
 const BoardMenu: React.FC<BoardMenuProps> = ({ textareaRef, isOpenModal, projectOwnerId, projectId, boardId, setOpenModal, isRenameBoard, setIsRenameBoard }) => {
     const { showAlert } = useAlert();
-    const dispatch = useDispatch();
 
     const userId = useSelector((state: RootState) => state.userReducer.id);
 
@@ -64,7 +62,6 @@ const BoardMenu: React.FC<BoardMenuProps> = ({ textareaRef, isOpenModal, project
         setIsRenameBoard(true);
         setOpenModal(false);
 
-
         setTimeout(() => {
             if (textareaRef.current) {
                 textareaRef.current.focus();
@@ -73,7 +70,7 @@ const BoardMenu: React.FC<BoardMenuProps> = ({ textareaRef, isOpenModal, project
         }, 0);
     };
 
-    const deleteBoard = async () => {
+    const removeBoard = async () => {
         if (isDeleteBoard) return;
 
         setIsDeleteBoard(true);
@@ -93,7 +90,6 @@ const BoardMenu: React.FC<BoardMenuProps> = ({ textareaRef, isOpenModal, project
                 return;
             }
 
-            dispatch(deleteBoardFromProject(boardId));
             setOpenModal(false);
         } catch (error) {
             showAlert(`Fetch failed: ${error}`);
@@ -119,7 +115,7 @@ const BoardMenu: React.FC<BoardMenuProps> = ({ textareaRef, isOpenModal, project
             }
             {projectOwnerId == userId &&
                 <div
-                    onClick={deleteBoard}
+                    onClick={removeBoard}
                     className={style.content}>
                     <DeleteOutlined style={{ color: '#FF2D20', fontSize: 20 }} />
                     <text style={{ color: '#FF2D20' }}>Delete</text>

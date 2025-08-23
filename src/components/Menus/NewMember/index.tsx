@@ -1,9 +1,8 @@
-import { useDispatch } from 'react-redux';
 import { useEffect, useRef, useState } from 'react';
 
 import style from './NewMember.module.scss';
 import { useAlert } from '../../Alert/context';
-import { addUserToCardInList, IUserProject } from '../../../redux/reducers/projectReducer';
+import { IUserProject } from '../../../redux/reducers/projectReducer';
 import { Avatar } from '../../../components/Avatar';
 
 
@@ -29,7 +28,6 @@ const NewMemberMenu: React.FC<NewMemberProps> = ({
     taskId
 }) => {
     const { showAlert } = useAlert();
-    const dispatch = useDispatch();
 
     const [isOpenMdl, setIsOpenMdl] = useState<boolean>(false);
     const [isUpdatingTask, setIsUpdatingTask] = useState<boolean>(false);
@@ -82,13 +80,6 @@ const NewMemberMenu: React.FC<NewMemberProps> = ({
                 showAlert(`Server error: ${response.status}, ${data.message}`);
                 return;
             }
-
-            dispatch(addUserToCardInList({
-                boardId: boardId,
-                listId: listId,
-                cardId: taskId,
-                userId: userId
-            }));
 
             setOpenModal(false);
         } catch (error) {

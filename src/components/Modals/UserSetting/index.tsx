@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react';
 import { SafetyCertificateOutlined, TeamOutlined, UserOutlined } from '@ant-design/icons';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import style from './UserSettingModal.module.scss';
 import { useAlert } from '../../Alert/context';
-import { EMemberRole, updateBoardMemberRole } from '../../../redux/reducers/projectReducer';
 import { RootState } from '../../../redux/store';
 
 
@@ -17,7 +16,7 @@ interface UserSettingModalProps {
 
 const UserSettingModal: React.FC<UserSettingModalProps> = ({ username, discordId, isOpenModal, setOpenModal }) => {
     const { showAlert } = useAlert();
-    const dispatch = useDispatch();
+    
     const projectState = useSelector((state: RootState) => state.projectReducer);
 
     const [selectedBoardId, setSelectedBoardId] = useState<string>('');
@@ -80,12 +79,6 @@ const UserSettingModal: React.FC<UserSettingModalProps> = ({ username, discordId
                 showAlert(`Server error: ${response.status}, ${data.message}`);
                 return;
             }
-
-            dispatch(updateBoardMemberRole({
-                boardId: selectedBoardId,
-                userId: discordId,
-                newRole: selectedRole as EMemberRole
-            }));
 
             setOpenModal(false);
             setSelectedBoardId('');

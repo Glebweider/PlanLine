@@ -1,11 +1,9 @@
 import { LogoutOutlined, SettingOutlined } from '@ant-design/icons';
-import { useDispatch } from 'react-redux';
 import { useEffect, useRef, useState } from 'react';
 
 import style from './UserMenu.module.scss';
 import UserSettingModal from '../../Modals/UserSetting';
 import { useAlert } from '../../Alert/context';
-import { removeUserFromProject } from '../../../redux/reducers/projectReducer';
 
 
 interface UserMenuProps {
@@ -17,7 +15,6 @@ interface UserMenuProps {
 
 const UserMenu: React.FC<UserMenuProps> = ({ user, isOpenModal, setOpenModal, projectId }) => {
     const { showAlert } = useAlert();
-    const dispatch = useDispatch();
 
     const [isOpenUserSettingsMenu, setIsOpenUserSettingsMenu] = useState<boolean>(false);
     const [isKickUser, setIsKickUser] = useState<boolean>(false);
@@ -77,7 +74,6 @@ const UserMenu: React.FC<UserMenuProps> = ({ user, isOpenModal, setOpenModal, pr
                 return;
             }
 
-            dispatch(removeUserFromProject(user?.id));
             setOpenModal(false);
         } catch (error) {
             showAlert(`Fetch failed: ${error}`);

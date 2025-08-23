@@ -1,9 +1,7 @@
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
 
 import style from './NewListModal.module.scss';
 import { useAlert } from '../../Alert/context';
-import { addListToBoard } from '../../../redux/reducers/projectReducer';
 
 
 interface NewListModalProps {
@@ -15,7 +13,6 @@ interface NewListModalProps {
 
 const NewListModal: React.FC<NewListModalProps> = ({ isOpenModal, projectId, boardId, setOpenModal }) => {
     const { showAlert } = useAlert();
-    const dispatch = useDispatch();
 
     const [isCreatingList, setIsCreatingList] = useState<boolean>(false);
     const [newListName, setNewListName] = useState<string>('');
@@ -50,17 +47,12 @@ const NewListModal: React.FC<NewListModalProps> = ({ isOpenModal, projectId, boa
                 }
             );
 
-            const data = await response.json();
-
+            
             if (!response.ok) {
+                const data = await response.json();
                 showAlert(`Server error: ${response.status}, ${data.message}`);
                 return;
             }
-
-            dispatch(addListToBoard({
-                boardId: boardId,
-                list: data
-            }));
 
             setNewListName('');
             setOpenModal(false);

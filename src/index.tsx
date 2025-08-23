@@ -9,6 +9,7 @@ import { AlertProvider } from "./components/Alert/context";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { Analytics } from '@vercel/analytics/react';
+import './utils/sseCore';
 
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
 root.render(

@@ -1,5 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
+export interface ProjectEvent {
+	type: 'create' | 'update' | 'delete' | 'add' | 'change' | 'remove';
+	entity: 'project' | 'board' | 'list' | 'card' | 'comment';
+	payload: any;
+	path?: string;
+}
+
 export interface IProject {
 	id: string;               // ID проекта (uuid или другой внешний id)
 	discordId: string;
@@ -88,6 +95,7 @@ const projectSlice = createSlice({
 	name: 'project',
 	initialState,
 	reducers: {
+		/* Project */
 		setProject: (state, action: PayloadAction<IProject>) => {
 			const discordIntegration = action.payload.discordIntegration || { updateChannelId: '' };
 			state.id = action.payload.id;
@@ -99,55 +107,55 @@ const projectSlice = createSlice({
 			state.dateOfCreation = action.payload.dateOfCreation;
 			state.discordIntegration = discordIntegration;
 		},
-		updateUpdateChannelId: (state, action: PayloadAction<string>) => {
+		updateProjectName: (state, action: PayloadAction<string>) => {
+			state.name = action.payload;
+		},
+		updateDiscordChannelId: (state, action: PayloadAction<string>) => {
 			if (state.discordIntegration) {
 				state.discordIntegration.updateChannelId = action.payload;
 			} else {
 				state.discordIntegration = { updateChannelId: action.payload };
 			}
 		},
-		setProjectName: (state, action: PayloadAction<string>) => {
-			state.name = action.payload;
-		},
 		clearProject: () => initialState,
-		updateBoardMemberRole: (state, action: PayloadAction<{
-			boardId: string;
-			userId: string;
-			newRole: EMemberRole;
-		}>) => {
-			const { boardId, userId, newRole } = action.payload;
 
-			const board = state.boards.find(b => b.id === boardId);
-			if (board) {
-				const member = board.members.find(m => m.id === userId);
-				if (member) {
-					member.role = newRole;
-				}
-			}
-		},
-		removeUserFromProject: (state, action: PayloadAction<string>) => {
+		/* Members */
+		removeProjectMember: (state, action: PayloadAction<string>) => {
 			const userIdToRemove = action.payload;
 
-			state.members = state.members.filter(member => member.id !== userIdToRemove);
-			state.boards.forEach(board => {
-				board.members = board.members.filter(member => member.id !== userIdToRemove);
+			state.members = state.members.filter((member) => member.id !== userIdToRemove);
+
+			state.boards.forEach((board) => {
+				board.members = board.members.filter((member) => member.id !== userIdToRemove);
+			});
+
+			state.boards.forEach((board) => {
+				board.lists.forEach((list) => {
+					list.cards.forEach((card) => {
+						card.members = card.members.filter((id) => id !== userIdToRemove);
+					});
+				});
 			});
 		},
-		deleteBoardFromProject: (state, action: PayloadAction<string>) => {
-			const boardIdToDelete = action.payload;
-			state.boards = state.boards.filter(board => board.id !== boardIdToDelete);
+		addProjectMember: (state, action: PayloadAction<{ user: IUserProject; boardId?: string, role?: EMemberRole }>) => {
+			const { user, boardId, role } = action.payload;
+
+			if (!state.members.find((m) => m.id === user.id))
+				state.members.push(user);
+
+			state.boards.forEach((board) => {
+				if (!board.members.find((m) => m.id === user.id)) {
+					board.members.push({
+						id: user.id,
+						role: board.id === boardId ? role || EMemberRole.NORMAL : EMemberRole.OBSERVER,
+					});
+				}
+			});
 		},
-		addListToBoard: (state, action: PayloadAction<{ boardId: string; list: IList }>) => {
-			const { boardId, list } = action.payload;
-			const board = state.boards.find((b) => b.id === boardId);
-			if (board) {
-				board.lists.push(list);
-			}
-		},
-		addUserToCardInList: (
-			state,
-			action: PayloadAction<{ boardId: string; listId: string; cardId: string; userId: string }>
-		) => {
+
+
+		/* Board Members in Card */
+		addCardMember: (state, action: PayloadAction<{ boardId: string; listId: string; cardId: string; userId: string }>) => {
 			const { boardId, listId, cardId, userId } = action.payload;
 			const board = state.boards.find(b => b.id === boardId);
 			if (board) {
@@ -165,10 +173,7 @@ const projectSlice = createSlice({
 				}
 			}
 		},
-		removeUserFromCardInList: (
-			state,
-			action: PayloadAction<{ boardId: string; listId: string; cardId: string; userId: string }>
-		) => {
+		removeCardMember: (state, action: PayloadAction<{ boardId: string; listId: string; cardId: string; userId: string }>) => {
 			const { boardId, listId, cardId, userId } = action.payload;
 			const board = state.boards.find(b => b.id === boardId);
 			if (board) {
@@ -181,14 +186,49 @@ const projectSlice = createSlice({
 				}
 			}
 		},
-		deleteListFromBoard: (state, action: PayloadAction<{ boardId: string; listId: string }>) => {
+
+		/* Boards */
+		addBoard(state, action: PayloadAction<IBoard>) {
+			state.boards.push(action.payload);
+		},
+		updateBoard(state, action: PayloadAction<{ boardId: string; updates: Partial<IBoard> }>) {
+			const { boardId, updates } = action.payload;
+			state.boards = state.boards.map((board) =>
+				board.id === boardId ? { ...board, ...updates } : board
+			);
+		},
+		deleteBoard(state, action: PayloadAction<string>) {
+			state.boards = state.boards.filter(
+				(board) => board.id !== action.payload
+			);
+		},
+		updateBoardMemberRole: (state, action: PayloadAction<{ boardId: string; userId: string; newRole: EMemberRole; }>) => {
+			const { boardId, userId, newRole } = action.payload;
+			const board = state.boards.find(b => b.id === boardId);
+			if (board) {
+				const member = board.members.find(m => m.id === userId);
+				if (member) {
+					member.role = newRole;
+				}
+			}
+		},
+
+		/* Lists */
+		addList: (state, action: PayloadAction<{ boardId: string; list: IList }>) => {
+			const { boardId, list } = action.payload;
+			const board = state.boards.find((b) => b.id === boardId);
+			if (board) {
+				board.lists.push(list);
+			}
+		},
+		deleteList: (state, action: PayloadAction<{ boardId: string; listId: string }>) => {
 			const { boardId, listId } = action.payload;
 			const board = state.boards.find((b) => b.id === boardId);
 			if (board) {
 				board.lists = board.lists.filter((list) => list.id !== listId);
 			}
 		},
-		renameListInBoard: (state, action: PayloadAction<{ boardId: string; listId: string; newName: string }>) => {
+		updateListName: (state, action: PayloadAction<{ boardId: string; listId: string; newName: string }>) => {
 			const { boardId, listId, newName } = action.payload;
 			const board = state.boards.find((b) => b.id === boardId);
 			if (board) {
@@ -198,7 +238,9 @@ const projectSlice = createSlice({
 				}
 			}
 		},
-		addCardToList: (state, action: PayloadAction<{ boardId: string; listId: string; card: ICard }>) => {
+
+		/* Cards */
+		addCard: (state, action: PayloadAction<{ boardId: string; listId: string; card: ICard }>) => {
 			const { boardId, listId, card } = action.payload;
 			const board = state.boards.find((b) => b.id === boardId);
 			if (board) {
@@ -208,7 +250,7 @@ const projectSlice = createSlice({
 				}
 			}
 		},
-		removeCardFromList: (state, action: PayloadAction<{ boardId: string; listId: string; cardId: string }>) => {
+		deleteCard: (state, action: PayloadAction<{ boardId: string; listId: string; cardId: string }>) => {
 			const { boardId, listId, cardId } = action.payload;
 			const board = state.boards.find((b) => b.id === boardId);
 			if (board) {
@@ -218,7 +260,12 @@ const projectSlice = createSlice({
 				}
 			}
 		},
-		updateCardInList: (state, action: PayloadAction<{ boardId: string; listId: string; cardId: string; updates: Partial<Pick<ICard, 'dueDate' | 'title' | 'description'>> }>) => {
+		updateCard: (state, action: PayloadAction<{
+			boardId: string;
+			listId: string;
+			cardId: string;
+			updates: Partial<Pick<ICard, 'dueDate' | 'title' | 'description'>>
+		}>) => {
 			const { boardId, listId, cardId, updates } = action.payload;
 			const board = state.boards.find(b => b.id === boardId);
 			if (board) {
@@ -232,26 +279,30 @@ const projectSlice = createSlice({
 					}
 				}
 			}
-		}
+		},
 	},
 });
 
 export const {
 	setProject,
-	addUserToCardInList,
-	removeUserFromCardInList,
-	setProjectName,
+	updateProjectName,
 	clearProject,
-	updateCardInList,
-	updateUpdateChannelId,
 	updateBoardMemberRole,
-	removeUserFromProject,
-	deleteBoardFromProject,
-	addCardToList,
-	deleteListFromBoard,
-	renameListInBoard,
-	addListToBoard,
-	removeCardFromList
+	updateDiscordChannelId,
+	removeProjectMember,
+	addProjectMember,
+	addCardMember,
+	removeCardMember,
+	addBoard,
+	updateBoard,
+	deleteBoard,
+	addList,
+	deleteList,
+	updateListName,
+	addCard,
+	deleteCard,
+	updateCard,
 } = projectSlice.actions;
+
 
 export default projectSlice.reducer;

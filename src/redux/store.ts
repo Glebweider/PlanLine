@@ -4,11 +4,11 @@ import projectReducer from './reducers/projectReducer';
 import siteReducer from './reducers/siteReducer';
 
 const store = configureStore({
-  reducer: {
-    userReducer,
-    projectReducer,
-    siteReducer
-  } 
+	reducer: {
+		userReducer,
+		projectReducer,
+		siteReducer
+	}
 });
 
 export type RootState = ReturnType<typeof store.getState>;

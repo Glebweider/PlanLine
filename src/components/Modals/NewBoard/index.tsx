@@ -1,10 +1,7 @@
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 
 import style from './NewBoardModal.module.scss';
 import { useAlert } from '../../Alert/context';
-import { setProject } from '../../../redux/reducers/projectReducer';
-import { RootState } from '../../../redux/store';
 
 
 interface NewBoardModalProps {
@@ -15,9 +12,6 @@ interface NewBoardModalProps {
 
 const NewBoardModal: React.FC<NewBoardModalProps> = ({ isOpenModal, projectId, setOpenModal }) => {
     const { showAlert } = useAlert();
-    const dispatch = useDispatch();
-
-    const projectState = useSelector((state: RootState) => state.projectReducer);
 
     const [isCreatingBoard, setIsCreatingBoard] = useState<boolean>(false);
     const [newBoardName, setNewBoardName] = useState<string>('');
@@ -52,17 +46,12 @@ const NewBoardModal: React.FC<NewBoardModalProps> = ({ isOpenModal, projectId, s
                 }
             );
 
-            const data = await response.json();
-
+            
             if (!response.ok) {
+                const data = await response.json();
                 showAlert(`Server error: ${response.status}, ${data.message}`);
                 return;
             }
-
-            dispatch(setProject({
-                ...projectState,
-                boards: [...projectState.boards, data],
-            }));
 
             setNewBoardName('');
             setOpenModal(false);

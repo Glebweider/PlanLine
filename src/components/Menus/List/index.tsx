@@ -1,10 +1,8 @@
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import { useState, useEffect, useRef } from 'react';
-import { useDispatch } from 'react-redux';
 
 import style from './ListMenu.module.scss';
 import { useAlert } from '../../Alert/context';
-import { deleteListFromBoard } from '../../../redux/reducers/projectReducer';
 
 
 interface ListMenuProps {
@@ -19,7 +17,6 @@ interface ListMenuProps {
 
 const ListMenu: React.FC<ListMenuProps> = ({ textareaRef, isOpenModal, projectId, boardId, listId, setOpenModal, setIsRenameList }) => {
     const { showAlert } = useAlert();
-    const dispatch = useDispatch();
 
     const [isOpenMdl, setIsOpenMdl] = useState<boolean>(false);
     const [isUseList, setIsUseList] = useState<boolean>(false);
@@ -88,11 +85,6 @@ const ListMenu: React.FC<ListMenuProps> = ({ textareaRef, isOpenModal, projectId
                 showAlert(`Server error: ${response.status}, ${data.message}`);
                 return;
             }
-
-            dispatch(deleteListFromBoard({
-                boardId: boardId,
-                listId: listId
-            }));
         } catch (error) {
             showAlert(`Fetch failed: ${error}`);
         } finally {

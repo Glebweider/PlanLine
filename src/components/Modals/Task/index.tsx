@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { ClockCircleOutlined, InfoCircleOutlined, MinusOutlined, PlusOutlined, QuestionCircleOutlined } from '@ant-design/icons';
 
 import style from './TaskModal.module.scss';
 import { useAlert } from '../../Alert/context';
-import { EMemberRole, IProject, IUserProject, removeCardFromList, removeUserFromCardInList, updateCardInList } from '../../../redux/reducers/projectReducer';
+import { EMemberRole, IProject, IUserProject } from '../../../redux/reducers/projectReducer';
 import { Avatar } from '../../../components/Avatar';
 import formatDateShortEn from '../../../utils/FormatDateShortEn';
 import Tooltip from '../../../components/Tooltip';
@@ -34,7 +34,6 @@ const TaskModal: React.FC<TaskModalProps> = ({
     users
 }) => {
     const { showAlert } = useAlert();
-    const dispatch = useDispatch();
 
     const task = useSelector((state: RootState) =>
         state.projectReducer.boards
@@ -86,17 +85,6 @@ const TaskModal: React.FC<TaskModalProps> = ({
                 return;
             }
 
-            dispatch(updateCardInList({
-                boardId: boardId,
-                listId: listId,
-                cardId: task?.id || '',
-                updates: {
-                    title: newTaskName || undefined,
-                    description: newTaskDescription || undefined,
-                    dueDate: newDueDate ?? undefined
-                }
-            }));
-
             setOpenModal(false);
         } catch (error) {
             showAlert(`Fetch failed: ${error}`);
@@ -125,12 +113,6 @@ const TaskModal: React.FC<TaskModalProps> = ({
                 return;
             }
 
-            dispatch(removeCardFromList({
-                boardId: boardId,
-                listId: listId,
-                cardId: task?.id || ''
-            }));
-
             setOpenModal(false);
         } catch (error) {
             showAlert(`Fetch failed: ${error}`);
@@ -158,13 +140,6 @@ const TaskModal: React.FC<TaskModalProps> = ({
                 showAlert(`Server error: ${response.status}, ${data.message}`);
                 return;
             }
-
-            dispatch(removeUserFromCardInList({
-                boardId: boardId,
-                listId: listId,
-                cardId: taskId,
-                userId: memberId
-            }));
         } catch (error) {
             showAlert(`Fetch failed: ${error}`);
         } finally {

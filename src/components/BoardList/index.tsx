@@ -1,10 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 import { MoreOutlined } from '@ant-design/icons';
-import { useDispatch } from 'react-redux';
 import { useDrop } from 'react-dnd';
 
 import styles from './BoardList.module.scss';
-import { addCardToList, EMemberRole, ICard, IList, IProject, removeCardFromList, renameListInBoard } from '../../redux/reducers/projectReducer';
+import { EMemberRole, ICard, IList, IProject } from '../../redux/reducers/projectReducer';
 import BoardTaskCard from '../Cards/BoardTask';
 import ButtonCreate from '../ButtonCreate';
 import ListMenu from '../Menus/List';
@@ -35,7 +34,6 @@ const BoardList: React.FC<BoardListProps> = ({
     boardId
 }) => {
     const { showAlert } = useAlert();
-    const dispatch = useDispatch();
 
     const [isOpenMenuListSettings, setIsOpenMenuListSettings] = useState<boolean>(false);
     const [isRenamedList, setIsRenamedList] = useState<boolean>(false);
@@ -83,12 +81,6 @@ const BoardList: React.FC<BoardListProps> = ({
                 showAlert(`Server error: ${response.status}, ${data.message}`);
                 return;
             }
-
-            dispatch(renameListInBoard({
-                boardId: boardId,
-                listId: list.id,
-                newName: trimmedName
-            }))
         } catch (error) {
             showAlert(`Fetch failed: ${error}`);
         }
@@ -115,24 +107,12 @@ const BoardList: React.FC<BoardListProps> = ({
                 }
             );
 
-            const data = await response.json();
-
+            
             if (!response.ok) {
+                const data = await response.json();
                 showAlert(`Server error: ${response.status}, ${data.message}`);
                 return;
             }
-
-            dispatch(removeCardFromList({
-                boardId: boardId,
-                listId: item.listId,
-                cardId: item.card.id
-            }));
-
-            dispatch(addCardToList({
-                boardId: boardId,
-                listId: list.id,
-                card: data
-            }));
         } catch (error) {
             showAlert(`Fetch failed: ${error}`);
         } finally {

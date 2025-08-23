@@ -43,19 +43,11 @@ const Navbar = () => {
     const [isOpenUserModal, setOpenUserModal] = useState<boolean>(false);
     const [projects, setProjects] = useState<IPreviewProject[]>([]);
     const [ownerProjects, setOwnerProjects] = useState<number>(0);
-    const [hideText, setHideText] = useState(false);
 
 
     useEffect(() => {
         localStorage.setItem('isOpenNavbar', `${isOpenNavbar}`);
         dispacth(setIsNavbarOpen(isOpenNavbar))
-
-        if (isOpenNavbar) {
-            const timeout = setTimeout(() => setHideText(true), 300);
-            return () => clearTimeout(timeout);
-        } else {
-            setHideText(false);
-        }
     }, [isOpenNavbar]);
 
     useEffect(() => {

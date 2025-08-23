@@ -1,20 +1,18 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import { useAlert } from '../components/Alert/context';
 import styles from '../styles/pages/ProjectSettingsPage.module.scss';
 import { RootState } from '../redux/store';
 import formatDateShortEn from '../utils/FormatDateShortEn';
 import { useGetProject } from '../utils/fetch/getProjectById';
-import { clearProject, setProjectName, updateUpdateChannelId } from '../redux/reducers/projectReducer';
 
 
 const ProjectSettingsPage = () => {
 	const { projectId } = useParams();
 	const { showAlert } = useAlert();
 	const { getProject } = useGetProject();
-	const dispatch = useDispatch();
 
 	const projectState = useSelector((state: RootState) => state.projectReducer);
 
@@ -51,7 +49,6 @@ const ProjectSettingsPage = () => {
 				showAlert(`Server error: ${response.status}, ${data.message}`);
 				return;
 			}
-			dispatch(setProjectName(name));
 		} catch (error) {
 			showAlert(`Fetch failed: ${error}`);
 		}
@@ -67,12 +64,13 @@ const ProjectSettingsPage = () => {
 					credentials: "include",
 				}
 			);
+			
 			if (!response.ok) {
 				const data = await response.json();
 				showAlert(`Server error: ${response.status}, ${data.message}`);
 				return;
 			}
-			dispatch(clearProject());
+			
 			window.location.href = "/projects";
 		} catch (error) {
 			showAlert(`Fetch failed: ${error}`);
@@ -100,8 +98,6 @@ const ProjectSettingsPage = () => {
 				showAlert(`Server error: ${response.status}, ${data.message}`);
 				return;
 			}
-
-			dispatch(updateUpdateChannelId(updateChannelId));
 		} catch (error) {
 			showAlert(`Fetch failed: ${error}`);
 		}

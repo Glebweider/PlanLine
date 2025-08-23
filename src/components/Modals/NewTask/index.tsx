@@ -1,9 +1,8 @@
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
 
 import style from './NewTaskModal.module.scss';
 import { useAlert } from '../../Alert/context';
-import { addCardToList, IUserProject } from '../../../redux/reducers/projectReducer';
+import { IUserProject } from '../../../redux/reducers/projectReducer';
 
 
 interface NewTaskModalProps {
@@ -17,7 +16,6 @@ interface NewTaskModalProps {
 
 const NewTaskModal: React.FC<NewTaskModalProps> = ({ isOpenModal, projectId, setOpenModal, boardId, listId, users }) => {
     const { showAlert } = useAlert();
-    const dispatch = useDispatch();
 
     const [isCreatingTask, setIsCreatingTask] = useState<boolean>(false);
     const [newTaskName, setNewTaskName] = useState<string>('');
@@ -58,18 +56,11 @@ const NewTaskModal: React.FC<NewTaskModalProps> = ({ isOpenModal, projectId, set
                 }
             );
 
-            const data = await response.json();
-
             if (!response.ok) {
+                const data = await response.json();
                 showAlert(`Server error: ${response.status}, ${data.message}`);
                 return;
             }
-
-            dispatch(addCardToList({
-                boardId: boardId,
-                listId: listId,
-                card: data
-            }));
 
             setNewTaskName('');
             setNewTaskDescription('');

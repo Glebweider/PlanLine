@@ -59,6 +59,7 @@ const NewProjectModal: React.FC<NewProjectModalProps> = ({ setProjects, isOpenMo
                 cardsCount: 0,
                 ownerId: data.ownerId
             }]);
+            
             setNewProjectName('');
             setOpenModal(false);
         } catch (error) {

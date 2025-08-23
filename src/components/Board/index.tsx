@@ -1,11 +1,11 @@
 import React, { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { MoreOutlined } from '@ant-design/icons';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import style from './Board.module.scss';
 import { Avatar } from '../Avatar';
-import { IBoard, setProject } from '../../redux/reducers/projectReducer';
+import { IBoard } from '../../redux/reducers/projectReducer';
 import { RootState } from '../../redux/store';
 import BoardMenu from '../Menus/Board';
 import { useAlert } from '../Alert/context';
@@ -18,7 +18,6 @@ interface BoardProps {
 
 const BoardCard: React.FC<BoardProps> = ({ projectId, board }) => {
     const { showAlert } = useAlert();
-    const dispatch = useDispatch();
 
     const projectState = useSelector((state: RootState) => state.projectReducer);
     const userId = useSelector((state: RootState) => state.userReducer.id);
@@ -59,18 +58,6 @@ const BoardCard: React.FC<BoardProps> = ({ projectId, board }) => {
                 showAlert(`Server error: ${response.status}, ${data.message}`);
                 return;
             }
-
-            dispatch(setProject({
-                ...projectState,
-                boards: projectState.boards.map(board =>
-                    board.id === selectedBoardId
-                        ? {
-                            ...board,
-                            name: trimmedName,
-                        }
-                        : board
-                )
-            }));
         } catch (error) {
             showAlert(`Fetch failed: ${error}`);
         }
