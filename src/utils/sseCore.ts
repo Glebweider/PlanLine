@@ -27,6 +27,9 @@ class SseCore {
     private eventSource: EventSource | null = null;
     private currentProjectId: string | null = null;
 
+    private hiddenTimeout: NodeJS.Timeout | null = null;
+    private shouldReloadOnReturn = false;
+
     constructor() {
         store.subscribe(() => {
             const state = store.getState();
@@ -37,6 +40,24 @@ class SseCore {
                 this.connect();
             }
         })
+
+        document.addEventListener("visibilitychange", () => {
+            if (document.hidden) {
+                this.hiddenTimeout = setTimeout(() => {
+                    this.disconnect();
+                    this.shouldReloadOnReturn = true;
+                }, 5 * 60 * 1000);
+            } else {
+                if (this.hiddenTimeout) {
+                    clearTimeout(this.hiddenTimeout);
+                    this.hiddenTimeout = null;
+                }
+
+                if (this.shouldReloadOnReturn) {
+                    window.location.reload();
+                }
+            }
+        });
     }
 
     connect() {
