@@ -36,6 +36,7 @@ const ProjectsPage = () => {
 
 	const [projects, setProjects] = useState<IProjectPreviewCard[]>([]);
 	const [selectedListId, setSelectedListId] = useState<string>('');
+	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [isOpenModalCreateProject, setOpenModalCreateProject] = useState<boolean>(false);
 	const [isOpenModalCreateBoard, setOpenModalCreateBoard] = useState<boolean>(false);
 	const [isOpenModalCreateList, setOpenModalCreateList] = useState<boolean>(false);
@@ -78,6 +79,8 @@ const ProjectsPage = () => {
 
 	const getProjects = async () => {
 		try {
+			setIsLoading(true);
+
 			const response = await fetch(
 				`${process.env.REACT_APP_BACKEND_URI}/projects/preview`,
 				{
@@ -94,10 +97,14 @@ const ProjectsPage = () => {
 			}
 
 			setProjects(data);
+			setIsLoading(false);
 		} catch (error) {
 			showAlert(`Fetch failed: ${error}`);
+			setIsLoading(false);
 		}
 	};
+
+	if (isLoading) return <div className={style.container}></div>
 
 	return (
 		<div className={style.container}>
