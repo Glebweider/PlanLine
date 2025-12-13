@@ -2,7 +2,7 @@ import { useNavigate, useLocation, useSearchParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
 import styles from './ProjectDropdown.module.scss';
-import { IPreviewProject } from '../../../components/Navbar';
+//import { IPreviewProject } from '../../../components/Navbar';
 import { useAlert } from '../../../components/Alert/context';
 
 
@@ -13,7 +13,7 @@ const ProjectDropdown = () => {
     const [searchParams] = useSearchParams();
 
     const [isOpen, setIsOpen] = useState(false);
-    const [projects, setProjects] = useState<IPreviewProject[]>([]);
+    const [projects, setProjects] = useState<any[]>([]); //IPreviewProject
 
 
     useEffect(() => {

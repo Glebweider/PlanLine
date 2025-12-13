@@ -35,8 +35,8 @@ export interface IBoard {
 }
 
 export enum EMemberRole {
-	ADMIN = 'Admin',
-	NORMAL = 'Normal',
+	ADMIN = 'Administrator',
+	NORMAL = 'Performer',
 	OBSERVER = 'Observer',
 }
 
@@ -96,6 +96,12 @@ const projectSlice = createSlice({
 	initialState,
 	reducers: {
 		/* Project */
+		setProjectId: (state, action: PayloadAction<{ id: string; }>) => {
+			return {
+				...initialState,
+				id: action.payload.id,
+			};
+		},
 		setProject: (state, action: PayloadAction<IProject>) => {
 			const discordIntegration = action.payload.discordIntegration || { updateChannelId: '' };
 			state.id = action.payload.id;
@@ -302,6 +308,7 @@ export const {
 	addCard,
 	deleteCard,
 	updateCard,
+	setProjectId
 } = projectSlice.actions;
 
 

@@ -3,140 +3,80 @@
 
 .container {
     display: flex;
-    flex-direction: column;
     align-items: center;
-    background-color: $color-bg-secondary;
-    height: 96vh;
-    padding: 10px;
-    border-radius: 15px;
-    transition: max-width 0.3s ease, min-width 0.3s ease;
-    max-width: 326px;
-    min-width: 326px;
-    overflow: hidden;
-}
-
-.containerCollapsed {
-    max-width: 84px;
-    min-width: 84px;
-}
-
-.buttonCreateProject {
-    max-width: 100%;
-    height: 60px;
-}
-
-.line {
-    margin-top: 20px;
+    justify-content: space-between;
+    background-color: $color-bg-modal;
+    padding: 0 56px;
+    width: auto;
+    height: 70px;
 }
 
 .userContainer {
+    position: relative;
     display: flex;
-    align-items: center;
-    width: 100%;
-    margin-top: 8px;
-    border-radius: 10px;
-    color: $color-secondary;
-}
 
-.userContent {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    margin-left: 15px;
-    min-height: 100%;
-    width: 100%;
-    color: #FFFFFF;
+    img {
+        border: 2px solid $color-error;
+        z-index: 1;
+    }
 
     a {
-        font-size: 20;
-        font-weight: 400;
-        text-transform: capitalize;
+        margin-left: -22px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0 12 0 30px;
+        font-size: 16;
+        height: 36px;
+        border-radius: 8px;
+        background-color: $color-bg-input;
     }
 }
 
-.changeVisibility {
-    font-size: 24;
-    color: #CFCFCF;
-    padding: 10px;
-    border-radius: 5px;
-    transition: background-color 0.2s ease;
-    cursor: pointer;
-
-    &:hover {
-        background-color: $color-bg-secondary-hover;
-    }
+.buttonsContainer {
+    display: flex;
+    gap: 30px;
 }
 
-.createNewProjectButton {
+.buttonContainer {
     display: flex;
     align-items: center;
-    justify-content: center;
-    margin-bottom: 15px;
-    background-color: $color-bg-secondary-2;
-    border: 1px solid $color-outline-modal;
-    height: 48px;
-    width: 90%;
-    border-radius: 10px;
-    padding: 8 0px;
-    transition: background-color 0.2s ease;
+    gap: 10px;
     cursor: pointer;
-    font-size: 20;
-    color: $color-secondary;
+    color: #303037;
+    transition: color .25s;
+
+    svg path {
+        stroke: #303037;
+        transition: stroke .25s;
+    }
 
     &:hover {
-        background-color: $color-bg-secondary-hover;
-    }
-}
+        color: $color-primary;
 
-.content {
-    width: 100%;
-    height: 100%;
-    margin-top: 34px;
-}
-
-.containerCollapsed {
-
-    .content {
-        width: auto;
-
-        a text {
-            display: none;
-        }
-    }
-
-    .userContainer {
-        width: 100%;
-        justify-content: center;
-
-        div {
-            display: none;
-        }
-
-        span {
-            display: none;
+        svg path {
+            stroke: $color-primary;
         }
     }
 }
 
-/* 📱 Мобильная версия */
-@media (max-width: 768px) {
-    .containerCollapsed {
+.buttonContainerActive {
+    color: $color-primary;
 
-        .content {
-            margin-top: 12px;
+    svg path {
+        stroke: $color-primary;
+    }
+}
 
-            a {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-            }
+.buttonLeave {
+    path {
+        stroke: #303037;
+        transition: stroke .25s;
+    }
 
-            a span {
-                font-size: 32;
-            }
+    &:hover {
+        path {
+            stroke: $color-error;
         }
-
-        max-width: 64px;
-        min-width: 64px;
     }
 }

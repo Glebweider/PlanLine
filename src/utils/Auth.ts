@@ -5,7 +5,7 @@ const AuthFunc = async () => {
         });
 
         if (res.ok) {
-            window.location.href = '/dashboard';
+            window.location.href = '/projects';
         } else {
             window.location.href = process.env.REACT_APP_DISCORD_AUTH_URI || '';
         }

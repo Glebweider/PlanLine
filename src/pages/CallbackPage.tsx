@@ -60,7 +60,7 @@ const CallbackPage = () => {
 						isAuth: true
 					}));
 
-					navigate('/dashboard')
+					navigate('/projects')
 				}
 			} catch (error) {
 				showAlert('Ошибка при авторизации');

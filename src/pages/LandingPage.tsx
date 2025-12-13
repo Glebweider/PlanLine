@@ -2,6 +2,7 @@ import { useState } from 'react';
 
 import styles from '../styles/pages/LandingPage.module.scss';
 import AuthFunc from '../utils/Auth';
+import { useNavigate } from 'react-router-dom';
 
 
 const slides = [
@@ -26,6 +27,7 @@ const LandingPage = () => {
 	const [currentSlide, setCurrentSlide] = useState(0);
 	const [direction, setDirection] = useState<'left' | 'right'>('left');
 	const [isFooterOpen, setFooterOpen] = useState(false);
+	const navigate = useNavigate();
 
 	const handleNext = () => {
 		if (currentSlide < slides.length - 1) {
@@ -53,7 +55,7 @@ const LandingPage = () => {
 					<a href="#features">Features</a>
 					<a href="#contact">Contact</a> */}
 					<div className={`${styles.authInNavbar} ${currentSlide > 0 ? styles.show : ''}`}>
-						<button className={styles.authButtonSmall} onClick={AuthFunc}>
+						<button className={styles.authButtonSmall} onClick={() => navigate('auth')}>
 							Auth with Discord
 						</button>
 					</div>
@@ -83,7 +85,7 @@ const LandingPage = () => {
 					</div>
 
 					{currentSlide === 0 && (
-						<button className={styles.authButton} onClick={AuthFunc}>
+						<button className={styles.authButton} onClick={() => navigate('auth')}>
 							Auth with Discord
 						</button>
 					)}

@@ -1,103 +1,101 @@
 @import '../../../styles/variables';
 
 
-.taskItem {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 12px 16px;
-    border: 1px solid #333;
-    border-radius: 8px;
-    background-color: $color-bg-secondary;
-    border: 1px solid $color-hr;
-    color: #fff;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-    text-decoration: none;
-
-    &:hover {
-        background-color: darken($color-bg-secondary, 5%);
-    }
-}
-
-.icon {
-    width: 26px;
-    height: 26px;
-    font-size: 26px;
-    color: #ccc;
-}
-
-.taskInfo {
+.container {
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    justify-content: space-between;
+    background-color: $color-bg-secondary;
+    cursor: pointer;
+    min-width: 202px;
+    max-width: 202px;
+    min-height: 72px;
+    max-height: 72px;
+    padding: 14 14 8 14;
+    border-radius: 8px;
 }
 
 .title {
-    font-size: 16px;
-    font-weight: 500;
-    color: #fff;
+    font-size: 15;
+    color: $color-primary;
 }
 
-.timestamps {
-    display: flex;
-    gap: 5px;
-}
-
-.projectDataContainer {
+.content {
     display: flex;
     align-items: center;
-    background-color: $color-bg-secondary-2;
-    height: 25px;
-    min-width: 80px;
-    max-width: 115px;
-    font-weight: 200;
-    border-radius: 5px;
-    color: #FFFFFF;
+    justify-content: space-between;
+    min-height: 32px;
+    max-height: 32px;
+}
+
+.dueDate {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10;
+    color: $color-bg-modal;
+    background-color: $color-orange;
+    height: 18px;
+    width: 60px;
+    border-radius: 4px;
+
+    &.disable {
+        background-color: $color-hr;
+        color: #000;
+    }
+}
+
+.users {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 64px;
 
     span {
-        font-size: 14;
-        margin-left: 8px;
-        margin-right: 8px;
+        font-size: 12px;
+        color: $color-hr;
+        margin-right: 25px;
+        flex-shrink: 0;
     }
 }
 
-.projectDataText {
-    font-size: 12;
-    margin-right: 8px;
+.avatars {
+    display: flex;
+    flex-direction: row;
 }
 
-/* 📱 Мобильная версия */
-@media (max-width: 768px) {
-    .taskItem {
-        gap: 12px;
-        padding: 10px 10px;
-        border-radius: 8px;
-    }
+.user {
+    margin-left: -16px;
+    border: 2px solid $color-accsess;
+    position: relative;
+    min-width: 24px;
+    min-height: 24px;
+    flex-shrink: 0;
+    background-color: $color-bg-secondary-2;
+}
 
-    .icon {
-        width: 20px;
-        height: 20px;
-        font-size: 20px;
-    }
+.user:nth-child(1) {
+    z-index: 10;
+}
 
-    .title {
-        font-size: 16;
-    }
+.user:nth-child(2) {
+    z-index: 9;
+}
 
-    .projectDataContainer {
-        height: 20px;
-        min-width: 60px;
-        max-width: 100px;
+.user:nth-child(3) {
+    z-index: 8;
+    margin-right: 0;
+}
 
-        span {
-            font-size: 12;
-            margin-left: 6px;
-            margin-right: 6px;
-        }
-    }
+.createDate {
+    color: $color-hr;
+    font-size: 11;
+    margin-top: 3px;
+}
 
-    .projectDataText {
-        font-size: 10;
-    }
+hr {
+    width: 100%;
+    height: 1px;
+    border-radius: 5px;
+    margin-top: 3px;
 }

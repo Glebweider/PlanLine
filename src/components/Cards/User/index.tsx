@@ -1,46 +1,44 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { MoreOutlined } from '@ant-design/icons';
 
 import style from './UserCard.module.scss';
-import { Avatar } from '../../Avatar';
-import formatDateShortEn from '../../../utils/FormatDateShortEn';
+import { IUserProject } from "../../../redux/reducers/projectReducer";
+import { Avatar } from '../../../components/Avatar';
+import UserSettingsMenu from '../../../components/Menus/UserSettings';
 import { RootState } from '../../../redux/store';
-import UserMenu from '../../Menus/User';
 
 
 interface UserCardProps {
-    user: any;
+    member: IUserProject;
+    permission: boolean;
 }
 
-const UserCard: React.FC<UserCardProps> = ({ user }) => {
-    const projectState = useSelector((state: RootState) => state.projectReducer);
-    const userId = useSelector((state: RootState) => state.userReducer.id);
+const UserCard: React.FC<UserCardProps> = ({ member, permission }) => {
+    const [isOpenMenu, setIsOpenMenu] = useState<boolean>(false);
 
-    const [isOpenUserMenu, setIsOpenUserMenu] = useState<boolean>(false);
+    const userState = useSelector((state: RootState) => state.userReducer);
 
     return (
-        <div style={{ display: 'flex', position: 'relative' }}>
+        <>
             <div className={style.container}>
                 <div className={style.content}>
-                    <Avatar size={45} user={user} className={style.avatar} />
-                    <div className={style.data}>
-                        <text className={style.name}>{user?.displayName ? user?.displayName  : user?.name}</text>
-                        <text className={style.dateOfCreation}>Created: {formatDateShortEn(user?.dateOfCreation)}</text>
-                    </div>
+                    <Avatar className={style.avatar} size={46} user={member} />
+                    <span>
+                        {member.displayName ? member.displayName : member.name}
+                    </span>
                 </div>
-                {userId == projectState.ownerId && user?.id != projectState.ownerId &&
-                    <MoreOutlined
-                        onClick={() => setIsOpenUserMenu(!isOpenUserMenu)}
-                        style={{ fontSize: 30, marginRight: -10 }} />
+                {permission && userState.id != member.id &&
+                    <img
+                        className={style.buttonEdit}
+                        onClick={() => setIsOpenMenu(true)}
+                        src='./icons/Settings.svg' />
                 }
+                <UserSettingsMenu
+                    isOpen={isOpenMenu}
+                    member={member}
+                    onClose={() => setIsOpenMenu(false)} />
             </div>
-            <UserMenu
-                user={user}
-                isOpenModal={isOpenUserMenu}
-                projectId={projectState.id}
-                setOpenModal={setIsOpenUserMenu} />
-        </div>
+        </>
     );
 };
 

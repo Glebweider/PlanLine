@@ -26,7 +26,7 @@ import store from '../redux/store';
 class SseCore {
     private eventSource: EventSource | null = null;
     private currentProjectId: string | null = null;
-
+    private externalListeners: ((event: ProjectEvent) => void)[] = [];
     private hiddenTimeout: NodeJS.Timeout | null = null;
     private shouldReloadOnReturn = false;
 
@@ -60,6 +60,13 @@ class SseCore {
         });
     }
 
+    subscribe(listener: (event: ProjectEvent) => void) {
+        this.externalListeners.push(listener);
+        return () => {
+            this.externalListeners = this.externalListeners.filter(l => l !== listener);
+        };
+    }
+
     connect() {
         this.disconnect();
 
@@ -86,6 +93,8 @@ class SseCore {
     private handleEvent(event: ProjectEvent) {
         const { type, entity, payload, path } = event;
         if (!path) return;
+
+        this.externalListeners.forEach(l => l(event));
 
         const pathParts = path.split('.');
         const getIds = (parts: string[]) => {

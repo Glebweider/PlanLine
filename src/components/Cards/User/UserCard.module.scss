@@ -5,41 +5,33 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: $color-bg-secondary;
-    border-radius: 10px;
-    width: 264px;
-    height: 70px;
-    padding: 0 18;
+    width: 100%;
+    min-height: 50px;
+    max-height: 50px;
+    z-index: 20;
+    position: relative;
 }
 
 .content {
     display: flex;
-}
+    align-items: center;
 
-.data {
-    margin-left: 15px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-.avatar {
-    border-radius: 5px;
-}
-
-.name {
-    font-size: 18;
-    color: #FFFFFF;
-}
-
-.dateOfCreation {
-    color: $color-secondary;
-    font-size: 14;
-}
-
-/* 📱 Мобильная версия */
-@media (max-width: 768px) {
-    .container {
-        max-width: 255px;
+    .avatar {
+        border: $color-accsess 2px solid;
     }
+
+    span {
+        margin-left: 15px;
+        font-size: 14;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 120px;
+    }
+}
+
+.buttonEdit {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
 }

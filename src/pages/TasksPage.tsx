@@ -46,7 +46,8 @@ const TasksPage = () => {
 				<div key={boardName} className={style.boardContainer}>
 					<div className={style.boardTitle}>{boardName}</div>
 					{boardTasks.map(task => (
-						<TaskCard key={task.id} projectId={projectId || ''} task={task} />
+						//<TaskCard key={task.id} projectId={projectId || ''} task={task} />
+						<></>
 					))}
 				</div>
 			))}

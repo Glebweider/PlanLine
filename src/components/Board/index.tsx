@@ -7,7 +7,6 @@ import style from './Board.module.scss';
 import { Avatar } from '../Avatar';
 import { IBoard } from '../../redux/reducers/projectReducer';
 import { RootState } from '../../redux/store';
-import BoardMenu from '../Menus/Board';
 import { useAlert } from '../Alert/context';
 
 
@@ -137,15 +136,6 @@ const BoardCard: React.FC<BoardProps> = ({ projectId, board }) => {
                     }
                 </div>
             </Link>
-            <BoardMenu
-                textareaRef={textareaRef}
-                isOpenModal={isOpenBoardMenu}
-                setIsRenameBoard={setIsRenamedBoard}
-                isRenameBoard={isRenamedBoard}
-                projectOwnerId={projectState.ownerId}
-                projectId={projectId || ""}
-                boardId={selectedBoardId}
-                setOpenModal={setIsOpenBoardMenu} />
         </div>
     );
 };

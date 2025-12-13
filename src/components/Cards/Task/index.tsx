@@ -1,69 +1,68 @@
-import { Link } from "react-router-dom";
-import { CheckCircleOutlined, ClockCircleOutlined, CloseCircleOutlined, InfoCircleOutlined, QuestionCircleOutlined, WarningOutlined } from "@ant-design/icons";
+import { useDrag } from 'react-dnd';
 
 import style from './TaskCard.module.scss';
-import { ITaskPreview } from "../../../pages/TasksPage";
-import formatDateShortEn from "../../../utils/FormatDateShortEn";
-import Tooltip from "../../../components/Tooltip";
+import { ICard, IProject } from "../../../redux/reducers/projectReducer";
+import { Avatar } from '../../../components/Avatar';
+import formatDateLong from 'src/utils/FormatDateLong';
+import formatDateShort from 'src/utils/FormatDateShort';
 
 
 interface TaskCardProps {
-    projectId: string;
-    task: ITaskPreview;
+    task: ICard;
+    listId: string;
+    projectState: IProject;
+    setIsOpenTask: React.Dispatch<React.SetStateAction<boolean>>;
+    setSelectedTask: React.Dispatch<React.SetStateAction<ICard>>;
 }
 
-const TaskCard: React.FC<TaskCardProps> = ({ projectId, task }) => {
-    const getDueIcon = (dueDate: string | null) => {
-        if (!dueDate) {
-            console.log(dueDate)
-            return <QuestionCircleOutlined className={style.icon} style={{ color: "#000" }} />;
-        }
-
-        const due = new Date(dueDate);
-        const now = new Date();
-
-        const isPast = due.getTime() < now.getTime();
-        const isSoon = due.getTime() - now.getTime() <= 1000 * 60 * 60 * 24 * 2;
-
-        if (isPast) {
-            return <CloseCircleOutlined className={style.icon} style={{ color: "#FF2D20" }} />;
-        } else if (isSoon) {
-            return <WarningOutlined className={style.icon} style={{ color: "#FFA500" }} />;
-        } else {
-            return <ClockCircleOutlined className={style.icon} style={{ color: "#ccc" }} />;
-        }
-    };
+const TaskCard: React.FC<TaskCardProps> = ({
+    task,
+    listId,
+    projectState,
+    setIsOpenTask,
+    setSelectedTask,
+}) => {
+    const [{ isDragging }, dragRef] = useDrag({
+        type: 'TASK',
+        item: () => ({ task, listId }),
+        collect: monitor => ({
+            isDragging: monitor.isDragging()
+        })
+    }, [task, listId]);
 
     return (
-        <Link
-            to={`/project/${projectId}/${task.boardId}`}
-            className={style.taskItem}>
+        <div
+            ref={dragRef}
+            onClick={() => {
+                setSelectedTask(task);
+                setIsOpenTask(true);
+            }}
+            className={style.container} >
+            <text className={style.title}>{task.title}</text>
+            <div className={style.content}>
+                <text className={`${style.dueDate} ${task.dueDate ? '' : style.disable}`}>
+                    {task.dueDate ? formatDateShort(task.dueDate) : 'no date set'}
+                    </text>
+                <div className={style.users}>
+                    {task.members.length > 3 &&
+                        <span>+{task.members.length - 3}</span>
+                    }
 
-            {getDueIcon(task.dueDate)}
-            <div className={style.taskInfo}>
-                <div className={style.title}>{task.title}</div>
-                <div className={style.timestamps}>
-                    <Tooltip text="Дата окончания задачи">
-                        <div className={style.projectDataContainer}>
-                            <CheckCircleOutlined />
-                            <text className={style.projectDataText}>{formatDateShortEn(task.dueDate)}</text>
-                        </div>
-                    </Tooltip>
-                    <Tooltip text="Дата созданния задачи">
-                        <div className={style.projectDataContainer}>
-                            <QuestionCircleOutlined />
-                            <text className={style.projectDataText}>{formatDateShortEn(`${task.createdAt}`)}</text>
-                        </div>
-                    </Tooltip>
-                    <Tooltip text="Дата обновленния задачи">
-                        <div className={style.projectDataContainer}>
-                            <InfoCircleOutlined />
-                            <text className={style.projectDataText}>{formatDateShortEn(`${task.updatedAt}`)}</text>
-                        </div>
-                    </Tooltip>
+                    <div className={style.avatars}>
+                        {task.members.slice(0, 3).map(member => (
+                            <Avatar
+                                key={member}
+                                size={22}
+                                className={style.user}
+                                user={projectState.members.find((m) => m.id === member)}
+                            />
+                        ))}
+                    </div>
                 </div>
             </div>
-        </Link>
+            <hr />
+            <text className={style.createDate}>Created on {formatDateLong(task.createdAt)}</text>
+        </div >
     );
 };
 

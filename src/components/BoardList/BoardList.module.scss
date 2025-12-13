@@ -4,56 +4,71 @@
 .container {
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
-    min-height: auto;
-    color: #FFFFFF;
-    gap: 10px;
+    align-self: flex-start;
+    min-width: 230px;
+    min-height: 84px;
+    max-height: 94%;
+    background-color: $color-bg-modal;
+    border-radius: 12px;
+    padding: 15 25 20 25;
 }
 
-.body {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    height: auto;
-    overflow-y: auto;
-}
-
-.main {
-    background-color: $color-bg-secondary;
-    border: 1px solid $color-hr;
+.containerData {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 218px;
-    height: 32px;
-    padding: 10 15;
-    border-radius: 10px;
-    font-size: 20;
+    height: 36px;
+
+    .containerLeftData {
+        display: flex;
+        align-items: center;
+
+        span {
+            margin-left: 4px;
+            font-size: 16;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 150px;
+            display: inline-block;
+        }
+    }
 }
 
-.buttonCreate {
-    width: 219px;
-    max-height: 52px;
-    min-height: 52px;
+.containerTasks {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    margin-right: -17.3px;
+    scrollbar-gutter: stable;
 }
 
-.listName {
-    font-size: 20;
-    color: #FFFFFF;
-    white-space: pre-wrap;
-    word-break: break-word;
-    width: 88%;
-}
+.addTaskToList {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    min-height: 48px;
+    max-height: 48px;
+    border: 2px $color-bg-input solid;
+    border-radius: 8px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    cursor: pointer;
 
-.listTextArea {
-    border: 1px solid $color-hr;
-    border-radius: 5px;
-    padding: 8 12;
-    color: #fff;
-    font-size: 16;
-    resize: none;
-    
-    &:focus {
-        border: none;
+    svg rect {
+        transition: fill 0.3s ease;
+    }
+
+    &:hover {
+        background-color: $color-primary;
+        color: $color-hr;
+
+        svg rect {
+            fill: $color-hr;
+        }
     }
 }

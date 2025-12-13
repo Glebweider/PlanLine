@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setUser } from '../redux/reducers/userReducer';
 import { RootState } from '../redux/store';
 import { useAlert } from './Alert/context';
-import style from '../styles/pages/ProtectedAuthRoute.module.scss';
 import { useNavigate } from 'react-router-dom';
 
 type ProtectedRouteProps = {
@@ -60,20 +59,7 @@ const ProtectedAuthRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
     };
 
 	if (isAuthenticated === null) {
-		return (
-			<div className={style.container}>
-				<div className={style.content}>
-					<text style={{ marginTop: 25 }} >Ожидайте загрузки</text>
-					<video 
-						src='/video/asmr-loading.mp4'
-						autoPlay
-						loop
-						muted
-						playsInline
-						style={{ width: '90%', height: '75%', objectFit: 'cover', margin: 25, borderRadius: 15 }} />
-				</div>
-			</div>
-		);
+		return (<></>);
 	}
 
 	return isAuthenticated ? <>{children}</> : <div></div>;

@@ -1,0 +1,97 @@
+@import '../../../styles/_variables.scss';
+
+
+.modalContent {
+    background: $color-bg-modal;
+    border-radius: 12px;
+    width: 320px;
+    height: 725px;
+    display: flex;
+    flex-direction: column;
+    padding: 24 42;
+    transform: translateY(80px);
+    opacity: 0;
+    animation: modalSlideUp 0.35s ease forwards;
+    margin-left: 67px; // Компенсация кнопки + Отступ
+}
+
+@keyframes modalSlideUp {
+    from {
+        transform: translateY(80px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.headerContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+
+    span {
+        font-size: 22;
+        color: $color-primary;
+    }
+
+    text {
+        font-size: 12;
+    }
+}
+
+.inviteContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 25px;
+    height: 32px;
+    padding: 0 12;
+    opacity: 0.5;
+    transition: opacity .35s;
+    border: solid 2px $color-hr;
+    border-radius: 8px;
+    border-top-left-radius: 0px;
+    cursor: default;
+
+    text {
+        font-size: 12;
+        color: $color-hr;
+    }
+
+    &:hover {
+        transition: opacity .35s;
+        opacity: 1;
+    }
+
+    svg {
+        cursor: pointer;
+    }
+}
+
+.inviteContainerActive {
+    border: solid 2px $color-accsess;
+
+    text {
+        color: $color-accsess;
+    }
+
+    svg path {
+        stroke: $color-accsess;
+    }
+}
+
+.usersContainer {
+    display: flex;
+    flex-direction: column;
+    margin-top: 40px;
+    gap: 35px;
+}
+
+.buttonCloseContainer {
+    height: 75%;
+    margin-left: 25px;
+}

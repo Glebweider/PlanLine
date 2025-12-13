@@ -1,0 +1,153 @@
+@import '../../../styles/variables';
+
+$colors: #FEFB90, #EF869F, #f0e803, #e0083a, #2087c4, #5120c4;
+
+.projectContainer {
+    display: flex;
+    flex-direction: column;
+    background-color: $color-bg-modal;
+    min-width: 275px;
+    max-width: 275px;
+    border-radius: 12px;
+    padding: 20px 30px;
+    z-index: 0;
+}
+
+.projectBoardsWrapper {
+    display: flex;
+    flex-direction: column;
+    margin-right: -30px;
+    overflow: hidden;
+    gap: 13px;
+    transition: height 0.3s ease;
+}
+
+.projectHeader {
+    display: flex;
+    justify-content: space-between;
+    color: $color-primary;
+}
+
+.headerLeft {
+    display: flex;
+    align-items: center;
+}
+
+.projectName {
+    font-size: 16px;
+    margin-left: 8px;
+}
+
+.arrowIcon {
+    transform: rotate(-90deg);
+    transition: transform 0.25s ease;
+}
+
+.active {
+    transform: rotate(0deg);
+}
+
+.containerBoard {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    width: 305px;
+    min-height: 45px;
+    max-height: 45px;
+
+    div {
+        display: flex;
+        align-items: center;
+
+        span {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: nth($colors, random(6));
+            margin-left: 30px;
+        }
+
+        a {
+            margin-left: 10px;
+            font-size: 14px;
+            color: #fff;
+        }
+    }
+
+    img {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        margin-right: 30px;
+        transition: opacity .25s, visibility .25s;
+    }
+
+    &:hover {        
+        img {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+    }
+}
+
+.containerActiveBoard {
+    position: relative;
+    min-height: 45px;
+    overflow: visible;
+
+    &::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        top: -15px;
+        height: 74px;
+        width: 305px;
+        background-image: url('data:image/svg+xml,%3Csvg viewBox="0 0 305 74" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"%3E%3Cpath d="M309.5 74H305.052C305.079 73.6355 305.094 73.2672 305.094 72.8955C305.094 66.6473 301.114 61.3322 295.558 59.3584H12C5.37258 59.3584 3.38246e-07 53.9858 0 47.3584V26.3584C0 19.731 5.37258 14.3584 12 14.3584H290.775C298.683 14.3584 305.094 7.92973 305.094 0H309.5V74Z" fill="%23141417"/%3E%3C/svg%3E');
+        background-repeat: no-repeat;
+        background-position: left center;
+        background-size: 100% 100%;
+        z-index: -1;
+    }
+
+    img {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+    }
+}
+
+.containerAddBoard {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 275px;
+    min-height: 32px;
+    max-height: 32px;
+    border-radius: 8px;
+    border: $color-primary 1px solid;
+    color: $color-primary;
+    font-size: 14px;
+    transition: background-color 0.2s ease, color 0.2s ease;
+    cursor: pointer;
+
+    span {
+        margin-left: 10px;
+        transition: color 0.2s ease;
+    }
+
+    svg rect {
+        transition: fill 0.2s ease;
+    }
+
+    &:hover {
+        background-color: $color-primary;
+        color: $color-hr;
+
+        svg rect {
+            fill: $color-hr;
+        }
+    }
+}

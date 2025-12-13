@@ -1,0 +1,221 @@
+@import '../../../styles/variables';
+
+
+.container {
+    position: absolute;
+    transform: translateX(-80%);
+    margin-left: 375px;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: transform 0.4s ease, opacity 0.4s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 18 28;
+    z-index: 10;
+}
+
+hr {
+    width: 100%;
+    height: 1px;
+    background-color: $color-hr;
+    border-radius: 5px;
+}
+
+.open {
+    transform: translateX(0);
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    background: linear-gradient($color-bg-default 0%, $color-bg-modal 100%);
+    border-radius: 12px;
+    margin-top: 294px;
+    width: 344px;
+    height: 300px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: $color-primary;
+    font-size: 20;
+    margin-bottom: 12px;
+
+    svg {
+        width: 16px;
+        height: 16px;
+        cursor: pointer;
+    }
+}
+
+.wrapper {
+    margin-top: 5px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: auto;
+    padding: 10px 14px;
+    background-color: $color-bg-modal;
+    transition: background-color 0.20s ease;
+    border-radius: 8px;
+    cursor: pointer;
+    user-select: none;
+
+    &:hover {
+        background-color: #17181b;
+    }
+}
+
+.label {
+    color: #FFF;
+    font-size: 16px;
+    font-weight: 200;
+    flex: 1;
+}
+
+.arrow {
+    transform: rotate(0);
+    transition: transform 0.20s ease;
+
+    &.active {
+        transform: rotate(-90deg);
+    }
+}
+
+.dropdown {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    width: 100%;
+    background: $color-bg-modal;
+    border-radius: 8px;
+    overflow: hidden;
+    z-index: 50;
+}
+
+.item {
+    display: flex;
+    align-items: center;
+    padding: 14px 20px;
+    color: #e4e4e4;
+    font-size: 14;
+    font-weight: 200;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+
+    span {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background-color: #e0083a;
+        margin-right: 12px;
+    }
+
+    &:hover {
+        background-color: #1a1a1d;
+    }
+}
+
+.warningText {
+    font-style: italic;
+    width: 275px;
+    font-size: 11;
+    color: $color-hr;
+    margin-left: 12px;
+}
+
+.containerRoles {
+    display: flex;
+    flex-direction: column;
+    margin-top: 35px;
+    margin-bottom: 5px;
+}
+
+.contentRole {
+    display: flex;
+    align-items: center;
+
+    text {
+        margin-left: 12px;
+        font-size: 15;
+        color: $color-primary;
+    }
+}
+
+.roles {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 12px;
+}
+
+.role {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 105px;
+    height: 26px;
+    color: $color-hr;
+    border: 1px #fff solid;
+    border-color: $color-hr;
+    transition: border-color 0.25s ease, color 0.25s ease;
+    border-radius: 8px;
+    cursor: pointer;
+
+    &.active {
+        color: $color-accsess;
+        border-color: $color-accsess;
+    }
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.closeButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 12;
+    border-radius: 8px;
+    width: 90px;
+    height: 24px;
+    cursor: pointer;
+
+    border: 2px solid $color-error;
+    transition: background-color .25s, border-color .25s, color .25s;
+    color: $color-error;
+
+    &:hover {
+        background-color: $color-error;
+        color: #000;
+    }
+}
+
+.applyButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 12;
+    border-radius: 8px;
+    width: 90px;
+    height: 24px;
+    cursor: pointer;
+
+    border: 2px solid $color-accent;
+    transition: background-color .25s,
+    border-color .25s,
+    color .25s;
+    color: $color-accent;
+
+    &:hover {
+        background-color: $color-accent;
+        color: #000;
+    }
+}
