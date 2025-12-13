@@ -69,6 +69,11 @@ const CreateNewModal: React.FC<CreateNewModalProps> = ({
                                 value={value}
                                 maxLength={maxLength}
                                 onChange={(e) => setValue(e.target.value)}
+                                onKeyDown={(e) => {
+                                    if (e.key === 'Enter') {
+                                        create();
+                                    }
+                                }}
                                 className={style.inputField}
                             />
                         </div>

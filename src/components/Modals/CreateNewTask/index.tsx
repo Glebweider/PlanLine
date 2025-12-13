@@ -153,6 +153,7 @@ const CreateNewTask: React.FC<CreateNewTaskProps> = ({
                                     paddingTop: 6,
                                     paddingBottom: 6
                                 }}
+                                className={style.editor}
                                 editor={editor} />
                             <div className={style.editorToolbarContainer}>
                                 <div className={style.editorToolbar}>

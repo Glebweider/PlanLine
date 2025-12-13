@@ -35,7 +35,7 @@ const UserSettingsMenu: React.FC<UserSettingsMenuProps> = ({ isOpen, member, onC
 
     const [selectedBoard, setSelectedBoard] = useState<string>('');
     const [value, onChange] = useState<string>('');
-    const [selectedRole, setSelectedRole] = useState<EMemberRole>(MemberRolesArray[2]);
+    const [selectedRole, setSelectedRole] = useState<EMemberRole>(MemberRolesArray[3]);
     const [open, setOpen] = useState<boolean>(false);
     const [isChange, setIsChange] = useState<boolean>(false);
     const [isKickUser, setIsKickUser] = useState<boolean>(false);
@@ -221,12 +221,13 @@ const UserSettingsMenu: React.FC<UserSettingsMenuProps> = ({ isOpen, member, onC
                 </div>
                 <div className={style.roles}>
                     {MemberRolesArray.map(role => (
-                        <div
+                        <button
                             key={role}
+                            disabled={!selectedBoard}
                             onClick={() => setSelectedRole(role)}
                             className={`${style.role} ${selectedRole === role ? style.active : ''}`}>
                             <text>{role}</text>
-                        </div>
+                        </button>
                     ))}
                 </div>
             </div>

@@ -4,8 +4,9 @@ import style from './ListMenu.module.scss';
 import { useAlert } from '../../Alert/context';
 import { IProjectPreviewCard } from '../../../pages/ProjectsPage';
 import CreateNewModal from '../../Modals/CreateNew';
-import { IList } from '../../../redux/reducers/projectReducer';
+import { IList, updateListName } from '../../../redux/reducers/projectReducer';
 import DeleteListModal from '../../../components/Modals/DeleteList';
+import { useDispatch } from 'react-redux';
 
 
 interface ListMenuProps {
@@ -32,6 +33,7 @@ const ListMenu: React.FC<ListMenuProps> = ({
     setProjects
 }) => {
     const { showAlert } = useAlert();
+    const dispatch = useDispatch();
 
     const [menuState, setMenuState] = useState<EMenuState | null>(null);
     const menuRef = useRef<HTMLDivElement>(null);
@@ -91,22 +93,11 @@ const ListMenu: React.FC<ListMenuProps> = ({
                         }
                     );
 
-                    const data = await response.json();
                     if (!response.ok) {
+                        const data = await response.json();
                         showAlert(`Server error: ${response.status}, ${data.message}`);
                         return;
                     }
-
-                    setProjects(prev =>
-                        prev.map(proj => ({
-                            ...proj,
-                            boards: proj.boards.map(board =>
-                                board.id === data.id
-                                    ? { ...board, name: data.name }
-                                    : board
-                            )
-                        }))
-                    );
                 }} />
 
             <DeleteListModal

@@ -72,6 +72,12 @@
     }
 }
 
+.editor div {
+    width: 100%;
+    min-height: 120px;
+    max-height: 640px;
+}
+
 .modalInputFieldContainer {
     margin-left: 5px;
     padding-right: 7px;
