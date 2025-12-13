@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useDrop } from 'react-dnd';
 
 import styles from './BoardList.module.scss';
-import { EMemberRole, ICard, IList, IProject} from '../../redux/reducers/projectReducer';
+import { EMemberRole, ICard, IList, IProject } from '../../redux/reducers/projectReducer';
 import TaskCard from '../Cards/Task';
 import TaskModal from '../Modals/Task';
 import { IUserState } from '../../redux/reducers/userReducer';
@@ -48,7 +48,7 @@ const BoardList: React.FC<BoardListProps> = ({
     const [isMoveCard, setIsMoveCard] = useState<boolean>(false);
 
 
-    const [, dropRef] = useDrop({
+    const [, dropTaskRef] = useDrop({
         accept: 'TASK',
         drop: (item: any) => {
             moveCard(item);
@@ -78,7 +78,7 @@ const BoardList: React.FC<BoardListProps> = ({
 
             if (!response.ok) {
                 const data = await response.json();
-                showAlert(`Server error: ${response.status}, ${data.message}`);
+                showAlert(`Server error: ${response.status}, ${data.message?.message}`);
                 return;
             }
         } catch (error) {
@@ -90,7 +90,7 @@ const BoardList: React.FC<BoardListProps> = ({
 
     return (
         <>
-            <div className={styles.container} ref={dropRef}>
+            <div className={styles.container} ref={dropTaskRef}>
                 <div className={styles.containerData}>
                     <div className={styles.containerLeftData}>
                         <ListMenu
@@ -118,7 +118,12 @@ const BoardList: React.FC<BoardListProps> = ({
                                 setIsOpenTask={setIsOpenTask}
                                 task={task}
                                 listId={list.id}
-                                projectState={projectState} />
+                                projectState={projectState}
+                                userPermission={
+                                    projectState.boards
+                                        ?.find(board => board.id === boardId)?.members
+                                        ?.find(member => member.id === userState.id)?.role != EMemberRole.OBSERVER
+                                } />
                         ))}
                     </div>
                 }

@@ -3,8 +3,8 @@ import { useDrag } from 'react-dnd';
 import style from './TaskCard.module.scss';
 import { ICard, IProject } from "../../../redux/reducers/projectReducer";
 import { Avatar } from '../../../components/Avatar';
-import formatDateLong from 'src/utils/FormatDateLong';
-import formatDateShort from 'src/utils/FormatDateShort';
+import formatDateLong from '../../../utils/FormatDateLong';
+import formatDateShort from '../../../utils/FormatDateShort';
 
 
 interface TaskCardProps {
@@ -13,6 +13,7 @@ interface TaskCardProps {
     projectState: IProject;
     setIsOpenTask: React.Dispatch<React.SetStateAction<boolean>>;
     setSelectedTask: React.Dispatch<React.SetStateAction<ICard>>;
+    userPermission: boolean;
 }
 
 const TaskCard: React.FC<TaskCardProps> = ({
@@ -21,10 +22,12 @@ const TaskCard: React.FC<TaskCardProps> = ({
     projectState,
     setIsOpenTask,
     setSelectedTask,
+    userPermission
 }) => {
     const [{ isDragging }, dragRef] = useDrag({
         type: 'TASK',
         item: () => ({ task, listId }),
+        canDrag: () => userPermission,
         collect: monitor => ({
             isDragging: monitor.isDragging()
         })
