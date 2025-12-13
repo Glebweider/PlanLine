@@ -1,7 +1,7 @@
 @import '../../../styles/_variables.scss';
 
 .modalContent {
-    background: $color-bg-modal;
+    background: $color-bg-secondary;
     border-radius: 12px;
     width: 650px;
     min-height: 315px;
@@ -37,7 +37,7 @@
     padding: 15 30;
     width: auto;
     max-height: 30px;
-    background-color: $color-bg-secondary-2;
+    background-color: $color-bg-modal;
     border-top-left-radius: 12px;
     border-top-right-radius: 12px;
 
