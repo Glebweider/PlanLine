@@ -1,4 +1,4 @@
-function formatDateLong(dateInput: string | Date): string {
+export function formatDateLong(dateInput: string | Date): string {
     const date = typeof dateInput === 'string'
         ? new Date(dateInput)
         : dateInput;
@@ -10,5 +10,3 @@ function formatDateLong(dateInput: string | Date): string {
         timeZone: 'UTC',
     }).format(date);
 }
-
-export default formatDateLong;

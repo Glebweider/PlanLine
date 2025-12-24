@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 
@@ -5,7 +6,6 @@ import style from './Navbar.module.scss';
 import { Avatar } from '../Avatar';
 import { RootState } from '../../redux/store';
 import LeaveModal from '../Modals/Leave';
-import { useState } from 'react';
 
 const Navbar = () => {
     const navigate = useNavigate();

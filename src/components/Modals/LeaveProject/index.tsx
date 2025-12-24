@@ -62,7 +62,7 @@ const LeaveProjectModal: React.FC<LeaveProjectModalProps> = ({
                 onClick={(e) => e.stopPropagation()}>
                 <div className={style.modalContentContainer}>
                     <div className={style.modalHeader}>
-                        <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
                             <path d="M9.6416 8.19001C9.97743 4.29001 11.9816 2.69751 16.3691 2.69751H16.5099C21.3524 2.69751 23.2916 4.63668 23.2916 9.47918V16.5425C23.2916 21.385 21.3524 23.3242 16.5099 23.3242H16.3691C12.0141 23.3242 10.0099 21.7533 9.65244 17.9183" stroke="#D4D4D4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                             <path d="M16.25 13H3.92163" stroke="#D4D4D4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                             <path d="M6.33742 9.37085L2.70825 13L6.33742 16.6292" stroke="#D4D4D4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />

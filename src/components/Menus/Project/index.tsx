@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { useState, useEffect, useRef, SetStateAction } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 import style from './ProjectMenu.module.scss';
 import { RootState } from '../../../redux/store';
@@ -8,15 +8,9 @@ import { IProjectPreviewCard } from '../../../pages/ProjectsPage';
 import UsersProjectModal from '../../../components/Modals/UsersProject';
 import CreateNewModal from '../../../components/Modals/CreateNew';
 import LeaveProjectModal from '../../../components/Modals/LeaveProject';
-import DeleteProjectModal from 'src/components/Modals/DeleteProject';
+import DeleteProjectModal from '../../../components/Modals/DeleteProject';
+import { PROJECT_NAME_MAX_LENGTH } from '../../../utils/constants';
 
-
-interface ProjectMenuProps {
-    isOpen: boolean;
-    project: IProjectPreviewCard;
-    onClose: () => void;
-    setProjects: React.Dispatch<React.SetStateAction<IProjectPreviewCard[]>>;
-}
 
 enum EMenuState {
     None = "None",
@@ -24,6 +18,13 @@ enum EMenuState {
     Leave = "Leave",
     Delete = "Delete",
     Rename = "Rename",
+}
+
+interface ProjectMenuProps {
+    isOpen: boolean;
+    project: IProjectPreviewCard;
+    onClose: () => void;
+    setProjects: React.Dispatch<React.SetStateAction<IProjectPreviewCard[]>>;
 }
 
 const ProjectMenu: React.FC<ProjectMenuProps> = ({
@@ -103,7 +104,7 @@ const ProjectMenu: React.FC<ProjectMenuProps> = ({
                 isOpen={menuState == EMenuState.Rename}
                 onClose={() => setMenuState(EMenuState.None)}
                 title={'Rename project:'}
-                maxLength={16}
+                maxLength={PROJECT_NAME_MAX_LENGTH}
                 onSubmit={async (name) => {
                     const response = await fetch(
                         `${process.env.REACT_APP_BACKEND_URI}/projects/${project.id}`,

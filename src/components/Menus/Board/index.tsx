@@ -5,7 +5,14 @@ import { useAlert } from '../../Alert/context';
 import { IBoardPreviewCard, IProjectPreviewCard } from '../../../pages/ProjectsPage';
 import CreateNewModal from '../../Modals/CreateNew';
 import DeleteBoardModal from '../../../components/Modals/DeleteBoard';
+import { BOARD_NAME_MAX_LENGTH } from '../../../utils/constants';
 
+
+enum EMenuState {
+    None = "None",
+    Delete = "Delete",
+    Rename = "Rename",
+}
 
 interface BoardMenuProps {
     isOpen: boolean;
@@ -13,12 +20,6 @@ interface BoardMenuProps {
     board: IBoardPreviewCard;
     onClose: () => void;
     setProjects: React.Dispatch<React.SetStateAction<IProjectPreviewCard[]>>;
-}
-
-enum EMenuState {
-    None = "None",
-    Delete = "Delete",
-    Rename = "Rename",
 }
 
 const BoardMenu: React.FC<BoardMenuProps> = ({
@@ -72,7 +73,7 @@ const BoardMenu: React.FC<BoardMenuProps> = ({
                 isOpen={menuState == EMenuState.Rename}
                 onClose={() => setMenuState(EMenuState.None)}
                 title={'Rename board:'}
-                maxLength={24}
+                maxLength={BOARD_NAME_MAX_LENGTH}
                 onSubmit={async (name) => {
                     const response = await fetch(
                         `${process.env.REACT_APP_BACKEND_URI}/projects/${project.id}/boards/${board.id}`,

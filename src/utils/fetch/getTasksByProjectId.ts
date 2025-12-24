@@ -1,13 +1,13 @@
 import { useAlert } from "../../components/Alert/context";
 
 
-export const useGetTasksByProjectId = () => {
+export const useGetMyTasks = () => {
     const { showAlert } = useAlert();
 
-    const getTasksByProjectId = async (projectId: string) => {
+    const getMyTasks = async () => {
         try {
             const response = await fetch(
-                `${process.env.REACT_APP_BACKEND_URI}/projects/${projectId}/tasks`,
+                `${process.env.REACT_APP_BACKEND_URI}/user/my-tasks`,
                 {
                     method: 'GET',
                     credentials: 'include',
@@ -28,5 +28,5 @@ export const useGetTasksByProjectId = () => {
         }
     };
 
-    return { getTasksByProjectId };
+    return { getMyTasks };
 };

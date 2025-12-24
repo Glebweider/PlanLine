@@ -1,18 +1,21 @@
 import style from './TaskModal.module.scss';
-import { ICard } from '../../../redux/reducers/projectReducer';
-import { useRef, useEffect } from 'react';
+import { ICard, IProject } from '../../../redux/reducers/projectReducer';
+import { formatDateShort } from '../../../utils';
+import Users from '../../../components/Users';
 
 
 interface TaskModalProps {
     task: ICard,
     isOpen: boolean;
     onClose: () => void;
+    projectState: IProject;
 }
 
 const TaskModal: React.FC<TaskModalProps> = ({
     task,
     isOpen,
     onClose,
+    projectState
 }) => {
 
     if (!isOpen) return <></>;
@@ -35,10 +38,13 @@ const TaskModal: React.FC<TaskModalProps> = ({
                             </div>
                         </div>
                         <div className={style.rightModalData}>
-                            <img onClick={() => console.log(123)} src='./icons/Profile-User.svg' />
-                            <img onClick={() => console.log(123)} src='./icons/Calendar.svg' />
+                            <Users task={task} projectState={projectState} />
+                            <text className={`${style.dueDate} ${task.dueDate ? '' : style.disable}`}>
+                                {task.dueDate ? formatDateShort(task.dueDate) : 'no date set'}
+                            </text>
                         </div>
                     </div>
+                    <text className={style.description}>Description</text>
                     <div className={style.descriptionBox}>
                         <div
                             className={style.taskContent}

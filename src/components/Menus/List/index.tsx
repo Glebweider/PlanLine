@@ -3,11 +3,17 @@ import { useState, useEffect, useRef } from 'react';
 import style from './ListMenu.module.scss';
 import { useAlert } from '../../Alert/context';
 import { IProjectPreviewCard } from '../../../pages/ProjectsPage';
+import { IList } from '../../../redux/reducers/projectReducer';
 import CreateNewModal from '../../Modals/CreateNew';
-import { IList, updateListName } from '../../../redux/reducers/projectReducer';
 import DeleteListModal from '../../../components/Modals/DeleteList';
-import { useDispatch } from 'react-redux';
+import { LIST_NAME_MAX_LENGTH } from '../../../utils/constants';
 
+
+enum EMenuState {
+    None = "None",
+    Delete = "Delete",
+    Rename = "Rename",
+}
 
 interface ListMenuProps {
     isOpen: boolean;
@@ -16,12 +22,6 @@ interface ListMenuProps {
     list: IList
     onClose: () => void;
     setProjects: React.Dispatch<React.SetStateAction<IProjectPreviewCard[]>>;
-}
-
-enum EMenuState {
-    None = "None",
-    Delete = "Delete",
-    Rename = "Rename",
 }
 
 const ListMenu: React.FC<ListMenuProps> = ({
@@ -33,7 +33,6 @@ const ListMenu: React.FC<ListMenuProps> = ({
     setProjects
 }) => {
     const { showAlert } = useAlert();
-    const dispatch = useDispatch();
 
     const [menuState, setMenuState] = useState<EMenuState | null>(null);
     const menuRef = useRef<HTMLDivElement>(null);
@@ -77,7 +76,7 @@ const ListMenu: React.FC<ListMenuProps> = ({
                 isOpen={menuState == EMenuState.Rename}
                 onClose={() => setMenuState(EMenuState.None)}
                 title={'Rename list:'}
-                maxLength={24}
+                maxLength={LIST_NAME_MAX_LENGTH}
                 onSubmit={async (name) => {
                     const response = await fetch(
                         `${process.env.REACT_APP_BACKEND_URI}/projects/${project.id}/boards/${boardId}/${list.id}`,

@@ -60,7 +60,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 30px;
+    gap: 20px;
 
     img {
         width: 24px;
@@ -113,12 +113,16 @@
     cursor: pointer;
 }
 
+.description {
+    color: $color-primary;
+    font-size: 15;
+    margin-left: 42px;
+    margin-top: 24px;
+}
+
 .descriptionBox {
-    margin: 30 30px;
-    //background: #0d0d0d;
-    //border: 1px solid #333;
+    margin: 0 22 22 22px;
     border-radius: 12px;
-    //padding: 12 0px;
 
     hr {
         margin-top: 8px;
@@ -151,5 +155,23 @@
             margin-top: 0.5rem;
             margin-bottom: 0.5rem;
         }
+    }
+}
+
+.dueDate {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11;
+    color: $color-bg-modal;
+    background-color: $color-orange;
+    height: 18px;
+    width: 74px;
+    height: 22px;
+    border-radius: 4px;
+
+    &.disable {
+        background-color: $color-hr;
+        color: #000;
     }
 }

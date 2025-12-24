@@ -5,13 +5,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import style from '../styles/pages/ProjectsPage.module.scss';
 import { useAlert } from '../components/Alert/context';
 import ProjectCard from '../components/Cards/Project';
-import { RootState } from '../redux/store';
-import { useGetProject } from '../utils/fetch/getProjectById';
+import CreateNewTask from '../components/Modals/TaskFormModal';
 import BoardList from '../components/BoardList';
 import CreateNewModal from '../components/Modals/CreateNew';
-import { sseCore } from '../utils/sseCore';
 import { EMemberRole, setProjectId } from '../redux/reducers/projectReducer';
-import CreateNewTask from '../components/Modals/CreateNewTask';
+import { RootState } from '../redux/store';
+import { useGetProject } from '../utils/fetch/getProjectById';
+import { BOARD_NAME_MAX_LENGTH, BOARDS_LIMIT, LIST_NAME_MAX_LENGTH, PROJECT_NAME_MAX_LENGTH, PROJECTS_LIMIT } from '../utils/constants';
+import { sseCore } from '../utils';
+
 
 export interface IBoardPreviewCard {
 	id: string;
@@ -132,7 +134,7 @@ const ProjectsPage = () => {
 								setProjects={setProjects}
 								setOpenModalCreateBoard={setOpenModalCreateBoard} />
 						))}
-						{projects?.length < 12 &&
+						{projects?.length < PROJECTS_LIMIT &&
 							<div
 								onClick={() => setOpenModalCreateProject(true)}
 								className={style.containerAddProject}>
@@ -162,7 +164,7 @@ const ProjectsPage = () => {
 							{projectState.boards
 								?.find(board => board.id === boardId)?.members
 								?.find(member => member.id === userState.id)?.role != EMemberRole.OBSERVER
-								&& projectState?.boards?.length < 12 &&
+								&& projectState?.boards?.length < BOARDS_LIMIT &&
 								<div
 									onClick={() => setOpenModalCreateList(true)}
 									className={style.addListToBoard}>
@@ -185,7 +187,7 @@ const ProjectsPage = () => {
 				isOpen={isOpenModalCreateProject}
 				onClose={() => setOpenModalCreateProject(!isOpenModalCreateProject)}
 				title={'Project name:'}
-				maxLength={16}
+				maxLength={PROJECT_NAME_MAX_LENGTH}
 				onSubmit={async (name) => {
 					const response = await fetch(
 						`${process.env.REACT_APP_BACKEND_URI}/projects/`,
@@ -221,7 +223,7 @@ const ProjectsPage = () => {
 				isOpen={isOpenModalCreateBoard}
 				onClose={() => setOpenModalCreateBoard(!isOpenModalCreateBoard)}
 				title={'Board name:'}
-				maxLength={16}
+				maxLength={BOARD_NAME_MAX_LENGTH}
 				onSubmit={async (name) => {
 					const response = await fetch(
 						`${process.env.REACT_APP_BACKEND_URI}/projects/${projectId}/boards`,
@@ -250,7 +252,7 @@ const ProjectsPage = () => {
 				isOpen={isOpenModalCreateList}
 				onClose={() => setOpenModalCreateList(!isOpenModalCreateList)}
 				title={'List name:'}
-				maxLength={16}
+				maxLength={LIST_NAME_MAX_LENGTH}
 				onSubmit={async (name) => {
 					const response = await fetch(
 						`${process.env.REACT_APP_BACKEND_URI}/projects/${projectId}/boards/${boardId}`,

@@ -7,8 +7,9 @@ import ProjectMenu from '../../Menus/Project';
 import { IProjectPreviewCard } from '../../../pages/ProjectsPage';
 import { setProjectId } from '../../../redux/reducers/projectReducer';
 import { RootState } from '../../../redux/store';
-import BoardCard from '../Board';
 import { useGetProject } from '../../../utils/fetch/getProjectById';
+import { BOARDS_LIMIT } from '../../../utils/constants';
+import BoardCard from '../Board';
 
 
 interface ProjectCardProps {
@@ -108,7 +109,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, setProjects, setOpen
                             boardId={boardId}
                             setProjects={setProjects} />
                     ))}
-                    {project.ownerId == userState.id && project?.boards?.length < 12 &&
+                    {project.ownerId == userState.id && project?.boards?.length < BOARDS_LIMIT &&
                         <div
                             onClick={() => setOpenModalCreateBoard(true)}
                             className={style.containerAddBoard}>

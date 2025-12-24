@@ -1,10 +1,7 @@
-// src/components/ui/Profile/index.tsx
 
-// ! own
-// ? styles
-import style from './Avatar.module.scss';
-// ? src
 import { useSelector } from 'react-redux';
+
+import style from './Avatar.module.scss';
 import { RootState } from '../../redux/store';
 
 type IProfileAvatarIconProps = {

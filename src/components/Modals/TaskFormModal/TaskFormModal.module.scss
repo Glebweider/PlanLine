@@ -1,0 +1,261 @@
+@import '../../../styles/_variables.scss';
+
+.modalContent {
+    background: $color-bg-secondary;
+    border-radius: 12px;
+    width: 650px;
+    min-height: 315px;
+    display: flex;
+    transform: translateY(40px);
+    opacity: 0;
+    animation: modalSlideUp 0.35s ease forwards;
+}
+
+@keyframes modalSlideUp {
+    from {
+        transform: translateY(40px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.modalContentContainer {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+}
+
+.description {
+    color: $color-primary;
+    font-size: 15;
+    margin-left: 42px;
+    margin-top: 24px;
+}
+
+.modalHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15 30;
+    width: auto;
+    max-height: 30px;
+    background-color: $color-bg-modal;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+
+    a {
+        margin-left: 8px;
+        font-size: 16;
+    }
+}
+
+.modalData {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 45px;
+    border-radius: 8px;
+    padding: 0 15 0 15;
+
+    hr {
+        width: 100%;
+    }
+}
+
+.rightModalData {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+
+    img {
+        width: 24px;
+        height: 24px;
+    }
+}
+
+.editor div {
+    width: 100%;
+    min-height: 120px;
+    max-height: 640px;
+}
+
+.modalInputFieldContainer {
+    margin-left: 5px;
+    padding-right: 7px;
+    height: 52%;
+    display: flex;
+    align-items: center;
+}
+
+.inputField {
+    font-size: 16;
+    color: #FFFFFF;
+}
+
+.modalButtons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.closeButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 12;
+    color: #000;
+    border-radius: 8px;
+    background-color: $color-error;
+    width: 90px;
+    height: 24px;
+    cursor: pointer;
+}
+
+.createButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 12;
+    color: #000;
+    border-radius: 8px;
+    background-color: $color-accent;
+    width: 90px;
+    height: 24px;
+    cursor: pointer;
+}
+
+.descriptionBox {
+    margin: 10 40 30 40;
+    background: #0d0d0d;
+    border: 1px solid #333;
+    border-radius: 12px;
+    padding: 12 0px;
+
+    div {
+        outline: none !important;
+        overflow-x: auto;
+
+        p {
+            margin-bottom: 0.3rem;
+            font-size: 14px;
+        }
+
+        ul {
+            margin-left: 20px;
+            list-style: disc;
+        }
+
+        ol {
+            margin-left: 20px;
+            list-style: decimal;
+        }
+
+        img {
+            display: block;
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin-bottom: 0.4rem;
+        }
+    }
+
+    .ProseMirror {
+        outline: none !important;
+        color: #e5e5e5;
+        height: 100%;
+        line-height: 1.6;
+
+        p strong {
+            margin-bottom: 0.15rem;
+            font-size: 14px;
+        }
+
+        ul {
+            margin-left: 20px;
+            list-style: disc;
+        }
+
+        ol {
+            margin-left: 20px;
+            list-style: decimal;
+        }
+
+        img {
+            min-height: 40%;
+            max-height: 40%;
+            display: block;
+            border-radius: 10px;
+        }
+    }
+
+    .editorToolbarContainer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 12px;
+        border-top: 1px solid #333;
+    }
+
+    .editorToolbar {
+        margin-left: 17px;
+        display: flex;
+        gap: 5px;
+
+        .toolbarBtn {
+            width: 26px;
+            height: 26px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.15s;
+
+            &:hover {
+                background: #3a3a3a;
+            }
+
+            &.active {
+                background: #5a5a5a;
+                color: white;
+                border-color: #888;
+            }
+        }
+    }
+
+    .editorActions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 12px;
+        margin-right: 17px;
+
+        .cancelBtn {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 12;
+            color: #000;
+            border-radius: 8px;
+            background-color: $color-error;
+            width: 90px;
+            height: 25px;
+            cursor: pointer;
+        }
+
+        .saveBtn {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 12;
+            color: #000;
+            border-radius: 8px;
+            background-color: $color-accent;
+            width: 90px;
+            height: 25px;
+            cursor: pointer;
+        }
+    }
+}

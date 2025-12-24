@@ -9,6 +9,8 @@ import { IUserState } from '../../redux/reducers/userReducer';
 import { useAlert } from '../Alert/context';
 import { IProjectPreviewCard } from '../../pages/ProjectsPage';
 import ListMenu from '../Menus/List';
+import TaskFormModal from '../Modals/TaskFormModal';
+import { TASKS_LIMIT } from '../../utils/constants';
 
 
 interface BoardListProps {
@@ -44,9 +46,13 @@ const BoardList: React.FC<BoardListProps> = ({
         updatedAt: new Date()
     });
     const [isOpenTask, setIsOpenTask] = useState<boolean>(false);
+    const [isOpenEditTask, setIsOpenEditTask] = useState<boolean>(false);
     const [isOpenMenu, setIsOpenMenu] = useState<boolean>(false);
     const [isMoveCard, setIsMoveCard] = useState<boolean>(false);
 
+    const userPermission = projectState.boards
+        ?.find(board => board.id === boardId)?.members
+        ?.find(member => member.id === userState.id)?.role != EMemberRole.OBSERVER
 
     const [, dropTaskRef] = useDrop({
         accept: 'TASK',
@@ -116,20 +122,15 @@ const BoardList: React.FC<BoardListProps> = ({
                                 key={task.id}
                                 setSelectedTask={setSelectedTask}
                                 setIsOpenTask={setIsOpenTask}
+                                setIsOpenEditTask={setIsOpenEditTask}
                                 task={task}
                                 listId={list.id}
                                 projectState={projectState}
-                                userPermission={
-                                    projectState.boards
-                                        ?.find(board => board.id === boardId)?.members
-                                        ?.find(member => member.id === userState.id)?.role != EMemberRole.OBSERVER
-                                } />
+                                userPermission={userPermission} />
                         ))}
                     </div>
                 }
-                {projectState.boards
-                    ?.find(board => board.id === boardId)?.members
-                    ?.find(member => member.id === userState.id)?.role != EMemberRole.OBSERVER && list?.cards?.length < 120 &&
+                {userPermission && list?.cards?.length < TASKS_LIMIT &&
                     <div
                         onClick={() => {
                             setSelectedListId(list.id);
@@ -148,7 +149,22 @@ const BoardList: React.FC<BoardListProps> = ({
             <TaskModal
                 task={selectedTask}
                 isOpen={isOpenTask}
-                onClose={() => setIsOpenTask(false)} />
+                onClose={() => setIsOpenTask(false)}
+                projectState={projectState} />
+
+            <TaskFormModal
+                isOpen={isOpenEditTask}
+                onClose={() => setIsOpenEditTask(false)}
+                projectId={projectState.id}
+                boardId={boardId}
+                listId={list.id}
+                initialData={{
+                    id: selectedTask.id,
+                    name: selectedTask.title,
+                    description: selectedTask.description,
+                    users: selectedTask.members,
+                    date: selectedTask.dueDate
+                }} />
         </>
     );
 };

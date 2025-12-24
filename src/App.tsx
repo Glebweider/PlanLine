@@ -10,7 +10,7 @@ import AuthPage from "./pages/AuthPage";
 
 //Components
 import ProtectedAuthRoute from "./components/ProtectedAuthRoute";
-import MainLayout from "./components/Layouts/MainLayout";
+import MainLayout from "./components/Layouts/Main";
 
 
 function App() {

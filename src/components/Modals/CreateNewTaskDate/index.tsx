@@ -1,12 +1,13 @@
 /* eslint-disable prefer-const */
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import style from './CreateNewTaskDate.module.scss';
 
 interface CreateNewTaskDateProps {
     isOpen: boolean;
     onClose: () => void;
-    setSelectedDate: React.Dispatch<React.SetStateAction<string>>;
+    selectedDate: Date | null
+    setSelectedDate: React.Dispatch<React.SetStateAction<Date | null>>;
 }
 
 const months = [
@@ -17,12 +18,40 @@ const months = [
 const CreateNewTaskDate: React.FC<CreateNewTaskDateProps> = ({
     isOpen,
     onClose,
+    selectedDate,
     setSelectedDate
 }) => {
     const [date, setDate] = useState(new Date());
     const [selected, setSelected] = useState(new Date());
     const [ampm, setAmpm] = useState<"AM" | "PM">("AM");
     const [time, setTime] = useState("12:00");
+
+
+    useEffect(() => {
+        if (!isOpen) return;
+
+        if (selectedDate) {
+            const initialDate = selectedDate instanceof Date ? selectedDate : new Date(selectedDate);
+
+            setSelected(initialDate);
+
+            const hours = initialDate.getHours();
+            const minutes = initialDate.getMinutes();
+
+            const isPM = hours >= 12;
+            const normalizedHours = hours % 12 || 12;
+
+            setAmpm(isPM ? "PM" : "AM");
+            setTime(`${String(normalizedHours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}`);
+            setDate(initialDate);
+        } else {
+            const now = new Date();
+            setSelected(now);
+            setTime("12:00");
+            setAmpm("AM");
+            setDate(now);
+        }
+    }, [isOpen, selectedDate]);
 
     const today = new Date();
     const year = date.getFullYear();
@@ -52,7 +81,7 @@ const CreateNewTaskDate: React.FC<CreateNewTaskDateProps> = ({
             0
         );
 
-        setSelectedDate(new Date(updated.getTime() - updated.getTimezoneOffset() * 60000).toISOString());
+        setSelectedDate(updated);
     };
 
     const selectDay = (day: number) => {
@@ -119,14 +148,14 @@ const CreateNewTaskDate: React.FC<CreateNewTaskDateProps> = ({
                                     isInRange ? style.inRange : null,
                                     isSelected ? style.selected : null,
                                     isToday ? style.today : null,
-                                    isPast ? style.disabledDay : null // 🚫 добавляем класс
+                                    isPast ? style.disabledDay : null
                                 ].filter(Boolean).join(" ");
 
                                 return (
                                     <span
                                         key={day}
                                         className={classes || undefined}
-                                        onClick={() => !isPast && selectDay(day)} // ❌ блокируем клик
+                                        onClick={() => !isPast && selectDay(day)}
                                         aria-current={isToday ? "date" : undefined}>
                                         {day}
                                     </span>

@@ -1,4 +1,4 @@
-function formatDateShort(dateInput: string | Date): string {
+export function formatDateShort(dateInput: string | Date): string {
     const date = typeof dateInput === 'string'
         ? new Date(dateInput)
         : dateInput;
@@ -9,5 +9,3 @@ function formatDateShort(dateInput: string | Date): string {
 
     return `${day}.${month}.${year}`;
 }
-
-export default formatDateShort;
